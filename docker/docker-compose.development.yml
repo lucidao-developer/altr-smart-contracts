@@ -15,6 +15,7 @@ services:
       - 8546:8545
       - 9230:9229
     command: ["bash", "/usr/src/app/docker/script/entrypoint.sh"]
+    container_name: altr-marketplace-smart-contracts
 
 volumes:
   altrmarketplace_vscodeserver:

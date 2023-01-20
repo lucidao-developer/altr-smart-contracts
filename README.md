@@ -15,26 +15,46 @@
 ### Setup
 
 This repository uses Docker Compose to work properly.
-Prior to conducting any action, you must start the **altr_marketplace_smart_contracts container**.
+Prior to conducting any action, you must start the **altr-marketplace-smart-contracts container**.
 
 Follow these instructions to setup the repository for testing and deploying the Altr contracts:
 
 - Install docker and docker-compose:
   https://docs.docker.com/compose/install/
 
+- Create an enviroment file named **.env.development**:
+
+  ```
+      $ touch .env.development
+  ```
+
+- and fill it with the following enviroment variables:
+
+  - Add a **Mnemonic**
+
+    ```
+        MNEMONIC=<your mnemonic>
+    ```
+
+  - Add a **Polygonscan Api Key**
+
+    ```
+        POLYGONSCAN_API_KEY=<your api key>
+    ```
+
 - Start the application by running:
 
-```
+  ```
   $ cd docker/
-  $ docker-compose -f docker-compose.yml up --build -d
-```
+  $ docker-compose -f docker-compose.development.yml up --build -d
+  ```
 
 ### Testing
 
 - Run a bash instance in the container:
 
 ```
-    $ docker exec -it altr_marketplace_smart_contracts bash
+    $ docker exec -it altr-marketplace-smart-contracts bash
 ```
 
 - Prepare the contracts and run the tests from inside the container:
@@ -44,37 +64,9 @@ Follow these instructions to setup the repository for testing and deploying the 
     $ npm run test --silent
 ```
 
-### Development
+### Deployment
 
-Setup the development environment by following these instructions:
-
-- Create an enviroment file named **.env.development**:
-
-```
-    $ touch .env.development
-```
-
-- and fill it with the following enviroment variables:
-
-  - Add a **Mnemonic** (only first address will be used)
-
-    ```
-        MNEMONIC=""
-    ```
-
-  - Add a **Polygonscan Api Key**
-
-    ```
-        POLYGONSCAN_API_KEY=""
-    ```
-
-- Run the container:
-
-```
-    $ docker-compose -f docker-compose.development.yml up --build -d
-```
-
-- To deploy a contract, run the associated script:
+To deploy a contract, run the associated script:
 
 ```
     $ npx hardhat run scripts/{deployScriptName}.ts
@@ -89,11 +81,19 @@ The Altr Marketplace integrates with the [0x v4 NFT Protocol](https://docs.0x.or
 The Altr Marketplace smart contracts ecosystem governs the issuance, sale and trade of NFTs representing the sole-ownership (ERC-721) or co-ownership (ERC-1155) of real-world luxury objects
 and the physical retrieval of said objects in exchange for the corresponding NFT.
 
+#### NatSpec
+
+You can find the NatSpec generated documentation [here](docs/index.md).
+
+#### Diagrams
+
 The ecosystem is comprised of multiple interconnected smart contracts, its general overview is described by the following diagram:
 
 | ![Altr Marketplace Use Case Diagram](https://storage.lucidao.com/51d374ec-06bd-4bc4-b296-40513052fbe0-bucket/lcd-marketplace-diagrams/use-case-diagram-v2.jpg) |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 |                                                    <b>Altr Marketplace Smart Contracts Use Case Diagram</b>                                                    |
+
+Here below you can find the activity diagram for every smart contract of the Altr ecosystem:
 
 | ![Nft Collection Factory Activity Diagram](https://storage.lucidao.com/51d374ec-06bd-4bc4-b296-40513052fbe0-bucket/lcd-marketplace-diagrams/nft-collection-factory-activity-diagram-v2.jpg) |
 | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
