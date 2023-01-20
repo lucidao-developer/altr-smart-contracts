@@ -1,0 +1,25 @@
+node_modules
+.env
+.env.test
+.env.development
+.env.production
+coverage
+coverage.json
+typechain*
+.openzeppelin/unknown-*.json
+tests.txt
+**/.DS_Store
+
+#Hardhat files
+cache
+artifacts
+bin
+
+#VsCode
+.history
+.devcontainer
+devcontainer.json
+marketplace.code-workspace
+*.orig
+tmpopenzeppelin
+slither*

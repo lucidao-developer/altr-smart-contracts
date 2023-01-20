@@ -1,0 +1,53 @@
+{
+  "name": "altr-marketplace-smart-contracts",
+  "version": "1.0.0",
+  "description": "Smart Contracts for Altr Marketplace",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run hardhat-test --silent",
+    "fast-test": "TS_NODE_TRANSPILE_ONLY=1 && npm run hardhat-test && TS_NODE_TRANSPILE_ONLY=0",
+    "verbose-test": "npm run hardhat-test",
+    "hardhat-test": "npx hardhat test",
+    "deploy-node": "npx hardhat node",
+    "compile": "npx hardhat compile",
+    "compile-docs": "npx hardhat compile && npx hardhat docgen",
+    "coverage": "npx hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"./test/index.ts\"",
+    "lint": "solhint --max-warnings 0 \"contracts/*.sol\" \"contracts/interfaces/*.sol\"",
+    "prettier-typescript": "prettier --write \"./**/*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucidao-developer/altr-marketplace.git"
+  },
+  "keywords": [
+    "lucidao",
+    "altr",
+    "marketplace",
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts"
+  ],
+  "author": "Lucidao Developer",
+  "license": "(MIT)",
+  "bugs": {
+    "url": "https://github.com/lucidao-developer/altr-marketplace/issues"
+  },
+  "homepage": "https://github.com/lucidao-developer/altr-marketplace#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@openzeppelin/contracts": "^4.8.1",
+    "@openzeppelin/contracts-upgradeable": "^4.8.1",
+    "@openzeppelin/hardhat-upgrades": "^1.22.1",
+    "dotenv": "^16.0.3",
+    "prettier-plugin-solidity": "^1.1.1",
+    "solhint": "^3.3.8",
+    "solhint-plugin-prettier": "^0.0.5"
+  },
+  "dependencies": {
+    "hardhat-contract-sizer": "^2.7.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-docgen": "^0.6.0-beta.34",
+    "yesno": "^0.4.0"
+  }
+}
