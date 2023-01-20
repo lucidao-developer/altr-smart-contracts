@@ -15,7 +15,7 @@
 ### Setup
 
 This repository uses Docker Compose to work properly.
-Prior to conducting any action, you must start the **test_lucidao_marketplace_smart_contracts container**.
+Prior to conducting any action, you must start the **altr_marketplace_smart_contracts container**.
 
 Follow these instructions to setup the repository for testing and deploying the Altr contracts:
 
@@ -34,7 +34,7 @@ Follow these instructions to setup the repository for testing and deploying the 
 - Run a bash instance in the container:
 
 ```
-    $ docker exec -it test_lucidao_marketplace_smart_contracts bash
+    $ docker exec -it altr_marketplace_smart_contracts bash
 ```
 
 - Prepare the contracts and run the tests from inside the container:
