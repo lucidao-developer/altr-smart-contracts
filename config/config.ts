@@ -10,7 +10,7 @@ interface IProcessEnv {
 
 declare global {
     namespace NodeJS {
-        interface ProcessEnv extends IProcessEnv { }
+        interface ProcessEnv extends IProcessEnv {}
     }
 }
 
@@ -70,7 +70,7 @@ const tiers = {
 
 let erc1155MetadataUri = "https://testapi.altr.trade/api/erc1155metadata/";
 
-let zeroExAddress = "0x4fb72262344034e034fce3d9c701fd9213a55260";
+let zeroExAddress = "0x4Fb72262344034e034fCE3D9c701fD9213A55260";
 
 if (onPolygonMainnetChain()) {
     timelockAddress = process.env.TimelockAddress;
@@ -79,7 +79,7 @@ if (onPolygonMainnetChain()) {
     allowListAddress = process.env.AllowListAddress;
 
     erc1155MetadataUri = "https://api.altr.trade/api/erc1155metadata/";
-    zeroExAddress = "0xdef1c0ded9bec7f1a1670819833240f027b25eff";
+    zeroExAddress = "0xDef1C0ded9bec7F1a1670819833240f027b25EfF";
 }
 
 export {

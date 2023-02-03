@@ -31,7 +31,7 @@ export function licenseManagerBehavior(): void {
 
     it("Check if oracle is a qualified oracle", async function () {
         expect(await this.nftLicenseManager.isAQualifiedOracle(this.oracle1.address)).to.be.equal(true);
-        let nftCollectionFactory = await getOrDeployNftCollectionFactory(this.signer, this.nftLicenseManager, this.governanceNftTreasury);
+        let nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
         expect(await nftCollectionFactory.createdContractCount()).to.be.eq(0);
         await (
             await nftCollectionFactory.createCollection(
@@ -53,7 +53,7 @@ export function licenseManagerBehavior(): void {
             this.servicePid,
             this.tokensForEligibility
         );
-        let nftCollectionFactory = await getOrDeployNftCollectionFactory(this.signer, testLicenseManager, this.governanceNftTreasury);
+        let nftCollectionFactory = await getOrDeployNftCollectionFactory(testLicenseManager, this.governanceNftTreasury);
         expect(await nftCollectionFactory.createdContractCount()).to.be.eq(0);
         expect(await testLicenseManager.isAQualifiedOracle(this.oracle1.address)).to.be.equal(false);
         await expect(

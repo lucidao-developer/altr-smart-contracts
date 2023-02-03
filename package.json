@@ -13,7 +13,8 @@
     "compile-docs": "npx hardhat compile && npx hardhat docgen",
     "coverage": "npx hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"./test/index.ts\"",
     "lint": "solhint --max-warnings 0 \"contracts/*.sol\" \"contracts/interfaces/*.sol\"",
-    "prettier-typescript": "prettier --write \"./**/*.ts\""
+    "prettier-typescript": "prettier --write \"./**/*.ts\"",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -45,8 +46,13 @@
     "solhint-plugin-prettier": "^0.0.5"
   },
   "dependencies": {
+    "@0x/contracts-erc20": "^3.3.54",
+    "@0x/contracts-utils": "^4.8.35",
+    "@0x/contracts-zero-ex": "^0.38.3",
+    "@traderxyz/nft-swap-sdk": "^0.30.0",
     "hardhat-contract-sizer": "^2.7.0",
     "hardhat-gas-reporter": "^1.0.9",
+    "patch-package": "^6.5.1",
     "solidity-docgen": "^0.6.0-beta.34",
     "yesno": "^0.4.0"
   }

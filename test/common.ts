@@ -54,13 +54,14 @@ export type AltrFractionSaleData = {
 
 export type AltrBuyoutData = {
     id: BigNumberish;
-    buyout: [string, BigNumber, string, string, BigNumber, BigNumber, BigNumber, boolean] & {
+    buyout: [string, BigNumber, string, string, BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
         initiator: string;
         fractionSaleId: BigNumber;
         buyoutToken: string;
         buyoutPrice: BigNumber;
         openingTime: BigNumber;
         closingTime: BigNumber;
+        fractionsToBuyout: BigNumber;
         isSuccessful: boolean;
     };
 };
@@ -140,8 +141,6 @@ export async function buildSuccessfulFractionsSaleScenario(
 ) {
     const fractionsSale = await context.altrFractionsSale.getFractionsSale(altrFractionSaleData.id);
     const { fractionsAmount, closingTime } = fractionsSale;
-    console.log(closingTime);
-    console.log(await time.latest());
     const fractionsToBuy = Math.ceil(fractionsAmount.mul(percFractionsToBuy).div(100).toNumber());
 
     const usdtToMint = ethers.utils.parseUnits("10000000", 6);
@@ -364,6 +363,7 @@ export class SOLIDITY_ERROR_MSG {
     public CANNOT_SET_PAST_TIME = `${this.contractName}: closing time cannot be set in the past`;
     public CANNOT_TRADE_FAILED_SALE_TOKEN = `${this.contractName}: cannot trade token whose sale failed`;
     public SALE_MIN_FRACTION_MUST_BE_ABOVE_0 = `${this.contractName}: sale min fractions must be above 0`;
+    public FRACTIONS_AMOUNT_CANNOT_BE_0 = `${this.contractName}: fractions amount cannot be 0`;
     public MISSING_ROLE = (address: string, role: string) => `AccessControl: account ${address.toLowerCase()} is missing role ${role}`;
     public DOES_NOT_SUPPORT_INTERFACE = (correctInterface: string) =>
         `${this.contractName}: does not support ${correctInterface} interface`;

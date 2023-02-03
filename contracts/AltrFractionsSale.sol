@@ -189,7 +189,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 			currentSaleId,
 			buyToken,
 			altrFractions,
-			totalPrice / fractionsAmount,
+			0,
 			feeManager.governanceTreasury(),
 			feeManager.saleFee(),
 			msg.sender

@@ -1,6 +1,5 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers, network } from "hardhat";
-import { buyoutFee, freeVaultServicePeriod, insolvencyGracePeriod, minGracePeriod, saleFee } from "../config/config";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
     deployFeeManagerTester,
     deployNftCollection,
@@ -12,21 +11,32 @@ import {
     getOrDeployFractionsSale,
     getOrDeployfUsdt,
     getOrDeployLicenseManager,
+    getOrDeployNftCollateralRetriever,
+    deployNftCollection,
+    getOrDeployNftCollectionFactory,
+    getOrDeployTradeChecker,
     getOrDeployLucidaoGovernanceNftReserve,
     getOrDeployLucidaoGovernanceReserve,
-    getOrDeployNftCollateralRetriever,
-    getOrDeployNftCollectionFactory,
+    getOrDeployFarm,
+    getOrDeployAllowList,
+    getOrDeployFractions,
+    getOrDeployFractionsSale,
+    getOrDeployFractionsBuyout,
 } from "../scripts/deployFunctions";
+import { deployZeroExAndFullMigrate } from "../scripts/deployZeroEx";
 import { mockConsoleLog, removeOpenzeppelinProxyManifestFile } from "../scripts/utilities";
 import { IStakingService } from "../typechain-types";
 import { buildFractionSaleScenario, buildScenario1, buildScenario4 } from "./common";
-import { feeManagerBehavior } from "./FeeManager.behavior";
-import { licenseManagerBehavior } from "./LicenseManager.behavior";
 import { lucidaoGovernanceNftReserveBehavior } from "./LucidaoGovernanceNftReserve.behavior";
-import { nftCollateralRetrieverBehavior } from "./NftCollateralRetriever.behavior";
 import { nftCollectionBehavior } from "./NftCollection.behavior";
 import { nftCollectionFactoryBehavior } from "./NftCollectionFactory.behavior";
+import { nftCollateralRetrieverBehavior } from "./NftCollateralRetriever.behavior";
+import { licenseManagerBehavior } from "./LicenseManager.behavior";
+import { resetNetwork, restoreSnapshot, setSnapshot, mintBigNumberfUsdtTo } from "./utilities";
+import { feeManagerBehavior } from "./FeeManager.behavior";
+import { buyoutFee, freeVaultServicePeriod, insolvencyGracePeriod, minGracePeriod, saleFee } from "../config/config";
 import { nftFractionalizationBehavior } from "./NftFractionalization.behavior";
+import { tradeCheckerBehavior } from "./TradeChecker.behavior";
 import {
     altrAllowList,
     altrFeeManager,
@@ -39,7 +49,6 @@ import {
     timedTokenSplitter,
     tokenSplitter,
 } from "./unit";
-import { resetNetwork, restoreSnapshot, setSnapshot } from "./utilities";
 
 var chai = require("chai");
 chai.config.includeStack = true;
@@ -100,11 +109,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
             });
 
             beforeEach(async function () {
@@ -151,11 +156,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.platformFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
                     this.nftLicenseManager,
@@ -244,11 +245,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.nftFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
                     this.nftLicenseManager,
@@ -301,6 +298,45 @@ describe("Tests", () => {
 
             lucidaoGovernanceNftReserveBehavior();
         });
+        describe("Trade Checker", () => {
+            before(async function () {
+                await resetNetwork(network);
+                this.licenseManager = await getOrDeployLicenseManager(this.testFarm, this.servicePid, this.tokensForEligibility);
+                this.feeManager = await getOrDeployFeeManager(
+                    this.governanceTreasury,
+                    this.licenseManager,
+                    this.redemptionFee,
+                    buyoutFee,
+                    saleFee
+                );
+                this.zeroEx = await deployZeroExAndFullMigrate();
+                this.tradeChecker = await getOrDeployTradeChecker(this.zeroEx, this.allowList, this.feeManager);
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.licenseManager, this.governanceNftTreasury);
+            });
+            beforeEach(async function () {
+                this.snapshot = await setSnapshot(network);
+                const transaction = await this.nftCollectionFactory.createCollection(
+                    "name",
+                    "symbol",
+                    this.oracle1.address,
+                    this.signer.address,
+                    0,
+                    0,
+                    0
+                );
+                const tx = await transaction.wait();
+                const nftCollectionAddress = tx.events?.at(-1)?.args?.contractAddress;
+                this.nftCollection = await ethers.getContractAt("AltrNftCollection", nftCollectionAddress);
+                await this.nftCollection.connect(this.oracle1).safeMint("Token URI");
+                await mintBigNumberfUsdtTo(this.fUsdt, this.signer.address, ethers.utils.parseUnits("1000", 6));
+            });
+
+            afterEach(async function () {
+                await restoreSnapshot(network, this.snapshot);
+            });
+
+            tradeCheckerBehavior();
+        });
     });
 
     describe("Unit tests", () => {
@@ -312,11 +348,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
             });
             beforeEach(async function () {
                 this.snapshot = await setSnapshot(network);
@@ -359,11 +391,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.platformFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
                     this.nftLicenseManager,
@@ -425,11 +453,7 @@ describe("Tests", () => {
                     this.tokensForEligibility
                 );
 
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
 
                 this.nftFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
@@ -480,11 +504,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.altrFractions = await getOrDeployFractions();
                 this.nftFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
@@ -517,11 +537,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.altrFractions = await getOrDeployFractions();
                 this.nftFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
@@ -547,11 +563,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.altrFractions = await getOrDeployFractions();
                 this.nftFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,
@@ -587,11 +599,7 @@ describe("Tests", () => {
                     this.servicePid,
                     this.tokensForEligibility
                 );
-                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(
-                    this.signer,
-                    this.nftLicenseManager,
-                    this.governanceNftTreasury
-                );
+                this.nftCollectionFactory = await getOrDeployNftCollectionFactory(this.nftLicenseManager, this.governanceNftTreasury);
                 this.altrFractions = await getOrDeployFractions();
                 this.nftFeeManager = await getOrDeployFeeManager(
                     this.governanceTreasury,

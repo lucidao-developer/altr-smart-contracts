@@ -23,3 +23,6 @@ marketplace.code-workspace
 *.orig
 tmpopenzeppelin
 slither*
+
+#Lucidao
+deploy-report

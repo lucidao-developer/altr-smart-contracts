@@ -1,10 +1,8 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers";
 import { hexlify, toUtf8Bytes } from "ethers/lib/utils";
-import fs from "fs";
 import { ethers } from "hardhat";
 import { Network } from "hardhat/types";
-import path from "path";
 import { ZERO_ADDRESS } from "../config/config";
 import { isDevelopment, testRunningInHardhat } from "../scripts/utilities";
 import { AnyswapV3ERC20 } from "../typechain-types";

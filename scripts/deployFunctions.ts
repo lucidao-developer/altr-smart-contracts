@@ -84,7 +84,6 @@ export async function deployNftCollection(
 }
 
 export async function getOrDeployNftCollectionFactory(
-    deployer: SignerWithAddress,
     licenseManager: AltrLicenseManager,
     governanceNftTreasury: LucidaoGovernanceNftReserve
 ): Promise<AltrNftCollectionFactory> {

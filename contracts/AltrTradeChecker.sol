@@ -34,6 +34,13 @@ contract AltrTradeChecker is ERC721Holder {
 	IFeeManager public immutable feeManager;
 
 	/**
+	 * @param seller the address that create the order to sell a specific nft
+	 * @param buyer the address who call the function to fulfill the order
+	 * @param sellOrder the order from the seller that contains all the info about buyer and seller assets
+	 */
+	event ZeroExOrderFulfilled(address indexed seller, address indexed buyer, LibNFTOrder.ERC721Order sellOrder);
+
+	/**
 	 * @dev Modifier that only allows allowlisted addresses to execute a function.
 	 */
 
@@ -75,5 +82,7 @@ contract AltrTradeChecker is ERC721Holder {
 		sellOrder.erc20Token.approve(address(zeroExContract), sellOrder.erc20TokenAmount);
 		zeroExContract.buyERC721(sellOrder, signature, callbackData);
 		sellOrder.erc721Token.safeTransferFrom(address(this), msg.sender, sellOrder.erc721TokenId);
+
+		emit ZeroExOrderFulfilled(sellOrder.maker, msg.sender, sellOrder);
 	}
 }

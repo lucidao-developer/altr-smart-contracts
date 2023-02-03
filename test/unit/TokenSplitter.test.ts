@@ -6,7 +6,7 @@ export default function () {
             expect(await this.tokenSplitter.redemptionToken()).to.equal(this.buyoutData.buyout.buyout[3]);
             expect(await this.tokenSplitter.token()).to.equal(this.altrFractions.address);
             expect(await this.tokenSplitter.tokenId()).to.equal(this.buyoutData.buyout.id);
-            expect(await this.tokenSplitter.tokenPrice()).to.equal(this.buyoutData.buyout.buyout[4]);
+            expect(await this.tokenSplitter.fractionsAmount()).to.equal(this.buyoutData.buyout.buyout.fractionsToBuyout);
         });
     });
     describe("release", function () {
@@ -19,8 +19,8 @@ export default function () {
         });
         it("Should transfer erc20 to fractions owner", async function () {
             const fractionsBalance = await this.altrFractions.balanceOf(this.owner2.address, this.buyoutData.buyout.id);
-            const fractionsPrice = this.buyoutData.buyout.buyout[4];
-            const price = fractionsBalance.mul(fractionsPrice);
+            const fractionPrice = this.buyoutData.buyout.buyout.buyoutPrice;
+            const price = fractionsBalance.mul(fractionPrice);
             await expect(this.tokenSplitter.release([this.owner2.address])).to.changeTokenBalances(
                 this.fUsdt,
                 [this.owner2.address, this.tokenSplitter.address],

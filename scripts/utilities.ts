@@ -1,4 +1,4 @@
-import { Manifest } from '@openzeppelin/upgrades-core';
+import { Manifest } from "@openzeppelin/upgrades-core";
 import { config as configDotenv } from "dotenv";
 import fs from "fs";
 import { resolve } from "path";
@@ -32,7 +32,7 @@ export function testRunningInHardhat() {
 
 export async function getOpenzeppelinNetworkManifestFilename(provider: any) {
     var filename = (await Manifest.forNetwork(provider)).file;
-    return filename
+    return filename;
 }
 
 export async function removeOpenzeppelinProxyManifestFile(provider: any) {
@@ -42,7 +42,7 @@ export async function removeOpenzeppelinProxyManifestFile(provider: any) {
     try {
         fs.accessSync(moduleName, fs.constants.F_OK);
         if (onPolygonMainnetChain()) {
-            console.error("Openzeppelin proxy file for Polygon mainnet already exists! Abort...")
+            console.error("Openzeppelin proxy file for Polygon mainnet already exists! Abort...");
             throw new Error("Manually manage openzeppelin proxy file...");
         }
     } catch (err) {

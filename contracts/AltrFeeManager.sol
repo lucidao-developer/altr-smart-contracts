@@ -114,7 +114,7 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 	 * @param tokenId The token id of the nft collection
 	 * @param price The price of the first sale of the token
 	 */
-	event SaleInfoSet(address nftCollection, uint256 tokenId, address redemptionFeeTokenAddress, uint256 price);
+	event SaleInfoSet(address indexed nftCollection, uint256 indexed tokenId, address indexed redemptionFeeTokenAddress, uint256 price);
 	/**
 	 * @dev Emitted when the fractions buyout fee is set
 	 * @param buyoutFee The new fractions buyout fee

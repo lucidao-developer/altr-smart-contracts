@@ -31,6 +31,7 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 		uint256 buyoutPrice;
 		uint256 openingTime;
 		uint256 closingTime;
+		uint256 fractionsToBuyout;
 		bool isSuccessful;
 	}
 	/**
@@ -93,11 +94,6 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 	 * @param buyoutAmount Amount paid for the buyout
 	 */
 	event BuyoutExecuted(uint256 indexed buyoutId, address indexed executor, uint256 boughtOutFractions, uint256 buyoutAmount);
-	/**
-	 * @dev Emitted when the protocol fee is set
-	 * @param protocolFee The value of the protocol fee
-	 */
-	event ProtocolFeeSet(uint256 protocolFee);
 	/**
 	 * @dev Emitted when the minimum fractions required for a buyout is set
 	 * @param buyoutMinFractions The value of the minimum fractions required for a buyout
@@ -179,6 +175,7 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 			buyoutPrice: 0,
 			openingTime: 0,
 			closingTime: 0,
+			fractionsToBuyout: 0,
 			isSuccessful: false
 		});
 
@@ -222,6 +219,7 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 			buyoutPrice: 0,
 			openingTime: block.timestamp,
 			closingTime: block.timestamp,
+			fractionsToBuyout: 0,
 			isSuccessful: true
 		});
 
@@ -251,15 +249,17 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 
 		require(canDoBuyout(msg.sender, buyout.fractionSaleId), "AltrFractionsBuyout: not enough fractions");
 
-		uint256 buyoutAmount = buyout.buyoutPrice * (fractionsSale.fractionsSold - fractionsBalance);
+		uint256 fractionsToBuyout = fractionsSale.fractionsSold - fractionsBalance;
+		uint256 buyoutAmount = buyout.buyoutPrice * fractionsToBuyout;
 		uint256 protocolFeeAmount = (buyoutAmount * feeManager.buyoutFee()) / _DENOMINATOR;
 
+		buyout.fractionsToBuyout = fractionsToBuyout;
 		buyout.isSuccessful = true;
 
 		altrFractions.burn(msg.sender, buyout.fractionSaleId, fractionsBalance);
 		altrFractions.setBuyoutStatus(buyout.fractionSaleId);
 
-		address buyoutTokenManager = address(new TokenSplitter(buyout.buyoutToken, altrFractions, buyout.fractionSaleId, buyout.buyoutPrice));
+		address buyoutTokenManager = address(new TokenSplitter(buyout.buyoutToken, altrFractions, buyout.fractionSaleId, fractionsToBuyout));
 		buyout.buyoutTokenManager = buyoutTokenManager;
 
 		buyout.buyoutToken.safeTransferFrom(msg.sender, feeManager.governanceTreasury(), protocolFeeAmount);

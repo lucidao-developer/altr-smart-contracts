@@ -1,8 +1,11 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { buildSuccessfulFractionsSaleScenario, SOLIDITY_ERROR_MSG } from "../common";
+import { mintBigNumberfUsdtTo } from "../utilities";
+import { ethers } from "hardhat";
 
 const TIMED_TOKEN_SPLITTER_ERROR_MSG = new SOLIDITY_ERROR_MSG("TimedTokenSplitter");
+const TOKEN_SPLITTER_ERROR_MSG = new SOLIDITY_ERROR_MSG("TokenSplitter");
 
 export default function () {
     describe("constructor", function () {
@@ -67,9 +70,35 @@ export default function () {
                 TIMED_TOKEN_SPLITTER_ERROR_MSG.SALE_DID_NOT_FAIL
             );
         });
-        it("Should not revert", async function () {
+        it("Should revert if fractionsAmount is 0", async function () {
             await time.increase(this.saleOpenTimePeriod + 1);
-            await expect(this.timedTokenSplitter.release([this.oracle1.address])).not.to.be.reverted;
+            await expect(this.timedTokenSplitter.release([this.oracle1.address])).to.be.revertedWith(
+                TOKEN_SPLITTER_ERROR_MSG.FRACTIONS_AMOUNT_CANNOT_BE_0
+            );
+        });
+        it("Should repay the users correctly", async function () {
+            const usdtToSpend = ethers.utils.parseUnits("10", 6);
+            await mintBigNumberfUsdtTo(this.fUsdt, this.signer.address, usdtToSpend);
+            await mintBigNumberfUsdtTo(this.fUsdt, this.owner1.address, usdtToSpend);
+            await this.fUsdt.approve(this.altrFractionsSale.address, usdtToSpend);
+            await this.fUsdt.connect(this.owner1).approve(this.altrFractionsSale.address, usdtToSpend);
+            await this.allowList.allowAddresses([this.signer.address, this.owner1.address]);
+            await this.altrFractionsSale.buyFractions(this.altrFractionSaleData.id, 1);
+            await this.altrFractionsSale.connect(this.owner1).buyFractions(this.altrFractionSaleData.id, 1);
+            await time.increase(this.saleOpenTimePeriod + 1);
+            await expect(this.timedTokenSplitter.release([this.signer.address])).to.changeTokenBalances(
+                this.fUsdt,
+                [this.signer.address, this.timedTokenSplitter.address],
+                [usdtToSpend, -usdtToSpend]
+            );
+            await expect(this.timedTokenSplitter.release([this.owner1.address])).to.changeTokenBalances(
+                this.fUsdt,
+                [this.owner1.address, this.timedTokenSplitter.address],
+                [usdtToSpend, -usdtToSpend]
+            );
+            await expect(this.timedTokenSplitter.release([this.signer.address])).to.be.revertedWith(
+                TOKEN_SPLITTER_ERROR_MSG.FRACTIONS_AMOUNT_CANNOT_BE_0
+            );
         });
     });
 }

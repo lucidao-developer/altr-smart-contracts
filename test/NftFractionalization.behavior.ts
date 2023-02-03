@@ -179,7 +179,11 @@ export function nftFractionalizationBehavior() {
         await mintBigNumberfUsdtTo(this.fUsdt, this.signer.address, usdtToSpend);
         await this.fUsdt.approve(this.altrFractionsSale.address, usdtToSpend);
 
-        await this.altrFractionsSale.buyFractions(altrFractionSaleData.id, fractionsToBuy);
+        await expect(await this.altrFractionsSale.buyFractions(altrFractionSaleData.id, fractionsToBuy)).to.changeTokenBalances(
+            this.fUsdt,
+            [this.signer.address, timedTokenSplitter.address],
+            [-usdtToSpend, usdtToSpend]
+        );
         await expect(timedTokenSplitter.release([this.signer.address])).to.be.revertedWith(
             TIMED_TOKEN_SPLITTER_ERROR_MSG.SALE_NOT_FINISHED
         );

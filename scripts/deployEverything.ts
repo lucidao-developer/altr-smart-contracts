@@ -2,10 +2,22 @@ import { ethers } from "hardhat";
 import { buyoutFee, redemptionFee, saleFee, servicePid, stakedTokens, timelockAddress, tokensForEligibility } from "../config/config";
 import { IStakingService } from "../typechain-types";
 import {
-    getOrDeployAllowList, getOrDeployFarm, getOrDeployFeeManager, getOrDeployFractions,
-    getOrDeployFractionsSale, getOrDeployfUsdt, getOrDeployLicenseManager, getOrDeployLucidaoGovernanceNftReserve, getOrDeployLucidaoGovernanceReserve, getOrDeployNftCollateralRetriever, getOrDeployNftCollectionFactory
+    getOrDeployAllowList,
+    getOrDeployFarm,
+    getOrDeployFeeManager,
+    getOrDeployFractions,
+    getOrDeployFractionsBuyout,
+    getOrDeployFractionsSale,
+    getOrDeployfUsdt,
+    getOrDeployLicenseManager,
+    getOrDeployLucidaoGovernanceNftReserve,
+    getOrDeployLucidaoGovernanceReserve,
+    getOrDeployNftCollateralRetriever,
+    getOrDeployNftCollectionFactory,
+    getOrDeployTradeChecker,
 } from "./deployFunctions";
 import { isDevelopment, isTest, removeOpenzeppelinProxyManifestFile } from "./utilities";
+import { zeroExAddress } from "../config/config";
 
 async function main() {
     const [deployer, fakeTimelock] = await ethers.getSigners();
@@ -36,7 +48,7 @@ async function main() {
     const licenseManager = await getOrDeployLicenseManager(stakingFarm as IStakingService, servicePid, tokensForEligibility);
 
     // collection factory
-    const nftCollectionFactory = await getOrDeployNftCollectionFactory(deployer, licenseManager, governanceNftTreasury);
+    const nftCollectionFactory = await getOrDeployNftCollectionFactory(licenseManager, governanceNftTreasury);
 
     // fee manager
     const feeManager = await getOrDeployFeeManager(governanceTreasury, licenseManager, redemptionFee, buyoutFee, saleFee);
@@ -52,6 +64,15 @@ async function main() {
 
     // Altr fractions sale
     const fractionsSale = await getOrDeployFractionsSale(fractions, allowList, feeManager);
+
+    // Altr fractions buyout
+    const fractionsBuyout = await getOrDeployFractionsBuyout(deployer, fractions, fractionsSale, feeManager);
+
+    // Zero Ex contract
+    const zeroEx = await ethers.getContractAt("IZeroEx", zeroExAddress!);
+
+    // Altr trade checker
+    const tradeChecker = await getOrDeployTradeChecker(zeroEx, allowList, feeManager);
 }
 
 main()

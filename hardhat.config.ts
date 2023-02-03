@@ -5,12 +5,7 @@ import "hardhat-gas-reporter";
 import { HardhatUserConfig, task } from "hardhat/config";
 import "solidity-docgen";
 
-import {
-    isTest,
-    myDotenvConfig,
-    onMumbaiChain,
-    onPolygonMainnetChain
-} from "./scripts/utilities";
+import { isTest, myDotenvConfig, onMumbaiChain, onPolygonMainnetChain } from "./scripts/utilities";
 
 myDotenvConfig();
 
@@ -36,13 +31,20 @@ if ((onMumbaiChain() || onPolygonMainnetChain()) && process.env.POLYGONSCAN_API_
 
 const config: HardhatUserConfig = {
     solidity: {
-        version: "0.8.17",
-        settings: {
-            optimizer: {
-                enabled: true,
-                runs: 200,
+        compilers: [
+            {
+                version: "0.6.5",
             },
-        },
+            {
+                version: "0.8.17",
+                settings: {
+                    optimizer: {
+                        enabled: true,
+                        runs: 200,
+                    },
+                },
+            },
+        ],
     },
     contractSizer: {
         alphaSort: true,
@@ -58,7 +60,7 @@ const config: HardhatUserConfig = {
         currency: "USD",
     },
     docgen: {
-        exclude: ["test", "libraries", "interfaces"]
+        exclude: ["test", "libraries", "interfaces"],
     },
     defaultNetwork: "hardhat",
     networks: {
