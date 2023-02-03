@@ -22,10 +22,10 @@ Follow these instructions to setup the repository for testing and deploying the 
 - Install docker and docker-compose:
   https://docs.docker.com/compose/install/
 
-- Create an enviroment file named **.env.development**:
+- Create an enviroment file named **.env.test**:
 
   ```
-      $ touch .env.development
+      $ touch .env.test
   ```
 
 - and fill it with the following enviroment variables:
@@ -46,7 +46,7 @@ Follow these instructions to setup the repository for testing and deploying the 
 
   ```
   $ cd docker/
-  $ docker-compose -f docker-compose.development.yml up --build -d
+  $ docker-compose -f docker-compose.yml up --build -d
   ```
 
 ### Testing
