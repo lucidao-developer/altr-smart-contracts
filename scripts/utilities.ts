@@ -24,6 +24,10 @@ export function isTest() {
     return process.env.NODE_ENV == "test";
 }
 
+export function isProduction() {
+    return process.env.NODE_ENV == "production";
+}
+
 export function testRunningInHardhat() {
     return (
         searchScriptArgsUsingNodeJsProcess("hardhat,test") || runningCoverageScript() || searchScriptArgsUsingNodeJsProcess("mocha-test")
@@ -109,7 +113,7 @@ export function myDotenvConfig() {
     });
 
     let mandatoryEnvParams = ["MNEMONIC", "POLYGONSCAN_API_KEY"];
-    if (!isDevelopment()) {
+    if (isProduction()) {
         mandatoryEnvParams.push("GovernanceTreasuryAddress");
         mandatoryEnvParams.push("FusdtAddress");
         mandatoryEnvParams.push("TimelockAddress");

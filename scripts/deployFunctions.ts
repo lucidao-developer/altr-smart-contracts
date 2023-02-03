@@ -45,7 +45,7 @@ import {
     LucidaoGovernanceReserve,
     TestFarm,
 } from "../typechain-types";
-import { isDevelopment, skipContractVerify } from "./utilities";
+import { isProduction, skipContractVerify } from "./utilities";
 
 export async function deployNftCollection(
     name: string,
@@ -406,7 +406,7 @@ export async function deployTestLicenseManager(
     servicePid: number,
     tokensForEligibility: number
 ): Promise<AltrTestLicenseManager> {
-    if (!isDevelopment()) {
+    if (isProduction()) {
         throw Error("Deploying test contract in wrong environment");
     }
 
@@ -426,7 +426,7 @@ export async function deployTestLicenseManager(
 }
 
 export async function deployFeeManagerTester(feeManager: string): Promise<FeeManagerTester> {
-    if (!isDevelopment()) {
+    if (isProduction()) {
         throw Error("Deploying test contract in wrong environment");
     }
     //test contract
@@ -451,7 +451,7 @@ export async function getOrDeployLucidaoGovernanceReserve(luciDaoTimelockAddress
         return await ethers.getContractAt(contractName, governanceTreasuryAddress);
     }
 
-    if (!isDevelopment()) {
+    if (isProduction()) {
         throw Error("Deploying test contract in wrong environment");
     }
     console.log(`\nDeploying contract ${contractName}`);
@@ -477,7 +477,7 @@ export async function getOrDeployfUsdt(vault: SignerWithAddress): Promise<Anyswa
         return await ethers.getContractAt(contractName, fusdtAddress);
     }
 
-    if (!isDevelopment()) {
+    if (isProduction()) {
         throw Error("Deploying test contract in wrong environment");
     }
 

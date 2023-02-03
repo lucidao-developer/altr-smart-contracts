@@ -5,7 +5,7 @@ node_modules
 .env.production
 coverage
 coverage.json
-typechain*
+typechain-*
 .openzeppelin/unknown-*.json
 tests.txt
 **/.DS_Store
@@ -25,4 +25,6 @@ tmpopenzeppelin
 slither*
 
 #Lucidao
+anonymized-contracts
+anonymized-scripts
 deploy-report
