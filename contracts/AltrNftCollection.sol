@@ -69,14 +69,6 @@ contract AltrNftCollection is ERC721URIStorage, ERC721Enumerable, ERC721Burnable
 	 */
 	event Seize(uint256 indexed tokenId);
 	/**
-	 * @notice Emits when an NFT is received
-	 * @param collectionAddress The address of the collection
-	 * @param from The address of the sender
-	 * @param operator The address of the operator
-	 * @param tokenId The ID of the token
-	 */
-	event NftReceived(address indexed collectionAddress, address indexed from, address operator, uint256 tokenId);
-	/**
 	 * @notice Emits when the free vault service period is set
 	 * @param freeVaultServicePeriod The free vault service period
 	 */
