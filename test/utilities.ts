@@ -7,6 +7,7 @@ import { ZERO_ADDRESS } from "../config/config";
 import { isDevelopment, testRunningInHardhat } from "../scripts/utilities";
 import { AnyswapV3ERC20 } from "../typechain-types";
 import path from "path";
+import fs from "fs";
 
 export function checkSkipTest(skipFlag: boolean, context: Mocha.Context) {
     if (skipFlag) {
@@ -98,7 +99,7 @@ function getFunctionsNameFromContractSourceName(sourceName: string): string[] {
         try {
             contractFile = fs.readFileSync(contractPath, "utf8");
         } catch (e) {
-            throw Error("Invalid source name");
+            throw e;
         }
     }
     const contract = contractFile.split(" ");
