@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./libraries/LibNFTOrder.sol";
 import "./libraries/LibSignature.sol";
 import "./interfaces/IZeroEx.sol";
@@ -17,6 +18,7 @@ import "./interfaces/IFeeManager.sol";
  */
 contract AltrTradeChecker is ERC721Holder {
 	using ERC165Checker for address;
+	using SafeERC20 for IERC20;
 
 	/**
 	 * @dev variable to store the address of the IZeroEx smart contract
@@ -78,8 +80,8 @@ contract AltrTradeChecker is ERC721Holder {
 		bytes calldata callbackData
 	) external payable onlyAllowListed {
 		feeManager.setSaleInfo(address(sellOrder.erc721Token), sellOrder.erc721TokenId, address(sellOrder.erc20Token), sellOrder.erc20TokenAmount);
-		sellOrder.erc20Token.transferFrom(msg.sender, address(this), sellOrder.erc20TokenAmount);
-		sellOrder.erc20Token.approve(address(zeroExContract), sellOrder.erc20TokenAmount);
+		sellOrder.erc20Token.safeTransferFrom(msg.sender, address(this), sellOrder.erc20TokenAmount);
+		sellOrder.erc20Token.safeApprove(address(zeroExContract), sellOrder.erc20TokenAmount);
 		zeroExContract.buyERC721(sellOrder, signature, callbackData);
 		sellOrder.erc721Token.safeTransferFrom(address(this), msg.sender, sellOrder.erc721TokenId);
 
