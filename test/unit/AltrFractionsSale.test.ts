@@ -13,8 +13,9 @@ import {
     getOrDeployLicenseManager,
     getOrDeployLucidaoGovernanceReserve,
 } from "../../scripts/deployFunctions";
-import { AltrFractionsSale } from "../../typechain-types";
+import { AltrFractionsSale, AltrFractionsSale__factory } from "../../typechain-types";
 import { buildScenario2, SOLIDITY_ERROR_MSG } from "../common";
+import { BigNumber } from "ethers";
 
 const FRACTIONS_SALE_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrFractionsSale");
 const FRACTIONS_BUYOUT_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrFractionsBuyout");
@@ -167,6 +168,27 @@ export default function () {
                 this.nftFeeManager
             );
             expect(await altrFractionsSale.altrFractionsBuyout()).to.equal(altrFractionsBuyout.address);
+        });
+    });
+    describe("constructor", async function () {
+        let FractionSale: AltrFractionsSale__factory;
+        beforeEach(async () => {
+            FractionSale = await ethers.getContractFactory("AltrFractionsSale");
+        });
+        it("Should revert if priceLimits and amount have not the same length", async function () {
+            const priceLimits = [BigNumber.from(0), BigNumber.from(10)];
+            const amounts = [10, 40, 60];
+            await expect(
+                FractionSale.deploy(this.altrFractions.address, this.nftFeeManager.address, this.allowList.address, priceLimits, amounts)
+            ).to.be.revertedWith(FRACTIONS_SALE_ERROR_MSG.CANNOT_MAP_ARRAY_OF_DIFFERENT_SIZE);
+        });
+        it("Should revert if priceLimits doesn't start with 0", async function () {
+            const priceLimits = [BigNumber.from(10), BigNumber.from(20)];
+            const amounts = [10, 40];
+            console.log(priceLimits);
+            await expect(
+                FractionSale.deploy(this.altrFractions.address, this.nftFeeManager.address, this.allowList.address, priceLimits, amounts)
+            ).to.be.revertedWith(FRACTIONS_SALE_ERROR_MSG.PRICE_LIMITS_MUST_START_WITH_0);
         });
     });
 }

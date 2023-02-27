@@ -375,6 +375,8 @@ export class SOLIDITY_ERROR_MSG {
     public REQUEST_EXCEEDS_ALLOWANCE = "AnyswapV3ERC20: request exceeds allowance";
     public ALREADY_INITIALIZED = "Initializable: contract is already initialized";
     public DEADLINE_LOWER_THAN_CURRENT = "AltrNftCollection: new deadline is lower than the current on";
+    public CANNOT_MAP_ARRAY_OF_DIFFERENT_SIZE = "AltrFractionsSale: cannot map array of different size";
+    public PRICE_LIMITS_MUST_START_WITH_0 = "AltrFractionsSale: price limits array must start with 0";
 }
 
 export class SOLIDITY_PANIC_CODES {

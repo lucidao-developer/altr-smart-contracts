@@ -454,6 +454,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 	 */
 	function _setTiers(uint256[] memory priceLimits, uint256[] memory fractionsAmounts) internal {
 		require(priceLimits.length == fractionsAmounts.length, "AltrFractionsSale: cannot map array of different size");
+		require(priceLimits[0] == 0, "AltrFractionsSale: price limits array must start with 0");
 		for (uint256 i; i < priceLimits.length; i++) {
 			tiers.set(priceLimits[i], fractionsAmounts[i]);
 		}
