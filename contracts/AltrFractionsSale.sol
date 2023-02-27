@@ -250,7 +250,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 	 * @dev The initiator can withdraw the fractions kept after the sale is closed and successful
 	 * @param saleId ID of the sale from which the fractions kept will be withdrawn
 	 */
-	function withdrawFractionsKept(uint256 saleId) external {
+	function withdrawFractionsKept(uint256 saleId) external onlyIfSaleClosed(saleId) {
 		FractionsSale memory fractionsSale = fractionsSales[saleId];
 
 		require(fractionsSale.initiator == msg.sender, "AltrFractionsSale: must be sale initiator");
