@@ -12,7 +12,7 @@ import { ADMIN_ROLE } from "../../config/roles";
 const FEE_MANAGER_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrFeeManager");
 
 export default function () {
-    describe("contructor", function () {
+    describe("constructor", function () {
         let FeeManager: AltrFeeManager__factory;
         beforeEach(async function () {
             FeeManager = await ethers.getContractFactory("AltrFeeManager");
