@@ -35,6 +35,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 
 	bytes32 public constant SALE_ISSUER_ROLE = keccak256("SALE_ISSUER_ROLE");
 	bytes32 public constant BURN_MANAGER_ROLE = keccak256("BURN_MANAGER_ROLE");
+	uint256 public constant MIN_OPENING_GAP = 86400; // ONE DAY
 
 	/**
 	 * @dev The address of the AltrFractions contract instance
@@ -170,7 +171,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 		uint256 minFractionsKept,
 		uint256 saleMinFractions
 	) external nonReentrant onlyRole(SALE_ISSUER_ROLE) {
-		require(closingTime > openingTime, "AltrFractionsSale: closing time must be greater than opening time");
+		require(closingTime > openingTime + MIN_OPENING_GAP, "AltrFractionsSale: closing time must be greater than opening time plus min opening time period");
 		require(openingTime > block.timestamp, "AltrFractionsSale: opening time cannot be in the past");
 		require(address(nftCollection) != address(0), "AltrFractionsSale: cannot be null address");
 		require(address(buyToken) != address(0), "AltrFractionsSale: cannot be null address");

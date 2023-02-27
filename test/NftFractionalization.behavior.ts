@@ -50,6 +50,17 @@ export function nftFractionalizationBehavior() {
             NFT_FRACTIONS_SALE_ERROR_MSG.SALE_MIN_FRACTION_MUST_BE_ABOVE_0
         );
 
+        const setupSaleArgsWrongOpenTimePeriod = [
+            nftCollectionContract.address,
+            nftTokenCollectionData.tokenId,
+            this.fUsdt.address,
+            now,
+            now + 86359,
+            10e6,
+            ethers.constants.Zero,
+            ethers.constants.Zero,
+        ] as const;
+
         const setupSaleRightArgs = [
             nftCollectionContract.address,
             nftTokenCollectionData.tokenId,
@@ -66,6 +77,10 @@ export function nftFractionalizationBehavior() {
         );
 
         await nftCollectionContract.connect(this.oracle1).approve(this.altrFractionsSale.address, nftTokenCollectionData.tokenId);
+
+        await expect(this.altrFractionsSale.connect(this.oracle1).setupSale(...setupSaleArgsWrongOpenTimePeriod)).to.be.revertedWith(
+            NFT_FRACTIONS_SALE_ERROR_MSG.CLOSING_TIME_MUST_BE_SET_AFTER_MINIMUM
+        );
 
         await this.altrFractionsSale.connect(this.oracle1).setupSale(...setupSaleRightArgs);
 

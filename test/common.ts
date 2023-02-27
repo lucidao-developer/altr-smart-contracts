@@ -364,6 +364,7 @@ export class SOLIDITY_ERROR_MSG {
     public CANNOT_TRADE_FAILED_SALE_TOKEN = `${this.contractName}: cannot trade token whose sale failed`;
     public SALE_MIN_FRACTION_MUST_BE_ABOVE_0 = `${this.contractName}: sale min fractions must be above 0`;
     public FRACTIONS_AMOUNT_CANNOT_BE_0 = `${this.contractName}: fractions amount cannot be 0`;
+    public CLOSING_TIME_MUST_BE_SET_AFTER_MINIMUM = `${this.contractName}: closing time must be greater than opening time plus min opening time period`;
     public MISSING_ROLE = (address: string, role: string) => `AccessControl: account ${address.toLowerCase()} is missing role ${role}`;
     public DOES_NOT_SUPPORT_INTERFACE = (correctInterface: string) =>
         `${this.contractName}: does not support ${correctInterface} interface`;

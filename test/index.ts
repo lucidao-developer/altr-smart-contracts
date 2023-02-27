@@ -92,7 +92,7 @@ describe("Tests", () => {
         this.insolvencyGracePeriod = insolvencyGracePeriod;
         this.freeVaultServicePeriod = freeVaultServicePeriod;
 
-        this.saleOpenTimePeriod = 180;
+        this.saleOpenTimePeriod = 86500;
 
         this.testFarm = await getOrDeployFarm(this.fUsdt, this.stakedTokens);
         console.log(`Governance Treasury: ${this.governanceTreasury.address}`);
