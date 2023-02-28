@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./interfaces/IFractions.sol";
 
 /**
@@ -10,7 +11,7 @@ import "./interfaces/IFractions.sol";
  * @author Lucidao Developer
  * @dev Contract for managing tokens used to buyout Altr fractions.
  */
-contract TokenSplitter {
+contract TokenSplitter is ReentrancyGuard {
 	using SafeERC20 for IERC20;
 	/**
 	 * @dev The ERC-20 token that users need to provide to redeem the fractions
@@ -58,19 +59,22 @@ contract TokenSplitter {
 	 * @dev Release the tokens, by burning the token in token contract and transfer the redemption token to the user
 	 * @param users The array of users' addresses to release the tokens to
 	 */
-	function release(address[] calldata users) public virtual {
+	function release(address[] calldata users) public virtual nonReentrant {
 		require(fractionsToBuyout > 0, "TokenSplitter: fractions amount cannot be 0");
 		uint256[] memory amounts = new uint256[](users.length);
 		uint256 fractionsPrice;
-		uint256 tokenPrice = redemptionToken.balanceOf(address(this)) / fractionsToBuyout;
+		uint256 boughtOutFractions;
+		uint256 tokenBalance = redemptionToken.balanceOf(address(this));
+		uint256 tokenPrice = tokenBalance / fractionsToBuyout;
 		for (uint256 i; i < users.length; i++) {
 			amounts[i] = token.balanceOf(users[i], tokenId);
-			fractionsToBuyout -= amounts[i];
-			fractionsPrice = tokenPrice * amounts[i];
+			boughtOutFractions += amounts[i];
+			fractionsPrice = (tokenBalance * amounts[i]) / fractionsToBuyout;
 
 			token.operatorBurn(users[i], tokenId, amounts[i]);
 			redemptionToken.safeTransfer(users[i], fractionsPrice);
 		}
+		fractionsToBuyout -= boughtOutFractions;
 		emit TokensReleased(users, redemptionToken, token, tokenId, amounts, tokenPrice);
 	}
 }
