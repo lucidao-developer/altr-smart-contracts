@@ -90,17 +90,6 @@ export default function () {
             ).to.be.revertedWith(FEE_MANAGER_ERROR_MSG.ALREADY_INITIALIZED);
         });
     });
-    describe("receive", function () {
-        it("Should receive money", async function () {
-            await this.signer.sendTransaction({ to: this.nftFeeManager.address, value: ethers.utils.parseEther("1") });
-            expect(await ethers.provider.getBalance(this.nftFeeManager.address)).to.equal(ethers.utils.parseEther("1"));
-        });
-        it("Should emit an event", async function () {
-            await expect(await this.signer.sendTransaction({ to: this.nftFeeManager.address, value: ethers.utils.parseEther("1") }))
-                .to.emit(this.nftFeeManager, "Received")
-                .withArgs(this.signer.address, ethers.utils.parseEther("1"));
-        });
-    });
     describe("receiveZeroExFeeCallback", function () {
         it("Should emit an event", async function () {
             expect(await this.nftFeeManager.receiveZeroExFeeCallback(this.fUsdt.address, 0, []))

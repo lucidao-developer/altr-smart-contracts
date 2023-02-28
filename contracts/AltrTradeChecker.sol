@@ -78,7 +78,7 @@ contract AltrTradeChecker is ERC721Holder {
 		LibNFTOrder.ERC721Order calldata sellOrder,
 		LibSignature.Signature calldata signature,
 		bytes calldata callbackData
-	) external payable onlyAllowListed {
+	) external onlyAllowListed {
 		feeManager.setSaleInfo(address(sellOrder.erc721Token), sellOrder.erc721TokenId, address(sellOrder.erc20Token), sellOrder.erc20TokenAmount);
 		sellOrder.erc20Token.safeTransferFrom(msg.sender, address(this), sellOrder.erc20TokenAmount);
 		sellOrder.erc20Token.safeApprove(address(zeroExContract), sellOrder.erc20TokenAmount);

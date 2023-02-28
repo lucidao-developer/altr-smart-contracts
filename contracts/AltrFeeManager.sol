@@ -89,12 +89,6 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 	 */
 	event LicenseManagerChanged(address indexed licenseManager);
 	/**
-	 * @dev The Received event is emitted when Ether is received by the contract
-	 * @param sender The address that sent the Ether
-	 * @param amount The amount of Ether received
-	 */
-	event Received(address indexed sender, uint256 amount);
-	/**
 	 * @dev The RedemptionFeePaid event is emitted when a redemption fee is paid for a specific NFT
 	 * @param nftCollection The address of the NFT collection that the NFT belongs to
 	 * @param tokenId The ID of the NFT for which the redemption fee was paid
@@ -140,13 +134,6 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 	/// @custom:oz-upgrades-unsafe-allow constructor
 	constructor() {
 		_disableInitializers();
-	}
-
-	/**
-	 * @dev The receive function allows the contract to receive Ether
-	 */
-	receive() external payable {
-		emit Received(msg.sender, msg.value);
 	}
 
 	/**
@@ -292,18 +279,6 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 	 */
 	function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
 		return interfaceId == type(IFeeManager).interfaceId || super.supportsInterface(interfaceId);
-	}
-
-	/**
-	 * @dev The _transferEth function allows to transfer eth to a specific recipient
-	 * @param recipient The address of the recipient
-	 * @param amount The amount of eth to transfer
-	 */
-	function _transferEth(address payable recipient, uint256 amount) internal {
-		if (amount > 0) {
-			(bool success, ) = recipient.call{ value: amount }("");
-			require(success, "AltrFeeManager: native token transfer failed");
-		}
 	}
 
 	/**
