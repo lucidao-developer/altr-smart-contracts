@@ -75,7 +75,7 @@ contract TimedTokenSplitter is TokenSplitter {
 	 * @param saleId_ the id of the sale
 	 * @param redemptionToken_ the token to redeem
 	 * @param token_ the token that represents the fractional ownership
-	 * @param fractionsAmount the amount of fractions issued
+	 * @param fractionsIssued the amount of fractions issued
 	 * @param governanceTreasury_ the address of the governance treasury
 	 * @param protocolFee_ the percentage of fee taken from the token amount
 	 * @param seller_ the address of the seller
@@ -86,11 +86,11 @@ contract TimedTokenSplitter is TokenSplitter {
 		uint256 saleId_,
 		IERC20 redemptionToken_,
 		IFractions token_,
-		uint256 fractionsAmount,
+		uint256 fractionsIssued,
 		address governanceTreasury_,
 		uint256 protocolFee_,
 		address seller_
-	) TokenSplitter(redemptionToken_, token_, saleId_, fractionsAmount) {
+	) TokenSplitter(redemptionToken_, token_, saleId_, fractionsIssued) {
 		saleContract = IFractionsSale(saleContract_);
 		saleId = saleId_;
 		governanceTreasury = governanceTreasury_;
@@ -122,7 +122,7 @@ contract TimedTokenSplitter is TokenSplitter {
 	function release(address[] calldata users) public override(TokenSplitter) onlyIfSaleClosed onlyFailedSale {
 		if (!releaseStarted) {
 			releaseStarted = true;
-			fractionsAmount = saleContract.getFractionsSale(saleId).fractionsSold;
+			fractionsToBuyout = saleContract.getFractionsSale(saleId).fractionsSold;
 		}
 		super.release(users);
 	}

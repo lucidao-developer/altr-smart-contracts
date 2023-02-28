@@ -6,7 +6,7 @@ export default function () {
             expect(await this.tokenSplitter.redemptionToken()).to.equal(this.buyoutData.buyout.buyout[3]);
             expect(await this.tokenSplitter.token()).to.equal(this.altrFractions.address);
             expect(await this.tokenSplitter.tokenId()).to.equal(this.buyoutData.buyout.id);
-            expect(await this.tokenSplitter.fractionsAmount()).to.equal(this.buyoutData.buyout.buyout.fractionsToBuyout);
+            expect(await this.tokenSplitter.fractionsToBuyout()).to.equal(this.buyoutData.buyout.buyout.fractionsToBuyout);
         });
     });
     describe("release", function () {

@@ -23,7 +23,7 @@ contract TokenSplitter {
 	/**
 	 * @dev The amount of fractions issued from token contract
 	 */
-	uint256 public fractionsAmount;
+	uint256 public fractionsToBuyout;
 	/**
 	 * @dev The ID of the NFT that corresponds to this token redemption
 	 */
@@ -45,13 +45,13 @@ contract TokenSplitter {
 	 * @param redemptionToken_ The ERC20 token for redemption
 	 * @param token_ The token to be split
 	 * @param tokenId_ Token Id for the token to be split
-	 * @param fractionsAmount_ the amount of fractions issued
+	 * @param fractionsToBuyout_ the amount of fractions to buyout
 	 */
-	constructor(IERC20 redemptionToken_, IFractions token_, uint256 tokenId_, uint256 fractionsAmount_) {
+	constructor(IERC20 redemptionToken_, IFractions token_, uint256 tokenId_, uint256 fractionsToBuyout_) {
 		redemptionToken = redemptionToken_;
 		token = token_;
 		tokenId = tokenId_;
-		fractionsAmount = fractionsAmount_;
+		fractionsToBuyout = fractionsToBuyout_;
 	}
 
 	/**
@@ -59,13 +59,13 @@ contract TokenSplitter {
 	 * @param users The array of users' addresses to release the tokens to
 	 */
 	function release(address[] calldata users) public virtual {
-		require(fractionsAmount > 0, "TokenSplitter: fractions amount cannot be 0");
+		require(fractionsToBuyout > 0, "TokenSplitter: fractions amount cannot be 0");
 		uint256[] memory amounts = new uint256[](users.length);
 		uint256 fractionsPrice;
-		uint256 tokenPrice = redemptionToken.balanceOf(address(this)) / fractionsAmount;
+		uint256 tokenPrice = redemptionToken.balanceOf(address(this)) / fractionsToBuyout;
 		for (uint256 i; i < users.length; i++) {
 			amounts[i] = token.balanceOf(users[i], tokenId);
-			fractionsAmount -= amounts[i];
+			fractionsToBuyout -= amounts[i];
 			fractionsPrice = tokenPrice * amounts[i];
 
 			token.operatorBurn(users[i], tokenId, amounts[i]);
