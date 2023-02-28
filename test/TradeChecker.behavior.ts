@@ -8,6 +8,7 @@ import {
 } from "@traderxyz/nft-swap-sdk";
 import { ethers } from "hardhat";
 import { SOLIDITY_ERROR_MSG } from "./common";
+import { ZERO_EX_ROLE } from "../config/roles";
 
 const TRADE_CHECKER_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrTradeChecker");
 
@@ -185,5 +186,48 @@ export function tradeCheckerBehavior() {
         await this.allowList.allowAddresses([this.signer.address]);
         const tx = takerApproveAndFill(takerSdk, FUSDT, signedOrder);
         await expect(tx).to.be.reverted;
+    });
+    it("Should pay fees properly", async function () {
+        await this.feeManager.grantRole(ZERO_EX_ROLE, this.zeroEx.address);
+        const nftSwapSdk = new NftSwapV4(ethers.provider, this.oracle1, "31337", {
+            zeroExExchangeProxyContractAddress: this.zeroEx.address,
+        });
+        const NFT = {
+            tokenAddress: this.nftCollection.address,
+            tokenId: "1",
+            type: "ERC721" as const,
+        };
+        const FUSDT = {
+            tokenAddress: this.fUsdt.address,
+            amount: ethers.utils.parseUnits("50", 6).toString(),
+            type: "ERC20" as const,
+        };
+        const fee = ethers.utils.parseUnits("10", 6);
+        const makerAddress = await nftSwapSdk.signer!.getAddress();
+        await nftSwapSdk.approveTokenOrNftByAsset(NFT, makerAddress);
+        const order = nftSwapSdk.buildOrder(NFT, FUSDT, makerAddress, {
+            taker: this.tradeChecker.address,
+            fees: [
+                {
+                    amount: fee,
+                    recipient: this.feeManager.address,
+                    feeData: "0x01",
+                },
+            ],
+        });
+        const signedOrder = await nftSwapSdk.signOrder(order);
+        const takerSdk = new NftSwapV4(ethers.provider, this.signer, "31337", {
+            zeroExExchangeProxyContractAddress: this.tradeChecker.address,
+        });
+        await this.allowList.allowAddresses([this.signer.address]);
+        const tx = takerApproveAndFill(takerSdk, FUSDT, signedOrder);
+        await expect(tx).not.to.be.reverted;
+        expect(await this.nftCollection.balanceOf(this.oracle1.address)).to.equal(0);
+        expect(await this.nftCollection.balanceOf(this.signer.address)).to.equal(1);
+        await expect(tx).to.changeTokenBalances(
+            this.fUsdt,
+            [makerAddress, this.signer.address, this.governanceTreasury.address],
+            [FUSDT.amount, -fee.add(FUSDT.amount), fee]
+        );
     });
 }
