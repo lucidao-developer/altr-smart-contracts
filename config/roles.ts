@@ -8,3 +8,4 @@ export const SALE_ISSUER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(
 export const LIST_MANAGER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("LIST_MANAGER_ROLE"));
 export const BURN_MANAGER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("BURN_MANAGER_ROLE"));
 export const TRADE_CHECKER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("TRADE_CHECKER_ROLE"));
+export const ZERO_EX_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes("ZERO_EX_ROLE"));

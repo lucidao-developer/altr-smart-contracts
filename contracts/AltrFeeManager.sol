@@ -29,6 +29,7 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 	uint256 private constant _DENOMINATOR = 10000;
 
 	bytes32 public constant TRADE_CHECKER_ROLE = keccak256("TRADE_CHECKER_ROLE");
+	bytes32 public constant ZERO_EX_ROLE = keccak256("ZERO_EX_ROLE");
 	/**
 	 * @dev The MAX_REDEMPTION_FEE is a constant variable that holds the maximum fee that can be charged for redemption of the physical assets represented by the NFTs
 	 */
@@ -144,13 +145,17 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 	 * @param feeData Additional data about the fee
 	 * @return success bytes4
 	 */
-	function receiveZeroExFeeCallback(address tokenAddress, uint256 amount, bytes calldata feeData) external override returns (bytes4 success) {
-		uint256 finalAmount = amount;
+	function receiveZeroExFeeCallback(
+		address tokenAddress,
+		uint256 amount,
+		bytes calldata feeData
+	) external override onlyRole(ZERO_EX_ROLE) returns (bytes4 success) {
+		uint256 finalAmount = IERC20Upgradeable(tokenAddress).balanceOf(address(this));
 		uint256 discount = ILicenseManager(licenseManager).getDiscount(tx.origin);
 
 		if (discount > 0) {
-			uint256 rebateAmount = (amount * discount) / 10000;
-			finalAmount = amount - rebateAmount;
+			uint256 rebateAmount = (finalAmount * discount) / 10000;
+			finalAmount -= rebateAmount;
 			IERC20Upgradeable(tokenAddress).safeTransfer(tx.origin, rebateAmount);
 
 			emit RebateReceived(tx.origin, tokenAddress, rebateAmount, feeData);
@@ -254,9 +259,10 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 		address licenseManager_,
 		uint256 redemptionFee_,
 		uint256 buyoutFee_,
-		uint256 saleFee_
+		uint256 saleFee_,
+		address zeroEx
 	) external initializer {
-		__AltrFeeManager_init(governanceTreasury_, licenseManager_, redemptionFee_, buyoutFee_, saleFee_);
+		__AltrFeeManager_init(governanceTreasury_, licenseManager_, redemptionFee_, buyoutFee_, saleFee_, zeroEx);
 	}
 
 	/**
@@ -325,9 +331,11 @@ contract AltrFeeManager is AccessControlUpgradeable, IFeeManager {
 		address licenseManager_,
 		uint256 redemptionFee_,
 		uint256 buyoutFee_,
-		uint256 saleFee_
+		uint256 saleFee_,
+		address zeroEx
 	) internal onlyInitializing {
 		_setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+		_setupRole(ZERO_EX_ROLE, zeroEx);
 		__AltrFeeManager_init_unchained(governanceTreasury_, licenseManager_, redemptionFee_, buyoutFee_, saleFee_);
 	}
 

@@ -23,6 +23,7 @@ import {
     nftCollectionFactoryAddress,
     tiers,
     tradeCheckerAddress,
+    zeroExAddress,
 } from "../config/config";
 import { ADMIN_ROLE, TRADE_CHECKER_ROLE } from "../config/roles";
 import {
@@ -155,7 +156,7 @@ export async function getOrDeployFeeManager(
 
     // DEPLOY FEE MANAGER
     const AltrFeeManager = await ethers.getContractFactory(contractName);
-    const contractArgs = [governanceTreasury.address, licenseManager.address, redemptionFee, buyoutFee, saleFee];
+    const contractArgs = [governanceTreasury.address, licenseManager.address, redemptionFee, buyoutFee, saleFee, zeroExAddress];
     const altrFeeManager = (await upgrades.deployProxy(AltrFeeManager, contractArgs, { initializer: "initialize" })) as AltrFeeManager;
 
     await altrFeeManager.deployed();

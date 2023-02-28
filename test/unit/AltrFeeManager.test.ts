@@ -6,7 +6,7 @@ import { ethers, upgrades } from "hardhat";
 import { getInterfaceIDFromAbiFile, mintfUsdtTo } from "../utilities";
 import { AltrFeeManager__factory } from "../../typechain-types";
 import { SOLIDITY_ERROR_MSG } from "../common";
-import { buyoutFee, saleFee } from "../../config/config";
+import { buyoutFee, saleFee, zeroExAddress } from "../../config/config";
 import { ADMIN_ROLE } from "../../config/roles";
 
 const FEE_MANAGER_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrFeeManager");
@@ -18,45 +18,94 @@ export default function () {
             FeeManager = await ethers.getContractFactory("AltrFeeManager");
         });
         it("Should revert if governance treasury is null address", async function () {
-            const contractArgs = [ethers.constants.AddressZero, this.nftLicenseManager.address, this.newRedemptionFee, buyoutFee, saleFee];
+            const contractArgs = [
+                ethers.constants.AddressZero,
+                this.nftLicenseManager.address,
+                this.newRedemptionFee,
+                buyoutFee,
+                saleFee,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.CANNOT_BE_NULL_ADDRESS
             );
         });
         it("Should revert if license manager is null address", async function () {
-            const contractArgs = [this.governanceTreasury.address, ethers.constants.AddressZero, this.newRedemptionFee, buyoutFee, saleFee];
+            const contractArgs = [
+                this.governanceTreasury.address,
+                ethers.constants.AddressZero,
+                this.newRedemptionFee,
+                buyoutFee,
+                saleFee,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.CANNOT_BE_NULL_ADDRESS
             );
         });
         it("Should revert if license manager does not support ILicenseManager interface", async function () {
-            const contractArgs = [this.governanceTreasury.address, this.owner1.address, this.newRedemptionFee, buyoutFee, saleFee];
+            const contractArgs = [
+                this.governanceTreasury.address,
+                this.owner1.address,
+                this.newRedemptionFee,
+                buyoutFee,
+                saleFee,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.DOES_NOT_SUPPORT_INTERFACE("ILicenseManager")
             );
         });
         it("Should revert if buyoutFee exceeds boundaries", async function () {
-            let contractArgs = [this.governanceTreasury.address, this.nftLicenseManager.address, this.newRedemptionFee, 10, saleFee];
+            let contractArgs = [
+                this.governanceTreasury.address,
+                this.nftLicenseManager.address,
+                this.newRedemptionFee,
+                10,
+                saleFee,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.FEE_EXCEEDS_BOUNDARIES
             );
-            contractArgs = [this.governanceTreasury.address, this.nftLicenseManager.address, this.newRedemptionFee, 100000, saleFee];
+            contractArgs = [
+                this.governanceTreasury.address,
+                this.nftLicenseManager.address,
+                this.newRedemptionFee,
+                100000,
+                saleFee,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.FEE_EXCEEDS_BOUNDARIES
             );
         });
         it("Should revert if saleFee exceeds boundaries", async function () {
-            let contractArgs = [this.governanceTreasury.address, this.nftLicenseManager.address, this.newRedemptionFee, buyoutFee, 10];
+            let contractArgs = [
+                this.governanceTreasury.address,
+                this.nftLicenseManager.address,
+                this.newRedemptionFee,
+                buyoutFee,
+                10,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.FEE_EXCEEDS_BOUNDARIES
             );
-            contractArgs = [this.governanceTreasury.address, this.nftLicenseManager.address, this.newRedemptionFee, buyoutFee, 1001];
+            contractArgs = [
+                this.governanceTreasury.address,
+                this.nftLicenseManager.address,
+                this.newRedemptionFee,
+                buyoutFee,
+                1001,
+                zeroExAddress,
+            ];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.FEE_EXCEEDS_BOUNDARIES
             );
         });
         it("Should revert if redemption fee exceeds max", async function () {
-            let contractArgs = [this.governanceTreasury.address, this.nftLicenseManager.address, 1001, buyoutFee, saleFee];
+            let contractArgs = [this.governanceTreasury.address, this.nftLicenseManager.address, 1001, buyoutFee, saleFee, zeroExAddress];
             await expect(upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" })).to.be.revertedWith(
                 FEE_MANAGER_ERROR_MSG.REDEMPTION_FEE_TOO_HIGH
             );
@@ -68,6 +117,7 @@ export default function () {
                 this.newRedemptionFee,
                 buyoutFee,
                 saleFee,
+                zeroExAddress,
             ];
             const feeManager = await upgrades.deployProxy(FeeManager, contractArgs, { initializer: "initialize" });
             expect(await feeManager.redemptionFee()).to.equal(this.newRedemptionFee);
@@ -85,7 +135,8 @@ export default function () {
                     this.nftLicenseManager.address,
                     this.newRedemptionFee,
                     buyoutFee,
-                    saleFee
+                    saleFee,
+                    zeroExAddress
                 )
             ).to.be.revertedWith(FEE_MANAGER_ERROR_MSG.ALREADY_INITIALIZED);
         });

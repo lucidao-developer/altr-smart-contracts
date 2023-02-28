@@ -49,6 +49,7 @@ import {
     timedTokenSplitter,
     tokenSplitter,
 } from "./unit";
+import { ZERO_EX_ROLE } from "../config/roles";
 
 var chai = require("chai");
 chai.config.includeStack = true;
@@ -224,6 +225,7 @@ describe("Tests", () => {
                     saleFee
                 );
                 this.nftFeeManagerTester = await deployFeeManagerTester(this.nftFeeManager.address);
+                await (await this.nftFeeManager.grantRole(ZERO_EX_ROLE, this.nftFeeManagerTester.address)).wait();
             });
 
             beforeEach(async function () {
@@ -470,6 +472,7 @@ describe("Tests", () => {
                     this.altrFractionsSale,
                     this.nftFeeManager
                 );
+                await (await this.nftFeeManager.grantRole(ZERO_EX_ROLE, this.signer.address)).wait();
             });
             beforeEach(async function () {
                 this.snapshot = await setSnapshot(network);
