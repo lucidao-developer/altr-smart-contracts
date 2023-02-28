@@ -457,7 +457,8 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 		require(priceLimits.length == fractionsAmounts.length, "AltrFractionsSale: cannot map array of different size");
 		require(priceLimits[0] == 0, "AltrFractionsSale: price limits array must start with 0");
 		for (uint256 i; i < priceLimits.length; i++) {
-			tiers.set(priceLimits[i], fractionsAmounts[i]);
+			bool success = tiers.set(priceLimits[i], fractionsAmounts[i]);
+			require(success, "AltrFractionsSale: tiers setting fails");
 		}
 	}
 }

@@ -128,7 +128,8 @@ contract AltrNftCollectionFactory is ERC165Upgradeable, OwnableUpgradeable, INft
 		CreatedContract memory newContract = CreatedContract(collection, symbol, name, oracle, tokenVersion);
 
 		createdContracts.push(newContract);
-		_collectionAddressSet.add(address(collection));
+		bool success = _collectionAddressSet.add(address(collection));
+		require(success, "AltrNftCollectionFactory: adding collection address to set fails");
 
 		emit CollectionCreated(address(collection), name, symbol, oracle);
 	}
