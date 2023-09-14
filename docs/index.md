@@ -94,11 +94,11 @@ _The FeeReceived event is emitted when a fee is received_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name         | Type    | Description                                         |
+| ------------ | ------- | --------------------------------------------------- |
 | tokenAddress | address | The address of the token that the fee was paid with |
-| amount | uint256 | The amount of the fee |
-| feeData | bytes | Additional data about the fee |
+| amount       | uint256 | The amount of the fee                               |
+| feeData      | bytes   | Additional data about the fee                       |
 
 ### RebateReceived
 
@@ -110,12 +110,12 @@ _The RebateReceived event is emitted when a rebate is received by a user_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| receiver | address | The address of the user that received the rebate |
+| Name         | Type    | Description                                            |
+| ------------ | ------- | ------------------------------------------------------ |
+| receiver     | address | The address of the user that received the rebate       |
 | tokenAddress | address | The address of the token that the rebate was paid with |
-| amount | uint256 | The amount of the rebate |
-| feeData | bytes | Additional data about the rebate |
+| amount       | uint256 | The amount of the rebate                               |
+| feeData      | bytes   | Additional data about the rebate                       |
 
 ### GovernanceTreasuryChanged
 
@@ -127,8 +127,8 @@ _The GovernanceTreasuryChanged event is emitted when the governance treasury add
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name               | Type    | Description                                |
+| ------------------ | ------- | ------------------------------------------ |
 | governanceTreasury | address | The new address of the governance treasury |
 
 ### LicenseManagerChanged
@@ -141,8 +141,8 @@ _The LicenseManagerChanged event is emitted when the license manager address is 
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name           | Type    | Description                                     |
+| -------------- | ------- | ----------------------------------------------- |
 | licenseManager | address | The new address of the license manager contract |
 
 ### Received
@@ -155,10 +155,10 @@ _The Received event is emitted when Ether is received by the contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                     |
+| ------ | ------- | ------------------------------- |
 | sender | address | The address that sent the Ether |
-| amount | uint256 | The amount of Ether received |
+| amount | uint256 | The amount of Ether received    |
 
 ### RedemptionFeePaid
 
@@ -170,12 +170,12 @@ _The RedemptionFeePaid event is emitted when a redemption fee is paid for a spec
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name          | Type    | Description                                               |
+| ------------- | ------- | --------------------------------------------------------- |
 | nftCollection | address | The address of the NFT collection that the NFT belongs to |
-| tokenId | uint256 | The ID of the NFT for which the redemption fee was paid |
-| sender | address | The address of the user that paid the redemption fee |
-| fee | uint256 | The amount of the redemption fee |
+| tokenId       | uint256 | The ID of the NFT for which the redemption fee was paid   |
+| sender        | address | The address of the user that paid the redemption fee      |
+| fee           | uint256 | The amount of the redemption fee                          |
 
 ### RedemptionFeeSet
 
@@ -187,8 +187,8 @@ _The RedemptionFeeSet event is emitted when the redemption fee is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name          | Type    | Description                   |
+| ------------- | ------- | ----------------------------- |
 | redemptionFee | uint256 | The new redemption fee amount |
 
 ### SaleInfoSet
@@ -201,12 +201,12 @@ _The SaleInfoSet event is emitted when the sale info is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollection | address | The address of the nft collection contract |
-| tokenId | uint256 | The token id of the nft collection |
-| redemptionFeeTokenAddress | address | The new redemption fee token address |
-| price | uint256 | The price of the first sale of the token |
+| Name                      | Type    | Description                                |
+| ------------------------- | ------- | ------------------------------------------ |
+| nftCollection             | address | The address of the nft collection contract |
+| tokenId                   | uint256 | The token id of the nft collection         |
+| redemptionFeeTokenAddress | address | The new redemption fee token address       |
+| price                     | uint256 | The price of the first sale of the token   |
 
 ### BuyoutFeeSet
 
@@ -218,8 +218,8 @@ _Emitted when the fractions buyout fee is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name      | Type    | Description                  |
+| --------- | ------- | ---------------------------- |
 | buyoutFee | uint256 | The new fractions buyout fee |
 
 ### SaleFeeSet
@@ -232,8 +232,8 @@ _Emitted when the fractions sale fee is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                |
+| ------- | ------- | -------------------------- |
 | saleFee | uint256 | The new fractions sale fee |
 
 ### feeChecker
@@ -246,9 +246,9 @@ _check that fee is included in boundaries_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| fee | uint256 | The fee to check |
+| Name | Type    | Description      |
+| ---- | ------- | ---------------- |
+| fee  | uint256 | The fee to check |
 
 ### constructor
 
@@ -271,21 +271,21 @@ function receiveZeroExFeeCallback(address tokenAddress, uint256 amount, bytes fe
 ```
 
 _The receiveZeroExFeeCallback function handles the callback from 0x protocol
- when the order is filled and fees are paid._
+when the order is filled and fees are paid._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name         | Type    | Description                                         |
+| ------------ | ------- | --------------------------------------------------- |
 | tokenAddress | address | The address of the token that the fee was paid with |
-| amount | uint256 | The amount of the fee |
-| feeData | bytes | Additional data about the fee |
+| amount       | uint256 | The amount of the fee                               |
+| feeData      | bytes   | Additional data about the fee                       |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| success | bytes4 | bytes4 |
+| Name    | Type   | Description |
+| ------- | ------ | ----------- |
+| success | bytes4 | bytes4      |
 
 ### setGovernanceTreasury
 
@@ -297,9 +297,9 @@ _The setGovernanceTreasury function allows the owner to set the governance treas
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| governanceTreasury_ | address | The new governance treasury address |
+| Name                 | Type    | Description                         |
+| -------------------- | ------- | ----------------------------------- |
+| governanceTreasury\_ | address | The new governance treasury address |
 
 ### setLicenseManager
 
@@ -311,9 +311,9 @@ _The setLicenseManager function allows the owner to set the address of the licen
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | The new address of the license manager contract |
+| Name             | Type    | Description                                     |
+| ---------------- | ------- | ----------------------------------------------- |
+| licenseManager\_ | address | The new address of the license manager contract |
 
 ### setRedemptionFee
 
@@ -325,9 +325,9 @@ _The setRedemptionFee function allows the owner to set the amount of the redempt
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| redemptionFee_ | uint256 | The new amount of the redemption fee |
+| Name            | Type    | Description                          |
+| --------------- | ------- | ------------------------------------ |
+| redemptionFee\_ | uint256 | The new amount of the redemption fee |
 
 ### setSaleInfo
 
@@ -339,12 +339,12 @@ _The setRedemptionFeeTokenAddress function allows the sale contract to set the a
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollection | address | The address of the nft collection contract |
-| tokenId | uint256 | The token id of the nft collection |
+| Name                      | Type    | Description                                 |
+| ------------------------- | ------- | ------------------------------------------- |
+| nftCollection             | address | The address of the nft collection contract  |
+| tokenId                   | uint256 | The token id of the nft collection          |
 | redemptionFeeTokenAddress | address | The new address of the redemption fee token |
-| price | uint256 | The first price of sale |
+| price                     | uint256 | The first price of sale                     |
 
 ### payRedemptionFee
 
@@ -356,10 +356,10 @@ _The payRedemptionFee function allows a user to pay the redemption fee for a spe
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollection | address | The address of the NFT collection that the NFT belongs to |
-| tokenId | uint256 | The ID of the NFT for which the redemption fee is being paid |
+| Name          | Type    | Description                                                  |
+| ------------- | ------- | ------------------------------------------------------------ |
+| nftCollection | address | The address of the NFT collection that the NFT belongs to    |
+| tokenId       | uint256 | The ID of the NFT for which the redemption fee is being paid |
 
 ### setBuyoutFee
 
@@ -371,9 +371,9 @@ _Allows an admin to set the protocol fee for the buyout of fractions_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _buyoutFee | uint256 | The new protocol fee |
+| Name        | Type    | Description          |
+| ----------- | ------- | -------------------- |
+| \_buyoutFee | uint256 | The new protocol fee |
 
 ### setSaleFee
 
@@ -385,9 +385,9 @@ _Allows an admin to set the protocol fee for the sale of fractions_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _saleFee | uint256 | The new protocol fee |
+| Name      | Type    | Description          |
+| --------- | ------- | -------------------- |
+| \_saleFee | uint256 | The new protocol fee |
 
 ### initialize
 
@@ -399,13 +399,13 @@ _The initialize function allows the contract owner to set the governance treasur
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| governanceTreasury_ | address | The address of the governance treasury |
-| licenseManager_ | address | The address of the license manager contract |
-| redemptionFee_ | uint256 | The amount of the redemption fee |
-| buyoutFee_ | uint256 |  |
-| saleFee_ | uint256 |  |
+| Name                 | Type    | Description                                 |
+| -------------------- | ------- | ------------------------------------------- |
+| governanceTreasury\_ | address | The address of the governance treasury      |
+| licenseManager\_     | address | The address of the license manager contract |
+| redemptionFee\_      | uint256 | The amount of the redemption fee            |
+| buyoutFee\_          | uint256 |                                             |
+| saleFee\_            | uint256 |                                             |
 
 ### isRedemptionFeePaid
 
@@ -417,15 +417,15 @@ _The isRedemptionFeePaid function returns whether or not the redemption fee has 
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollection | address | The address of the NFT collection that the NFT belongs to |
-| tokenId | uint256 | The ID of the NFT for which the fee status is being checked |
+| Name          | Type    | Description                                                 |
+| ------------- | ------- | ----------------------------------------------------------- |
+| nftCollection | address | The address of the NFT collection that the NFT belongs to   |
+| tokenId       | uint256 | The ID of the NFT for which the fee status is being checked |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type | Description                                                                                |
+| ------- | ---- | ------------------------------------------------------------------------------------------ |
 | feePaid | bool | A boolean indicating whether or not the redemption fee has been paid for the specified NFT |
 
 ### supportsInterface
@@ -438,102 +438,102 @@ _The supportsInterface function allows to check if this contract implement a spe
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description              |
+| ----------- | ------ | ------------------------ |
 | interfaceId | bytes4 | the interfaceId to check |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool a boolean indicating whether this contract implement the specified interfaceId |
+| Name | Type | Description                                                                         |
+| ---- | ---- | ----------------------------------------------------------------------------------- |
+| [0]  | bool | bool a boolean indicating whether this contract implement the specified interfaceId |
 
-### _transferEth
+### \_transferEth
 
 ```solidity
 function _transferEth(address payable recipient, uint256 amount) internal
 ```
 
-_The _transferEth function allows to transfer eth to a specific recipient_
+_The \_transferEth function allows to transfer eth to a specific recipient_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| recipient | address payable | The address of the recipient |
-| amount | uint256 | The amount of eth to transfer |
+| Name      | Type            | Description                   |
+| --------- | --------------- | ----------------------------- |
+| recipient | address payable | The address of the recipient  |
+| amount    | uint256         | The amount of eth to transfer |
 
-### _setGovernanceTreasury
+### \_setGovernanceTreasury
 
 ```solidity
 function _setGovernanceTreasury(address governanceTreasury_) internal
 ```
 
-_The _setGovernanceTreasury function allows to set the governanceTreasury address_
+_The \_setGovernanceTreasury function allows to set the governanceTreasury address_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| governanceTreasury_ | address | The new governanceTreasury address |
+| Name                 | Type    | Description                        |
+| -------------------- | ------- | ---------------------------------- |
+| governanceTreasury\_ | address | The new governanceTreasury address |
 
-### _setLicenseManager
+### \_setLicenseManager
 
 ```solidity
 function _setLicenseManager(address licenseManager_) internal
 ```
 
-_The _setLicenseManager function allows to set the licenseManager address_
+_The \_setLicenseManager function allows to set the licenseManager address_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | The new licenseManager address |
+| Name             | Type    | Description                    |
+| ---------------- | ------- | ------------------------------ |
+| licenseManager\_ | address | The new licenseManager address |
 
-### _setRedemptionFee
+### \_setRedemptionFee
 
 ```solidity
 function _setRedemptionFee(uint256 redemptionFee_) internal
 ```
 
-_The _setRedemptionFee function allows to set the redemptionFee_
+_The \_setRedemptionFee function allows to set the redemptionFee_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| redemptionFee_ | uint256 | The new redemptionFee |
+| Name            | Type    | Description           |
+| --------------- | ------- | --------------------- |
+| redemptionFee\_ | uint256 | The new redemptionFee |
 
-### _setRedemptionFeeTokenAddress
+### \_setRedemptionFeeTokenAddress
 
 ```solidity
 function _setRedemptionFeeTokenAddress(address nftCollection, uint256 tokenId, address redemptionFeeTokenAddress_) internal
 ```
 
-_The _setRedemptionFeeTokenAddress function allows to set the redemptionFeeTokenAddress_
+_The \_setRedemptionFeeTokenAddress function allows to set the redemptionFeeTokenAddress_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollection | address | The address of the nft collection contract |
-| tokenId | uint256 | The token id of the nft collection |
-| redemptionFeeTokenAddress_ | address | The new redemptionFeeTokenAddress |
+| Name                        | Type    | Description                                |
+| --------------------------- | ------- | ------------------------------------------ |
+| nftCollection               | address | The address of the nft collection contract |
+| tokenId                     | uint256 | The token id of the nft collection         |
+| redemptionFeeTokenAddress\_ | address | The new redemptionFeeTokenAddress          |
 
-### __AltrFeeManager_init
+### \_\_AltrFeeManager_init
 
 ```solidity
 function __AltrFeeManager_init(address governanceTreasury_, address licenseManager_, uint256 redemptionFee_, uint256 buyoutFee_, uint256 saleFee_) internal
 ```
 
-### __AltrFeeManager_init_unchained
+### \_\_AltrFeeManager_init_unchained
 
 ```solidity
 function __AltrFeeManager_init_unchained(address governanceTreasury_, address licenseManager_, uint256 redemptionFee_, uint256 buyoutFee_, uint256 saleFee_) internal
 ```
 
-### _setBuyoutFee
+### \_setBuyoutFee
 
 ```solidity
 function _setBuyoutFee(uint256 _buyoutFee) internal
@@ -543,11 +543,11 @@ _Sets the protocol fee for the buyout of fractions_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _buyoutFee | uint256 | The new protocol fee for the buyout of fractions |
+| Name        | Type    | Description                                      |
+| ----------- | ------- | ------------------------------------------------ |
+| \_buyoutFee | uint256 | The new protocol fee for the buyout of fractions |
 
-### _setSaleFee
+### \_setSaleFee
 
 ```solidity
 function _setSaleFee(uint256 _saleFee) internal
@@ -557,9 +557,9 @@ _Sets the protocol fee for the sale of fractions_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _saleFee | uint256 | The new protocol fee for the sale of fractions |
+| Name      | Type    | Description                                    |
+| --------- | ------- | ---------------------------------------------- |
+| \_saleFee | uint256 | The new protocol fee for the sale of fractions |
 
 ## AltrFractionsBuyout
 
@@ -644,11 +644,11 @@ _Emitted when a buyout request is made_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| saleId | uint256 | ID of the sale |
+| Name      | Type    | Description                     |
+| --------- | ------- | ------------------------------- |
+| saleId    | uint256 | ID of the sale                  |
 | initiator | address | Address of the buyout initiator |
-| buyoutId | uint256 | ID of the buyout |
+| buyoutId  | uint256 | ID of the buyout                |
 
 ### BuyoutParamsSet
 
@@ -660,10 +660,10 @@ _Emitted when the buyout parameters are set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| buyoutId | uint256 | ID of the buyout |
-| buyout | struct AltrFractionsBuyout.Buyout | Buyout struct containing the buyout parameters |
+| Name     | Type                              | Description                                    |
+| -------- | --------------------------------- | ---------------------------------------------- |
+| buyoutId | uint256                           | ID of the buyout                               |
+| buyout   | struct AltrFractionsBuyout.Buyout | Buyout struct containing the buyout parameters |
 
 ### BuyoutExecuted
 
@@ -675,12 +675,12 @@ _Emitted when a buyout is executed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| buyoutId | uint256 | ID of the buyout |
-| executor | address | Address of the buyout executor |
+| Name               | Type    | Description                    |
+| ------------------ | ------- | ------------------------------ |
+| buyoutId           | uint256 | ID of the buyout               |
+| executor           | address | Address of the buyout executor |
 | boughtOutFractions | uint256 | Amount of fractions bought out |
-| buyoutAmount | uint256 | Amount paid for the buyout |
+| buyoutAmount       | uint256 | Amount paid for the buyout     |
 
 ### ProtocolFeeSet
 
@@ -692,8 +692,8 @@ _Emitted when the protocol fee is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type    | Description                   |
+| ----------- | ------- | ----------------------------- |
 | protocolFee | uint256 | The value of the protocol fee |
 
 ### BuyoutMinFractionsSet
@@ -706,8 +706,8 @@ _Emitted when the minimum fractions required for a buyout is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name               | Type    | Description                                              |
+| ------------------ | ------- | -------------------------------------------------------- |
 | buyoutMinFractions | uint256 | The value of the minimum fractions required for a buyout |
 
 ### BuyoutOpenTimePeriodSet
@@ -720,8 +720,8 @@ _Emitted when the time period for a buyout to be open is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name                 | Type    | Description                             |
+| -------------------- | ------- | --------------------------------------- |
 | buyoutOpenTimePeriod | uint256 | The time period for a buyout to be open |
 
 ### FeeManagerSet
@@ -734,8 +734,8 @@ _Emitted when the fee manager is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name       | Type    | Description                          |
+| ---------- | ------- | ------------------------------------ |
 | feeManager | address | The new fee manager contract address |
 
 ### onlyIfSaleClosed
@@ -748,8 +748,8 @@ _Rejects calls if the specified sale is not closed yet_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description       |
+| ------ | ------- | ----------------- |
 | saleId | uint256 | The sale to check |
 
 ### onlyBeforeBuyoutOpen
@@ -762,8 +762,8 @@ _Rejects calls if the specified buyout has already started_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description         |
+| -------- | ------- | ------------------- |
 | buyoutId | uint256 | The buyout to check |
 
 ### onlyWhileBuyoutOpen
@@ -776,8 +776,8 @@ _Rejects calls if the specified buyout is not open yet_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description         |
+| -------- | ------- | ------------------- |
 | buyoutId | uint256 | The buyout to check |
 
 ### constructor
@@ -790,13 +790,13 @@ _Constructor function to initialize the AltrFractionsBuyout contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _altrFractions | contract IFractions | Address of the IFractions contract that holds the token fractions |
-| _altrFractionsSale | contract IFractionsSale | Address of the IFractionsSale contract that holds the information of the fractions sale |
-| _feeManager | address | Address of the feeManager contract that manages the buyout fee |
-| _buyoutMinFractions | uint256 | Minimum fractions required for a sale to be boughtOut |
-| _buyoutOpenTimePeriod | uint256 | Time duration for the buyout to be open |
+| Name                   | Type                    | Description                                                                             |
+| ---------------------- | ----------------------- | --------------------------------------------------------------------------------------- |
+| \_altrFractions        | contract IFractions     | Address of the IFractions contract that holds the token fractions                       |
+| \_altrFractionsSale    | contract IFractionsSale | Address of the IFractionsSale contract that holds the information of the fractions sale |
+| \_feeManager           | address                 | Address of the feeManager contract that manages the buyout fee                          |
+| \_buyoutMinFractions   | uint256                 | Minimum fractions required for a sale to be boughtOut                                   |
+| \_buyoutOpenTimePeriod | uint256                 | Time duration for the buyout to be open                                                 |
 
 ### requestBuyout
 
@@ -808,8 +808,8 @@ _Initiates a buyout request for a sale_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description              |
+| ------ | ------- | ------------------------ |
 | saleId | uint256 | The sale to be boughtOut |
 
 ### setBuyoutParams
@@ -822,10 +822,10 @@ _Sets the parameters for a buyout request_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| buyoutId | uint256 | The buyout to set the parameters for |
-| buyoutPrice | uint256 | The price for buyout the tokens |
+| Name        | Type    | Description                          |
+| ----------- | ------- | ------------------------------------ |
+| buyoutId    | uint256 | The buyout to set the parameters for |
+| buyoutPrice | uint256 | The price for buyout the tokens      |
 
 ### buyoutUnsupervised
 
@@ -839,8 +839,8 @@ _Executes a buyout request for 100% fractions holder_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                  |
+| ------ | ------- | ---------------------------- |
 | saleId | uint256 | The ID of the sale to buyout |
 
 ### executeBuyout
@@ -855,8 +855,8 @@ _Executes a buyout request_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description               |
+| -------- | ------- | ------------------------- |
 | buyoutId | uint256 | The buyout to be executed |
 
 ### setBuyoutMinFractions
@@ -869,9 +869,9 @@ _Set the minimum number of fractions required to initiate a buyout_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _buyoutMinFractions | uint256 | The minimum number of fractions required for buyout |
+| Name                 | Type    | Description                                         |
+| -------------------- | ------- | --------------------------------------------------- |
+| \_buyoutMinFractions | uint256 | The minimum number of fractions required for buyout |
 
 ### setBuyoutOpenTimePeriod
 
@@ -883,9 +883,9 @@ _Sets the time period for buyout to be open_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _buyoutOpenTimePeriod | uint256 | The new time period for buyout to be open |
+| Name                   | Type    | Description                               |
+| ---------------------- | ------- | ----------------------------------------- |
+| \_buyoutOpenTimePeriod | uint256 | The new time period for buyout to be open |
 
 ### setFeeManager
 
@@ -897,9 +897,9 @@ function setFeeManager(address _feeManager) external
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _feeManager | address | The address of the fee manager |
+| Name         | Type    | Description                    |
+| ------------ | ------- | ------------------------------ |
+| \_feeManager | address | The address of the fee manager |
 
 ### isBeforeBuyoutOpen
 
@@ -911,15 +911,15 @@ _Returns true if the buyout has not yet started_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description          |
+| -------- | ------- | -------------------- |
 | buyoutId | uint256 | The id of the buyout |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the buyout has not yet started, otherwise false |
+| Name | Type | Description                                             |
+| ---- | ---- | ------------------------------------------------------- |
+| [0]  | bool | true if the buyout has not yet started, otherwise false |
 
 ### isBuyoutOpen
 
@@ -931,15 +931,15 @@ _Check if the buyout with the given id is still open_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description                   |
+| -------- | ------- | ----------------------------- |
 | buyoutId | uint256 | The id of the buyout to check |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the buyout is open, false otherwise |
+| Name | Type | Description                                 |
+| ---- | ---- | ------------------------------------------- |
+| [0]  | bool | true if the buyout is open, false otherwise |
 
 ### supportsInterface
 
@@ -951,15 +951,15 @@ _Check whether the contract implements a specific interface_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                                 |
+| ----------- | ------ | ------------------------------------------- |
 | interfaceId | bytes4 | The interface identifier, as a 4-byte value |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the contract implements the interface, false otherwise |
+| Name | Type | Description                                                    |
+| ---- | ---- | -------------------------------------------------------------- |
+| [0]  | bool | true if the contract implements the interface, false otherwise |
 
 ### canDoBuyout
 
@@ -971,16 +971,16 @@ _Determine if the buyout initiator has enough fractions to perform a buyout_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name            | Type    | Description                         |
+| --------------- | ------- | ----------------------------------- |
 | buyoutInitiator | address | the address of the buyout initiator |
-| saleId | uint256 | the ID of the sale |
+| saleId          | uint256 | the ID of the sale                  |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | boolean indicating if the buyout initiator can do a buyout |
+| Name | Type | Description                                                |
+| ---- | ---- | ---------------------------------------------------------- |
+| [0]  | bool | boolean indicating if the buyout initiator can do a buyout |
 
 ### buyoutsCounter
 
@@ -992,11 +992,11 @@ _returns the current number of buyouts_
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256 current number of buyouts |
+| Name | Type    | Description                       |
+| ---- | ------- | --------------------------------- |
+| [0]  | uint256 | uint256 current number of buyouts |
 
-### _setBuyoutMinFractions
+### \_setBuyoutMinFractions
 
 ```solidity
 function _setBuyoutMinFractions(uint256 _buyoutMinFractions) internal
@@ -1006,11 +1006,11 @@ _sets the minimum number of fractions required for buyout_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _buyoutMinFractions | uint256 | The minimum number of fractions that can be bought out |
+| Name                 | Type    | Description                                            |
+| -------------------- | ------- | ------------------------------------------------------ |
+| \_buyoutMinFractions | uint256 | The minimum number of fractions that can be bought out |
 
-### _setFeeManager
+### \_setFeeManager
 
 ```solidity
 function _setFeeManager(address _feeManager) internal
@@ -1020,11 +1020,11 @@ _sets the feeManager address. Only callable by contracts's admin role_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _feeManager | address | The address of the fee manager contract |
+| Name         | Type    | Description                             |
+| ------------ | ------- | --------------------------------------- |
+| \_feeManager | address | The address of the fee manager contract |
 
-### _setBuyoutOpenTimePeriod
+### \_setBuyoutOpenTimePeriod
 
 ```solidity
 function _setBuyoutOpenTimePeriod(uint256 _buyoutOpenTimePeriod) internal
@@ -1034,9 +1034,9 @@ _sets the time period during which a buyout can be executed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _buyoutOpenTimePeriod | uint256 | The time period during which a buyout can be executed |
+| Name                   | Type    | Description                                           |
+| ---------------------- | ------- | ----------------------------------------------------- |
+| \_buyoutOpenTimePeriod | uint256 | The time period during which a buyout can be executed |
 
 ## AltrFractionsSale
 
@@ -1103,9 +1103,9 @@ _Emitted when a new fractions sale is created_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| saleId | uint256 | The ID of the sale |
+| Name          | Type                                | Description                                         |
+| ------------- | ----------------------------------- | --------------------------------------------------- |
+| saleId        | uint256                             | The ID of the sale                                  |
 | fractionsSale | struct IFractionsSale.FractionsSale | The struct containing details of the Fractions sale |
 
 ### FractionsPurchased
@@ -1118,11 +1118,11 @@ _Emitted when someone purchases fractions_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| saleId | uint256 | The ID of the sale |
-| beneficiary | address | The address of the beneficiary who purchased the fractions |
-| fractionsAmount | uint256 | The amount of fractions purchased |
+| Name            | Type    | Description                                                |
+| --------------- | ------- | ---------------------------------------------------------- |
+| saleId          | uint256 | The ID of the sale                                         |
+| beneficiary     | address | The address of the beneficiary who purchased the fractions |
+| fractionsAmount | uint256 | The amount of fractions purchased                          |
 
 ### FractionsKeptWithdrawn
 
@@ -1134,11 +1134,11 @@ _Emitted when a sale issuer withdraws fractions that were kept_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| saleId | uint256 | The ID of the sale |
+| Name        | Type    | Description                                               |
+| ----------- | ------- | --------------------------------------------------------- |
+| saleId      | uint256 | The ID of the sale                                        |
 | beneficiary | address | The address of the beneficiary who withdrew the fractions |
-| amount | uint256 | The amount of fractions withdrawn |
+| amount      | uint256 | The amount of fractions withdrawn                         |
 
 ### FailedSaleNftWithdrawn
 
@@ -1150,12 +1150,12 @@ _Emitted when an NFT is withdrawn from a failed sale_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| saleId | uint256 | The ID of the sale |
-| beneficiary | address | The address of the beneficiary who withdrew the NFT |
+| Name          | Type    | Description                                                        |
+| ------------- | ------- | ------------------------------------------------------------------ |
+| saleId        | uint256 | The ID of the sale                                                 |
+| beneficiary   | address | The address of the beneficiary who withdrew the NFT                |
 | nftCollection | address | The address of the NFT collection from which the NFT was withdrawn |
-| nftId | uint256 | The ID of the withdrawn NFT |
+| nftId         | uint256 | The ID of the withdrawn NFT                                        |
 
 ### TiersSet
 
@@ -1167,9 +1167,9 @@ _Emitted when the fraction amount tiers are set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| priceLimits | uint256[] | The array of price limits for the tiers |
+| Name             | Type      | Description                                  |
+| ---------------- | --------- | -------------------------------------------- |
+| priceLimits      | uint256[] | The array of price limits for the tiers      |
 | fractionsAmounts | uint256[] | The array of fractions amounts for the tiers |
 
 ### AllowListSet
@@ -1182,8 +1182,8 @@ _Emitted when the allow list is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name      | Type    | Description                                |
+| --------- | ------- | ------------------------------------------ |
 | allowList | address | The address of the new allow list contract |
 
 ### FractionsBuyoutAddressSet
@@ -1196,8 +1196,8 @@ _Emitted when the fractions buyout address is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name            | Type    | Description                                      |
+| --------------- | ------- | ------------------------------------------------ |
 | fractionsBuyout | address | The address of the new fractions buyout contract |
 
 ### FeeManagerSet
@@ -1210,8 +1210,8 @@ _Emitted when the fee manager is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name       | Type    | Description                          |
+| ---------- | ------- | ------------------------------------ |
 | feeManager | address | The new fee manager contract address |
 
 ### onlyWhileSaleOpen
@@ -1224,8 +1224,8 @@ _Modifier that allows a function to only be executed when the sale is open_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description    |
+| ------ | ------- | -------------- |
 | saleId | uint256 | ID of the sale |
 
 ### onlyIfSaleClosed
@@ -1238,8 +1238,8 @@ _Modifier that allows a function to only be executed when the sale is closed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description    |
+| ------ | ------- | -------------- |
 | saleId | uint256 | ID of the sale |
 
 ### constructor
@@ -1252,13 +1252,13 @@ _Constructor to initialize the AltrFractionsSale contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _altrFractions | contract IFractions | The address of the IFractions contract to be used in the sale |
-| _feeManager | address | Address of the feeManager contract that manages the sale fee |
-| _allowList | address | The address of the contract that will hold the allowlist |
-| _priceLimits | uint256[] | Array of price limits for the different tiers of the sale |
-| _fractionsAmounts | uint256[] | Array of fractions amounts for the different tiers of the sale |
+| Name               | Type                | Description                                                    |
+| ------------------ | ------------------- | -------------------------------------------------------------- |
+| \_altrFractions    | contract IFractions | The address of the IFractions contract to be used in the sale  |
+| \_feeManager       | address             | Address of the feeManager contract that manages the sale fee   |
+| \_allowList        | address             | The address of the contract that will hold the allowlist       |
+| \_priceLimits      | uint256[]           | Array of price limits for the different tiers of the sale      |
+| \_fractionsAmounts | uint256[]           | Array of fractions amounts for the different tiers of the sale |
 
 ### setupSale
 
@@ -1273,16 +1273,16 @@ It deploys a new contract that manages the buyTokens(if the sale will succeed it
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollection | contract IERC721 | The ERC721 contract that holds the NFT to be sold |
-| nftId | uint256 | The ID of the NFT to be sold |
-| buyToken | contract IERC20 | The ERC20 token that will be used to purchase fractions |
-| openingTime | uint256 | The timestamp when the sale will open |
-| closingTime | uint256 | The timestamp when the sale will close |
-| totalPrice | uint256 | The total price of the NFT being sold |
-| minFractionsKept | uint256 | The minimum number of fractions that the initiator will keep |
-| saleMinFractions | uint256 | The minimum number of fractions that must be sold for the sale to be successful |
+| Name             | Type             | Description                                                                     |
+| ---------------- | ---------------- | ------------------------------------------------------------------------------- |
+| nftCollection    | contract IERC721 | The ERC721 contract that holds the NFT to be sold                               |
+| nftId            | uint256          | The ID of the NFT to be sold                                                    |
+| buyToken         | contract IERC20  | The ERC20 token that will be used to purchase fractions                         |
+| openingTime      | uint256          | The timestamp when the sale will open                                           |
+| closingTime      | uint256          | The timestamp when the sale will close                                          |
+| totalPrice       | uint256          | The total price of the NFT being sold                                           |
+| minFractionsKept | uint256          | The minimum number of fractions that the initiator will keep                    |
+| saleMinFractions | uint256          | The minimum number of fractions that must be sold for the sale to be successful |
 
 ### buyFractions
 
@@ -1299,10 +1299,10 @@ _Allows a user to buy fractions from a sale_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                                |
+| ------ | ------- | ------------------------------------------ |
 | saleId | uint256 | ID of the sale from which to buy fractions |
-| amount | uint256 | Number of fractions to buy |
+| amount | uint256 | Number of fractions to buy                 |
 
 ### withdrawFractionsKept
 
@@ -1316,8 +1316,8 @@ _The initiator can withdraw the fractions kept after the sale is closed and succ
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                                                    |
+| ------ | ------- | -------------------------------------------------------------- |
 | saleId | uint256 | ID of the sale from which the fractions kept will be withdrawn |
 
 ### withdrawFailedSaleNft
@@ -1331,8 +1331,8 @@ in case the sale was not successful and the minimum fractions were not sold._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                                        |
+| ------ | ------- | -------------------------------------------------- |
 | saleId | uint256 | The ID of the sale from which to withdraw the NFT. |
 
 ### setAllowList
@@ -1345,9 +1345,9 @@ _Allows the contract owner to set the allowList address._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _allowList | address | The new allowList address. |
+| Name        | Type    | Description                |
+| ----------- | ------- | -------------------------- |
+| \_allowList | address | The new allowList address. |
 
 ### setTiers
 
@@ -1359,9 +1359,9 @@ _Allows the contract owner to set the tiers for the sale._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| priceLimits | uint256[] | The price limits for the tiers. |
+| Name             | Type      | Description                          |
+| ---------------- | --------- | ------------------------------------ |
+| priceLimits      | uint256[] | The price limits for the tiers.      |
 | fractionsAmounts | uint256[] | The fractions amounts for the tiers. |
 
 ### setFractionsBuyout
@@ -1374,8 +1374,8 @@ _Function that sets the address of buyout contract for the fractions_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name                   | Type    | Description                    |
+| ---------------------- | ------- | ------------------------------ |
 | fractionsBuyoutAddress | address | address of the buyout contract |
 
 ### setFeeManager
@@ -1388,9 +1388,9 @@ function setFeeManager(address _feeManager) external
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _feeManager | address | The address of the fee manager. |
+| Name         | Type    | Description                     |
+| ------------ | ------- | ------------------------------- |
+| \_feeManager | address | The address of the fee manager. |
 
 ### getFractionsSale
 
@@ -1402,15 +1402,15 @@ _Function that gets the sale details of the fraction sale by its saleId_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                 |
+| ------ | ------- | --------------------------- |
 | saleId | uint256 | saleId of the fraction sale |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | struct IFractionsSale.FractionsSale | Returns the FractionsSale memory struct |
+| Name | Type                                | Description                             |
+| ---- | ----------------------------------- | --------------------------------------- |
+| [0]  | struct IFractionsSale.FractionsSale | Returns the FractionsSale memory struct |
 
 ### onERC721Received
 
@@ -1424,18 +1424,18 @@ _This function is called when an ERC721 token is received by the contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description                                                           |
+| -------- | ------- | --------------------------------------------------------------------- |
 | operator | address | The address that called the function (i.e. the ERC721 smart contract) |
-| from | address | The address that sent the token |
-| tokenId | uint256 | The id of the token being received |
-| data | bytes | Additional data with the transaction |
+| from     | address | The address that sent the token                                       |
+| tokenId  | uint256 | The id of the token being received                                    |
+| data     | bytes   | Additional data with the transaction                                  |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes4 | bytes4 The function signature of the successful call |
+| Name | Type   | Description                                          |
+| ---- | ------ | ---------------------------------------------------- |
+| [0]  | bytes4 | bytes4 The function signature of the successful call |
 
 ### onERC1155Received
 
@@ -1449,19 +1449,19 @@ _This function is called when an ERC1155 token is received by the contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description                                                            |
+| -------- | ------- | ---------------------------------------------------------------------- |
 | operator | address | The address that called the function (i.e. the ERC1155 smart contract) |
-| from | address | The address that sent the token |
-| tokenId | uint256 | The id of the token being received |
-| amount | uint256 | The amount of tokens being received |
-| data | bytes | Additional data with the transaction |
+| from     | address | The address that sent the token                                        |
+| tokenId  | uint256 | The id of the token being received                                     |
+| amount   | uint256 | The amount of tokens being received                                    |
+| data     | bytes   | Additional data with the transaction                                   |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes4 | bytes4 The function signature of the successful call |
+| Name | Type   | Description                                          |
+| ---- | ------ | ---------------------------------------------------- |
+| [0]  | bytes4 | bytes4 The function signature of the successful call |
 
 ### isSaleClosed
 
@@ -1473,15 +1473,15 @@ _Check if a sale is closed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description    |
+| ------ | ------- | -------------- |
 | saleId | uint256 | ID of the sale |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the sale is closed, otherwise false |
+| Name | Type | Description                                 |
+| ---- | ---- | ------------------------------------------- |
+| [0]  | bool | true if the sale is closed, otherwise false |
 
 ### isSaleOpen
 
@@ -1493,15 +1493,15 @@ _Check if a sale is open_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description    |
+| ------ | ------- | -------------- |
 | saleId | uint256 | ID of the sale |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the sale is open, otherwise false |
+| Name | Type | Description                               |
+| ---- | ---- | ----------------------------------------- |
+| [0]  | bool | true if the sale is open, otherwise false |
 
 ### isSaleSuccessful
 
@@ -1513,15 +1513,15 @@ _Check if a sale is successful_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description    |
+| ------ | ------- | -------------- |
 | saleId | uint256 | ID of the sale |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the sale is successful, otherwise false |
+| Name | Type | Description                                     |
+| ---- | ---- | ----------------------------------------------- |
+| [0]  | bool | true if the sale is successful, otherwise false |
 
 ### supportsInterface
 
@@ -1533,15 +1533,15 @@ _function to check if the contract support a given interface._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                                 |
+| ----------- | ------ | ------------------------------------------- |
 | interfaceId | bytes4 | The interface id of the interface to check. |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | true if the interface is supported, false otherwise. |
+| Name | Type | Description                                          |
+| ---- | ---- | ---------------------------------------------------- |
+| [0]  | bool | true if the interface is supported, false otherwise. |
 
 ### salesCounter
 
@@ -1553,9 +1553,9 @@ _function to get the current sales counter._
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | The current sales counter. |
+| Name | Type    | Description                |
+| ---- | ------- | -------------------------- |
+| [0]  | uint256 | The current sales counter. |
 
 ### getFractionsAmountByPrice
 
@@ -1567,17 +1567,17 @@ _Returns the amount of fractions an nft can be divided into at a given price._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name  | Type    | Description                                           |
+| ----- | ------- | ----------------------------------------------------- |
 | price | uint256 | The price point to check the amount of fractions for. |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | uint256 The amount of fractions an nft can be divided into at a given price. |
+| Name | Type    | Description                                                                  |
+| ---- | ------- | ---------------------------------------------------------------------------- |
+| [0]  | uint256 | uint256 The amount of fractions an nft can be divided into at a given price. |
 
-### _setAllowList
+### \_setAllowList
 
 ```solidity
 function _setAllowList(address _allowList) internal
@@ -1587,11 +1587,11 @@ _set the address of the contract that implements the IAllowList interface as the
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _allowList | address | address of the contract that implements the IAllowList interface. |
+| Name        | Type    | Description                                                       |
+| ----------- | ------- | ----------------------------------------------------------------- |
+| \_allowList | address | address of the contract that implements the IAllowList interface. |
 
-### _setFeeManager
+### \_setFeeManager
 
 ```solidity
 function _setFeeManager(address _feeManager) internal
@@ -1601,11 +1601,11 @@ _sets the feeManager address. Only callable by contracts's admin role._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _feeManager | address | The address of the fee manager contract. |
+| Name         | Type    | Description                              |
+| ------------ | ------- | ---------------------------------------- |
+| \_feeManager | address | The address of the fee manager contract. |
 
-### _setTiers
+### \_setTiers
 
 ```solidity
 function _setTiers(uint256[] priceLimits, uint256[] fractionsAmounts) internal
@@ -1615,9 +1615,9 @@ _set the tiers for the current contract._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| priceLimits | uint256[] | array of price limits for the tiers. |
+| Name             | Type      | Description                               |
+| ---------------- | --------- | ----------------------------------------- |
+| priceLimits      | uint256[] | array of price limits for the tiers.      |
 | fractionsAmounts | uint256[] | array of fractions amounts for the tiers. |
 
 ## AltrNftCollateralRetriever
@@ -1656,11 +1656,11 @@ event NftBurned(address collectionAddress, address oracleAddress, uint256 tokenI
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name              | Type    | Description                                       |
+| ----------------- | ------- | ------------------------------------------------- |
 | collectionAddress | address | the address of the contract where the NFT belongs |
-| oracleAddress | address | the address of the oracle that is burning the NFT |
-| tokenId | uint256 | the unique identifier of the NFT being burned |
+| oracleAddress     | address | the address of the oracle that is burning the NFT |
+| tokenId           | uint256 | the unique identifier of the NFT being burned     |
 
 ### RedeemRequest
 
@@ -1670,12 +1670,12 @@ event RedeemRequest(address collectionAddress, address from, address operator, u
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| collectionAddress | address | the address of the contract where the NFT belongs |
-| from | address | the address of the account redeeming the NFT |
-| operator | address | the address of the operator handling the redeem request |
-| tokenId | uint256 | the unique identifier of the NFT being redeemed |
+| Name              | Type    | Description                                             |
+| ----------------- | ------- | ------------------------------------------------------- |
+| collectionAddress | address | the address of the contract where the NFT belongs       |
+| from              | address | the address of the account redeeming the NFT            |
+| operator          | address | the address of the operator handling the redeem request |
+| tokenId           | uint256 | the unique identifier of the NFT being redeemed         |
 
 ### NftCollectionFactoryChanged
 
@@ -1685,8 +1685,8 @@ event NftCollectionFactoryChanged(address nftCollectionFactory)
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name                 | Type    | Description                                   |
+| -------------------- | ------- | --------------------------------------------- |
 | nftCollectionFactory | address | the new address of the NFT collection factory |
 
 ### FeeManagerChanged
@@ -1697,8 +1697,8 @@ event FeeManagerChanged(address feeManager)
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name       | Type    | Description                        |
+| ---------- | ------- | ---------------------------------- |
 | feeManager | address | the new address of the fee manager |
 
 ### onlyMinter
@@ -1725,10 +1725,10 @@ _Burns the NFT_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type    | Description                                              |
+| ----------- | ------- | -------------------------------------------------------- |
 | nftContract | address | The address of the NFT contract where the token belongs. |
-| tokenId | uint256 | The tokenId of the NFT. |
+| tokenId     | uint256 | The tokenId of the NFT.                                  |
 
 ### setNftCollectionFactory
 
@@ -1740,9 +1740,9 @@ _Changes the factory for the NFT collections._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollectionFactory_ | address | Address of the NFT collection factory. |
+| Name                   | Type    | Description                            |
+| ---------------------- | ------- | -------------------------------------- |
+| nftCollectionFactory\_ | address | Address of the NFT collection factory. |
 
 ### setFeeManager
 
@@ -1754,9 +1754,9 @@ _This function is used to set the address of the fee manager_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| feeManager_ | address | the address of the fee manager |
+| Name         | Type    | Description                    |
+| ------------ | ------- | ------------------------------ |
+| feeManager\_ | address | the address of the fee manager |
 
 ### initialize
 
@@ -1768,10 +1768,10 @@ _This function is used to initialize the contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollectionFactory_ | address | the address of the NFT collection factory |
-| feeManager_ | address | the address of the fee manager |
+| Name                   | Type    | Description                               |
+| ---------------------- | ------- | ----------------------------------------- |
+| nftCollectionFactory\_ | address | the address of the NFT collection factory |
+| feeManager\_           | address | the address of the fee manager            |
 
 ### onERC721Received
 
@@ -1783,14 +1783,14 @@ _This function is triggered when an ERC721 token is received. This function ensu
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description                                         |
+| -------- | ------- | --------------------------------------------------- |
 | operator | address | The address of the person who executed the transfer |
-| from | address | The address of the person who sent the ERC721 token |
-| tokenId | uint256 | The token ID of the received ERC721 token |
-| data | bytes | Additional data with no specified format |
+| from     | address | The address of the person who sent the ERC721 token |
+| tokenId  | uint256 | The token ID of the received ERC721 token           |
+| data     | bytes   | Additional data with no specified format            |
 
-### _setNftCollectionFactory
+### \_setNftCollectionFactory
 
 ```solidity
 function _setNftCollectionFactory(address nftCollectionFactory_) internal
@@ -1800,11 +1800,11 @@ _Sets the address of the NFT collection factory contract._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollectionFactory_ | address | The address of the NFT collection factory contract. |
+| Name                   | Type    | Description                                         |
+| ---------------------- | ------- | --------------------------------------------------- |
+| nftCollectionFactory\_ | address | The address of the NFT collection factory contract. |
 
-### _setFeeManager
+### \_setFeeManager
 
 ```solidity
 function _setFeeManager(address feeManager_) internal
@@ -1814,11 +1814,11 @@ _Sets the address of the fee manager contract._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| feeManager_ | address | The address of the fee manager contract. |
+| Name         | Type    | Description                              |
+| ------------ | ------- | ---------------------------------------- |
+| feeManager\_ | address | The address of the fee manager contract. |
 
-### __AltrNftCollateralRetriever_init
+### \_\_AltrNftCollateralRetriever_init
 
 ```solidity
 function __AltrNftCollateralRetriever_init(address nftCollectionFactory_, address feeManager_) internal
@@ -1828,12 +1828,12 @@ _Initializes the AltrNftCollateralRetriever contract._
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollectionFactory_ | address | The address of the NFT collection factory contract. |
-| feeManager_ | address | The address of the fee manager contract. |
+| Name                   | Type    | Description                                         |
+| ---------------------- | ------- | --------------------------------------------------- |
+| nftCollectionFactory\_ | address | The address of the NFT collection factory contract. |
+| feeManager\_           | address | The address of the fee manager contract.            |
 
-### __AltrNftCollateralRetriever_init_unchained
+### \_\_AltrNftCollateralRetriever_init_unchained
 
 ```solidity
 function __AltrNftCollateralRetriever_init_unchained(address nftCollectionFactory_, address feeManager_) internal
@@ -1843,10 +1843,10 @@ _Initializes the AltrNftCollateralRetriever contract without calling the interna
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftCollectionFactory_ | address | The address of the NFT collection factory contract. |
-| feeManager_ | address | The address of the fee manager contract. |
+| Name                   | Type    | Description                                         |
+| ---------------------- | ------- | --------------------------------------------------- |
+| nftCollectionFactory\_ | address | The address of the NFT collection factory contract. |
+| feeManager\_           | address | The address of the fee manager contract.            |
 
 ## AltrNftCollection
 
@@ -1925,9 +1925,9 @@ Emits when the deadline for the vault service is set
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The ID of the token |
+| Name     | Type    | Description                        |
+| -------- | ------- | ---------------------------------- |
+| tokenId  | uint256 | The ID of the token                |
 | deadline | uint256 | The deadline for the vault service |
 
 ### InsolvencyGracePeriodSet
@@ -1940,8 +1940,8 @@ Emits when the insolvency grace period is set
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name                  | Type    | Description                         |
+| --------------------- | ------- | ----------------------------------- |
 | insolvencyGracePeriod | uint256 | The grace period for the insolvency |
 
 ### Seize
@@ -1954,8 +1954,8 @@ Emits when the token is seized
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description         |
+| ------- | ------- | ------------------- |
 | tokenId | uint256 | The ID of the token |
 
 ### NftReceived
@@ -1968,12 +1968,12 @@ Emits when an NFT is received
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name              | Type    | Description                   |
+| ----------------- | ------- | ----------------------------- |
 | collectionAddress | address | The address of the collection |
-| from | address | The address of the sender |
-| operator | address | The address of the operator |
-| tokenId | uint256 | The ID of the token |
+| from              | address | The address of the sender     |
+| operator          | address | The address of the operator   |
+| tokenId           | uint256 | The ID of the token           |
 
 ### FreeVaultServicePeriod
 
@@ -1985,8 +1985,8 @@ Emits when the free vault service period is set
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name                   | Type    | Description                   |
+| ---------------------- | ------- | ----------------------------- |
 | freeVaultServicePeriod | uint256 | The free vault service period |
 
 ### constructor
@@ -1999,17 +1999,17 @@ _Constructor function that initializes the AltrNftCollection contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| name_ | string | The name of the token |
-| symbol_ | string | The symbol of the token |
-| oracleAddress_ | address | The address of the oracle contract |
-| vaultManagerAddress_ | address | The address of the vault manager |
-| adminAddress_ | address | The address of the admin |
-| nftReserveAddress_ | address | The address of the NFT reserve contract |
-| minGracePeriod_ | uint256 | The minimum grace period for vault service |
-| insolvencyGracePeriod_ | uint256 | The insolvency grace period for vault service |
-| freeVaultServicePeriod_ | uint256 | The free period for the vault service |
+| Name                     | Type    | Description                                   |
+| ------------------------ | ------- | --------------------------------------------- |
+| name\_                   | string  | The name of the token                         |
+| symbol\_                 | string  | The symbol of the token                       |
+| oracleAddress\_          | address | The address of the oracle contract            |
+| vaultManagerAddress\_    | address | The address of the vault manager              |
+| adminAddress\_           | address | The address of the admin                      |
+| nftReserveAddress\_      | address | The address of the NFT reserve contract       |
+| minGracePeriod\_         | uint256 | The minimum grace period for vault service    |
+| insolvencyGracePeriod\_  | uint256 | The insolvency grace period for vault service |
+| freeVaultServicePeriod\_ | uint256 | The free period for the vault service         |
 
 ### seize
 
@@ -2021,8 +2021,8 @@ _Allows the admin to seize an NFT and transfer it to the NFT reserve address_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                 |
+| ------- | ------- | ------------------------------------------- |
 | tokenId | uint256 | The tokenId of the NFT that is being seized |
 
 ### setVaultServiceDeadline
@@ -2035,10 +2035,10 @@ _Allows the vault manager role to set a new deadline for vault service_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The tokenId of the NFT for which the deadline is being set |
-| deadline | uint256 | The new deadline for vault service |
+| Name     | Type    | Description                                                |
+| -------- | ------- | ---------------------------------------------------------- |
+| tokenId  | uint256 | The tokenId of the NFT for which the deadline is being set |
+| deadline | uint256 | The new deadline for vault service                         |
 
 ### setInsolvencyGracePeriod
 
@@ -2050,9 +2050,9 @@ _Allows the admin role to set a new insolvency grace period_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| insolvencyGracePeriod_ | uint256 | The new insolvency grace period |
+| Name                    | Type    | Description                     |
+| ----------------------- | ------- | ------------------------------- |
+| insolvencyGracePeriod\_ | uint256 | The new insolvency grace period |
 
 ### setFreeVaultServicePeriod
 
@@ -2064,9 +2064,9 @@ _Allows the admin role to set a new free vault service period_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| freeVaultServicePeriod_ | uint256 | The new free vault service period |
+| Name                     | Type    | Description                       |
+| ------------------------ | ------- | --------------------------------- |
+| freeVaultServicePeriod\_ | uint256 | The new free vault service period |
 
 ### safeMint
 
@@ -2078,9 +2078,9 @@ _Allows the minter role to mint a new NFT, assigns the tokenURI and sets the dea
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| uri | string | The URI of the NFT that is being minted |
+| Name | Type   | Description                             |
+| ---- | ------ | --------------------------------------- |
+| uri  | string | The URI of the NFT that is being minted |
 
 ### getVaultServiceDeadline
 
@@ -2092,14 +2092,14 @@ _Allows anyone to get the deadline for vault service for a specific NFT_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                                      |
+| ------- | ------- | ---------------------------------------------------------------- |
 | tokenId | uint256 | The tokenId of the NFT for which the deadline is being retrieved |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name     | Type    | Description                    |
+| -------- | ------- | ------------------------------ |
 | deadline | uint256 | The deadline for vault service |
 
 ### tokenURI
@@ -2112,15 +2112,15 @@ _Allows anyone to get the URI of a specific NFT_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                                 |
+| ------- | ------- | ----------------------------------------------------------- |
 | tokenId | uint256 | The tokenId of the NFT for which the URI is being retrieved |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | string | The URI of the NFT |
+| Name | Type   | Description        |
+| ---- | ------ | ------------------ |
+| [0]  | string | The URI of the NFT |
 
 ### supportsInterface
 
@@ -2132,17 +2132,17 @@ _Allows anyone to check if the contract supports an interface_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                               |
+| ----------- | ------ | ----------------------------------------- |
 | interfaceId | bytes4 | The interfaceId being checked for support |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | True if the contract supports the interface, false otherwise |
+| Name | Type | Description                                                  |
+| ---- | ---- | ------------------------------------------------------------ |
+| [0]  | bool | True if the contract supports the interface, false otherwise |
 
-### _beforeTokenTransfer
+### \_beforeTokenTransfer
 
 ```solidity
 function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal virtual
@@ -2152,14 +2152,14 @@ _internal function that is executed before a token transfer_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| from | address | The current owner of the token |
-| to | address | The address to which the token is being transferred |
-| tokenId | uint256 | The tokenId of the NFT that is being transferred |
+| Name      | Type    | Description                                         |
+| --------- | ------- | --------------------------------------------------- |
+| from      | address | The current owner of the token                      |
+| to        | address | The address to which the token is being transferred |
+| tokenId   | uint256 | The tokenId of the NFT that is being transferred    |
 | batchSize | uint256 | The number of tokens being transferred in the batch |
 
-### _burn
+### \_burn
 
 ```solidity
 function _burn(uint256 tokenId) internal
@@ -2169,11 +2169,11 @@ _internal function that burns a token_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                 |
+| ------- | ------- | ------------------------------------------- |
 | tokenId | uint256 | The tokenId of the NFT that is being burned |
 
-### _setVaultServiceDeadline
+### \_setVaultServiceDeadline
 
 ```solidity
 function _setVaultServiceDeadline(uint256 tokenId, uint256 deadline) internal
@@ -2183,12 +2183,12 @@ _internal function that sets the deadline for vault service for a specific NFT_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The tokenId of the NFT for which the deadline is being set |
-| deadline | uint256 | The deadline for vault service |
+| Name     | Type    | Description                                                |
+| -------- | ------- | ---------------------------------------------------------- |
+| tokenId  | uint256 | The tokenId of the NFT for which the deadline is being set |
+| deadline | uint256 | The deadline for vault service                             |
 
-### _baseURI
+### \_baseURI
 
 ```solidity
 function _baseURI() internal pure returns (string)
@@ -2198,9 +2198,9 @@ _internal pure function that returns the base URI for the NFTs_
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | string | the base URI |
+| Name | Type   | Description  |
+| ---- | ------ | ------------ |
+| [0]  | string | the base URI |
 
 ## AltrNftCollectionFactory
 
@@ -2260,12 +2260,12 @@ _Emits when a new NFT collection is created_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| contractAddress | address | address of the newly created NFT collection contract |
-| collectionName | string | name of the NFT collection |
-| collectionSymbol | string | symbol of the NFT collection |
-| collectionOracle | address | oracle address for the NFT collection |
+| Name             | Type    | Description                                          |
+| ---------------- | ------- | ---------------------------------------------------- |
+| contractAddress  | address | address of the newly created NFT collection contract |
+| collectionName   | string  | name of the NFT collection                           |
+| collectionSymbol | string  | symbol of the NFT collection                         |
+| collectionOracle | address | oracle address for the NFT collection                |
 
 ### LicenseManagerChanged
 
@@ -2277,8 +2277,8 @@ _Emits when the license manager address is changed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name           | Type    | Description                 |
+| -------------- | ------- | --------------------------- |
 | licenseManager | address | new license manager address |
 
 ### NftReserveAddressChanged
@@ -2291,8 +2291,8 @@ _Emits when the nft reserve address is changed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name              | Type    | Description             |
+| ----------------- | ------- | ----------------------- |
 | nftReserveAddress | address | new nft reserve address |
 
 ### constructor
@@ -2313,14 +2313,14 @@ _This function creates a new collection contract with the given name, symbol, or
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| name | string | name of the new collection contract |
-| symbol | string | symbol of the new collection contract |
-| oracle | address | oracle address for the new collection contract |
-| vaultManager | address | vault manager address for the new collection contract |
-| minGracePeriod | uint256 | minimum grace period for the new collection contract |
-| insolvencyGracePeriod | uint256 | insolvency grace period for the new collection contract |
+| Name                   | Type    | Description                                               |
+| ---------------------- | ------- | --------------------------------------------------------- |
+| name                   | string  | name of the new collection contract                       |
+| symbol                 | string  | symbol of the new collection contract                     |
+| oracle                 | address | oracle address for the new collection contract            |
+| vaultManager           | address | vault manager address for the new collection contract     |
+| minGracePeriod         | uint256 | minimum grace period for the new collection contract      |
+| insolvencyGracePeriod  | uint256 | insolvency grace period for the new collection contract   |
 | freeVaultServicePeriod | uint256 | free vault service period for the new collection contract |
 
 ### setLicenseManager
@@ -2333,9 +2333,9 @@ _This function updates the contract's license manager address_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | address of the new license manager |
+| Name             | Type    | Description                        |
+| ---------------- | ------- | ---------------------------------- |
+| licenseManager\_ | address | address of the new license manager |
 
 ### setNftReserveAddress
 
@@ -2347,9 +2347,9 @@ _This function updates the contract's NFT Reserve address_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftReserveAddress_ | address | address of the new NFT Reserve |
+| Name                | Type    | Description                    |
+| ------------------- | ------- | ------------------------------ |
+| nftReserveAddress\_ | address | address of the new NFT Reserve |
 
 ### initialize
 
@@ -2361,10 +2361,10 @@ _This function initializes the contract's fields with the given values_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | address of the license manager |
-| nftReserveAddress_ | address | address of the NFT Reserve |
+| Name                | Type    | Description                    |
+| ------------------- | ------- | ------------------------------ |
+| licenseManager\_    | address | address of the license manager |
+| nftReserveAddress\_ | address | address of the NFT Reserve     |
 
 ### isAKnownCollection
 
@@ -2376,15 +2376,15 @@ _This function checks if a given address is a known collection contract address_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name              | Type    | Description                        |
+| ----------------- | ------- | ---------------------------------- |
 | collectionAddress | address | address of the collection contract |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | Returns true if the given address is a known collection contract, returns false otherwise |
+| Name | Type | Description                                                                               |
+| ---- | ---- | ----------------------------------------------------------------------------------------- |
+| [0]  | bool | Returns true if the given address is a known collection contract, returns false otherwise |
 
 ### createdContractCount
 
@@ -2396,9 +2396,9 @@ _This function gets the number of created collection contracts_
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | Returns number of created collection contracts |
+| Name | Type    | Description                                    |
+| ---- | ------- | ---------------------------------------------- |
+| [0]  | uint256 | Returns number of created collection contracts |
 
 ### supportsInterface
 
@@ -2410,17 +2410,17 @@ _Function to check if the contract implements the required interface_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                     |
+| ----------- | ------ | ------------------------------- |
 | interfaceId | bytes4 | bytes4 The interface identifier |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool Returns true if the contract implements the interface, false otherwise |
+| Name | Type | Description                                                                 |
+| ---- | ---- | --------------------------------------------------------------------------- |
+| [0]  | bool | bool Returns true if the contract implements the interface, false otherwise |
 
-### __AltrNftCollectionFactory_init
+### \_\_AltrNftCollectionFactory_init
 
 ```solidity
 function __AltrNftCollectionFactory_init(address licenseManager_, address nftReserveAddress_) internal
@@ -2430,12 +2430,12 @@ _Initializer function for the contract, which is called only once_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | address The address of the license manager contract |
-| nftReserveAddress_ | address | address The address of the NFT reserve contract |
+| Name                | Type    | Description                                         |
+| ------------------- | ------- | --------------------------------------------------- |
+| licenseManager\_    | address | address The address of the license manager contract |
+| nftReserveAddress\_ | address | address The address of the NFT reserve contract     |
 
-### __AltrNftCollectionFactory_init_unchained
+### \_\_AltrNftCollectionFactory_init_unchained
 
 ```solidity
 function __AltrNftCollectionFactory_init_unchained(address licenseManager_, address nftReserveAddress_) internal
@@ -2445,12 +2445,12 @@ _Internal function for initializing the contract, that is called only once_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | address The address of the license manager contract |
-| nftReserveAddress_ | address | address The address of the NFT reserve contract |
+| Name                | Type    | Description                                         |
+| ------------------- | ------- | --------------------------------------------------- |
+| licenseManager\_    | address | address The address of the license manager contract |
+| nftReserveAddress\_ | address | address The address of the NFT reserve contract     |
 
-### _setLicenseManager
+### \_setLicenseManager
 
 ```solidity
 function _setLicenseManager(address licenseManager_) internal
@@ -2460,11 +2460,11 @@ _Internal function to set the address of the license manager contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| licenseManager_ | address | address The address of the license manager contract |
+| Name             | Type    | Description                                         |
+| ---------------- | ------- | --------------------------------------------------- |
+| licenseManager\_ | address | address The address of the license manager contract |
 
-### _setNftReserveAddress
+### \_setNftReserveAddress
 
 ```solidity
 function _setNftReserveAddress(address nftReserveAddress_) internal
@@ -2474,9 +2474,9 @@ _Internal function to set the address of the NFT reserve contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| nftReserveAddress_ | address | address The address of the NFT reserve contract |
+| Name                | Type    | Description                                     |
+| ------------------- | ------- | ----------------------------------------------- |
+| nftReserveAddress\_ | address | address The address of the NFT reserve contract |
 
 ## AltrTradeChecker
 
@@ -2525,11 +2525,11 @@ _Constructor function that initializes the AltrTradeChecker contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| _zeroExContract | address payable | Address of the 0x contract to interact with |
-| _allowList | address | Address of the contract that manages the Altr allowlist |
-| _feeManager | address |  |
+| Name             | Type            | Description                                             |
+| ---------------- | --------------- | ------------------------------------------------------- |
+| \_zeroExContract | address payable | Address of the 0x contract to interact with             |
+| \_allowList      | address         | Address of the contract that manages the Altr allowlist |
+| \_feeManager     | address         |                                                         |
 
 ### buyERC721
 
@@ -2541,11 +2541,11 @@ _Allows the caller to buy an ERC721 token from a 0x sell order_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| sellOrder | struct LibNFTOrder.ERC721Order | The sell order |
-| signature | struct LibSignature.Signature | Signature of the sell order, signed by the seller |
-| callbackData | bytes | Data to pass through to the trade execution callback |
+| Name         | Type                           | Description                                          |
+| ------------ | ------------------------------ | ---------------------------------------------------- |
+| sellOrder    | struct LibNFTOrder.ERC721Order | The sell order                                       |
+| signature    | struct LibSignature.Signature  | Signature of the sell order, signed by the seller    |
+| callbackData | bytes                          | Data to pass through to the trade execution callback |
 
 ## TimedTokenSplitter
 
@@ -2601,12 +2601,12 @@ _Emits when tokens seller is released_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| seller | address | The address of the seller |
-| saleContract | contract IFractionsSale | Address of the sale contract |
-| saleId | uint256 | Identifier of the sale |
-| sellerAmount | uint256 | The amount that was released to the seller |
+| Name         | Type                    | Description                                |
+| ------------ | ----------------------- | ------------------------------------------ |
+| seller       | address                 | The address of the seller                  |
+| saleContract | contract IFractionsSale | Address of the sale contract               |
+| saleId       | uint256                 | Identifier of the sale                     |
+| sellerAmount | uint256                 | The amount that was released to the seller |
 
 ### onlyIfSaleClosed
 
@@ -2646,16 +2646,16 @@ Initializes the contract with the sale contract address, the sale id, the token 
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| saleContract_ | address | address of the sale contract |
-| saleId_ | uint256 | the id of the sale |
-| redemptionToken_ | contract IERC20 | the token to redeem |
-| token_ | contract IFractions | the token that represents the fractional ownership |
-| tokenPrice_ | uint256 | the price of the token |
-| governanceTreasury_ | address | the address of the governance treasury |
-| protocolFee_ | uint256 | the percentage of fee taken from the token amount |
-| seller_ | address | the address of the seller |
+| Name                 | Type                | Description                                        |
+| -------------------- | ------------------- | -------------------------------------------------- |
+| saleContract\_       | address             | address of the sale contract                       |
+| saleId\_             | uint256             | the id of the sale                                 |
+| redemptionToken\_    | contract IERC20     | the token to redeem                                |
+| token\_              | contract IFractions | the token that represents the fractional ownership |
+| tokenPrice\_         | uint256             | the price of the token                             |
+| governanceTreasury\_ | address             | the address of the governance treasury             |
+| protocolFee\_        | uint256             | the percentage of fee taken from the token amount  |
+| seller\_             | address             | the address of the seller                          |
 
 ### releaseSeller
 
@@ -2680,8 +2680,8 @@ _Function to release the user's token from the contract_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name  | Type      | Description                                                       |
+| ----- | --------- | ----------------------------------------------------------------- |
 | users | address[] | address[] calldata of the users that we want to release the token |
 
 ## TokenSplitter
@@ -2730,14 +2730,14 @@ _Event emitted when the tokens are released to the users_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| users | address[] | array of addresses of the users that receive the tokens |
-| redemptionToken | contract IERC20 | The address of the token used for redemption |
-| token | contract IFractions | The address of the token contract that holds the fractions being redeemed |
-| tokenId | uint256 | The id of the token that represents the fractions being redeemed |
-| amounts | uint256[] | The amounts of fractions being redeemed |
-| fractionsPrice | uint256 | The price of each fraction being redeemed |
+| Name            | Type                | Description                                                               |
+| --------------- | ------------------- | ------------------------------------------------------------------------- |
+| users           | address[]           | array of addresses of the users that receive the tokens                   |
+| redemptionToken | contract IERC20     | The address of the token used for redemption                              |
+| token           | contract IFractions | The address of the token contract that holds the fractions being redeemed |
+| tokenId         | uint256             | The id of the token that represents the fractions being redeemed          |
+| amounts         | uint256[]           | The amounts of fractions being redeemed                                   |
+| fractionsPrice  | uint256             | The price of each fraction being redeemed                                 |
 
 ### constructor
 
@@ -2749,12 +2749,12 @@ _Create the TokenSplitter instance and set the token instances_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| redemptionToken_ | contract IERC20 | The ERC20 token for redemption |
-| token_ | contract IFractions | The token to be split |
-| tokenId_ | uint256 | Token Id for the token to be split |
-| tokenPrice_ | uint256 | The price of the token for redemption |
+| Name              | Type                | Description                           |
+| ----------------- | ------------------- | ------------------------------------- |
+| redemptionToken\_ | contract IERC20     | The ERC20 token for redemption        |
+| token\_           | contract IFractions | The token to be split                 |
+| tokenId\_         | uint256             | Token Id for the token to be split    |
+| tokenPrice\_      | uint256             | The price of the token for redemption |
 
 ### release
 
@@ -2766,8 +2766,8 @@ _Release the tokens, by burning the token in token contract and transfer the red
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name  | Type      | Description                                            |
+| ----- | --------- | ------------------------------------------------------ |
 | users | address[] | The array of users' addresses to release the tokens to |
 
 ## AltrAllowList
@@ -2821,8 +2821,8 @@ _function to allow addresses_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name      | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
 | addresses | address[] | array of addresses to be allowed |
 
 ### disallowAddresses
@@ -2835,8 +2835,8 @@ _function to disallow addresses_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name      | Type      | Description                         |
+| --------- | --------- | ----------------------------------- |
 | addresses | address[] | array of addresses to be disallowed |
 
 ### isAddressAllowed
@@ -2849,15 +2849,15 @@ _function to check if an address is allowed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name | Type    | Description                  |
+| ---- | ------- | ---------------------------- |
 | user | address | address of the user to check |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool value indicating whether the address is allowed |
+| Name | Type | Description                                          |
+| ---- | ---- | ---------------------------------------------------- |
+| [0]  | bool | bool value indicating whether the address is allowed |
 
 ### supportsInterface
 
@@ -2869,17 +2869,17 @@ _function to check if a interface is supported_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                |
+| ----------- | ------ | -------------------------- |
 | interfaceId | bytes4 | bytes4 id of the interface |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool value indicating whether the interface is supported |
+| Name | Type | Description                                              |
+| ---- | ---- | -------------------------------------------------------- |
+| [0]  | bool | bool value indicating whether the interface is supported |
 
-### _setAddressesStatus
+### \_setAddressesStatus
 
 ```solidity
 function _setAddressesStatus(address[] addresses, bool status) internal
@@ -2889,10 +2889,10 @@ _internal function to set the status of addresses_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| addresses | address[] | array of addresses |
-| status | bool | status to set, true for allowed, false for disallowed |
+| Name      | Type      | Description                                           |
+| --------- | --------- | ----------------------------------------------------- |
+| addresses | address[] | array of addresses                                    |
+| status    | bool      | status to set, true for allowed, false for disallowed |
 
 ## AltrFractions
 
@@ -2959,10 +2959,10 @@ event BuyoutStatusSet(uint256 tokenId, bool status)
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The token ID of the token sale |
-| status | bool | The status of the buyout for the token sale |
+| Name    | Type    | Description                                 |
+| ------- | ------- | ------------------------------------------- |
+| tokenId | uint256 | The token ID of the token sale              |
+| status  | bool    | The status of the buyout for the token sale |
 
 ### TokenSaleStatusSet
 
@@ -2972,10 +2972,10 @@ event TokenSaleStatusSet(uint256 tokenId, enum AltrFractions.TokenSaleStatus sta
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The token ID of the token sale |
-| status | enum AltrFractions.TokenSaleStatus | The status of the token sale |
+| Name    | Type                               | Description                    |
+| ------- | ---------------------------------- | ------------------------------ |
+| tokenId | uint256                            | The token ID of the token sale |
+| status  | enum AltrFractions.TokenSaleStatus | The status of the token sale   |
 
 ### ContractSaleSet
 
@@ -2985,8 +2985,8 @@ event ContractSaleSet(contract IFractionsSale altrFractionsSale)
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name              | Type                    | Description                                   |
+| ----------------- | ----------------------- | --------------------------------------------- |
 | altrFractionsSale | contract IFractionsSale | The address of the altrFractionsSale contract |
 
 ### ClosingTimeForTokenSaleSet
@@ -2997,9 +2997,9 @@ event ClosingTimeForTokenSaleSet(uint256 tokenId, uint256 closingTime)
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The token ID of the token sale |
+| Name        | Type    | Description                        |
+| ----------- | ------- | ---------------------------------- |
+| tokenId     | uint256 | The token ID of the token sale     |
 | closingTime | uint256 | The closing time of the token sale |
 
 ### OperatorBurn
@@ -3010,12 +3010,12 @@ event OperatorBurn(address operator, address account, uint256 id, uint256 amount
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| operator | address | The operator address |
-| account | address | The address of the owner of the fractions |
-| id | uint256 | The token ID |
-| amount | uint256 | The burn amount |
+| Name     | Type    | Description                               |
+| -------- | ------- | ----------------------------------------- |
+| operator | address | The operator address                      |
+| account  | address | The address of the owner of the fractions |
+| id       | uint256 | The token ID                              |
+| amount   | uint256 | The burn amount                           |
 
 ### constructor
 
@@ -3023,13 +3023,13 @@ event OperatorBurn(address operator, address account, uint256 id, uint256 amount
 constructor(string uri_) public
 ```
 
-_Constructor that creates an ERC1155 contract with the specified uri_ and grants the msg.sender the DEFAULT_ADMIN_ROLE_
+_Constructor that creates an ERC1155 contract with the specified uri_ and grants the msg.sender the DEFAULT*ADMIN_ROLE*
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| uri_ | string | The URI of the ERC1155 contract |
+| Name  | Type   | Description                     |
+| ----- | ------ | ------------------------------- |
+| uri\_ | string | The URI of the ERC1155 contract |
 
 ### setUri
 
@@ -3041,9 +3041,9 @@ _The setUri function allows the contract owner to set the URI of the ERC1155 tok
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| uri_ | string | The URI of the ERC1155 token |
+| Name  | Type   | Description                  |
+| ----- | ------ | ---------------------------- |
+| uri\_ | string | The URI of the ERC1155 token |
 
 ### setContractSale
 
@@ -3057,9 +3057,9 @@ _The setContractSale function allows the contract owner to set the contract sale
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| contractSale_ | address | The address of the contract sale |
+| Name           | Type    | Description                      |
+| -------------- | ------- | -------------------------------- |
+| contractSale\_ | address | The address of the contract sale |
 
 ### setBuyoutStatus
 
@@ -3071,8 +3071,8 @@ _The setBuyoutStatus function allows the contract owner to set the buyout status
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                                  |
+| ------- | ------- | ------------------------------------------------------------ |
 | tokenId | uint256 | The ID of the token for which the buyout status is being set |
 
 ### setClosingTimeForTokenSale
@@ -3085,10 +3085,10 @@ _The setClosingTimeForTokenSale function allows the contract owner to set the cl
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | The ID of the token for which the closing time is being set |
-| closingTime | uint256 | The closing time for the token sale |
+| Name        | Type    | Description                                                 |
+| ----------- | ------- | ----------------------------------------------------------- |
+| tokenId     | uint256 | The ID of the token for which the closing time is being set |
+| closingTime | uint256 | The closing time for the token sale                         |
 
 ### mint
 
@@ -3100,12 +3100,12 @@ _The mint function allows the contract owner to mint new tokens_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| to | address | The address of the account that the tokens are being minted to |
-| tokenId | uint256 | The ID of the token being minted |
-| amount | uint256 | The amount of tokens being minted |
-| data | bytes | Additional data associated with the minting of the tokens |
+| Name    | Type    | Description                                                    |
+| ------- | ------- | -------------------------------------------------------------- |
+| to      | address | The address of the account that the tokens are being minted to |
+| tokenId | uint256 | The ID of the token being minted                               |
+| amount  | uint256 | The amount of tokens being minted                              |
+| data    | bytes   | Additional data associated with the minting of the tokens      |
 
 ### operatorBurn
 
@@ -3117,11 +3117,11 @@ _The operatorBurn function allows a contract operator to burn specific tokens fr
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                        |
+| ------- | ------- | -------------------------------------------------- |
 | account | address | The address from which the tokens are being burned |
-| id | uint256 | The ID of the token being burned |
-| amount | uint256 | The amount of tokens being burned |
+| id      | uint256 | The ID of the token being burned                   |
+| amount  | uint256 | The amount of tokens being burned                  |
 
 ### burn
 
@@ -3133,11 +3133,11 @@ _The burn function allows the contract owner to burn specific tokens from a spec
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description                                        |
+| ------- | ------- | -------------------------------------------------- |
 | account | address | The address from which the tokens are being burned |
-| id | uint256 | The ID of the token being burned |
-| amount | uint256 | The amount of tokens being burned |
+| id      | uint256 | The ID of the token being burned                   |
+| amount  | uint256 | The amount of tokens being burned                  |
 
 ### grantRole
 
@@ -3149,9 +3149,9 @@ _The grantRole function grants a specific role to a specific account_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| role | bytes32 | The bytes32 of the role being granted |
+| Name    | Type    | Description                                                   |
+| ------- | ------- | ------------------------------------------------------------- |
+| role    | bytes32 | The bytes32 of the role being granted                         |
 | account | address | The address of the account to which the role is being granted |
 
 ### testTokenTransferability
@@ -3168,11 +3168,11 @@ if the token sale has not closed yet, it will update the status of the token sal
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| tokenId | uint256 | the tokenId to check |
-| operator | address | the operator that wants to transfer the token |
-| to | address | the address to which the token is being transferred |
+| Name     | Type    | Description                                         |
+| -------- | ------- | --------------------------------------------------- |
+| tokenId  | uint256 | the tokenId to check                                |
+| operator | address | the operator that wants to transfer the token       |
+| to       | address | the address to which the token is being transferred |
 
 ### uri
 
@@ -3184,15 +3184,15 @@ _Returns the URI of a specific token ID_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| id | uint256 | The token ID |
+| Name | Type    | Description  |
+| ---- | ------- | ------------ |
+| id   | uint256 | The token ID |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | string | The URI of the token ID |
+| Name | Type   | Description             |
+| ---- | ------ | ----------------------- |
+| [0]  | string | The URI of the token ID |
 
 ### supportsInterface
 
@@ -3204,15 +3204,15 @@ _The supportsInterface function allows to check if the contract implements an in
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                        |
+| ----------- | ------ | ---------------------------------- |
 | interfaceId | bytes4 | bytes4 identifier of the interface |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | boolean indicating whether the contract supports the interface or not |
+| Name | Type | Description                                                           |
+| ---- | ---- | --------------------------------------------------------------------- |
+| [0]  | bool | boolean indicating whether the contract supports the interface or not |
 
 ### updateTokenSaleStatus
 
@@ -3224,11 +3224,11 @@ _the updateTokenSaleStatus function sets the status of the token sale to failed 
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description |
+| ------- | ------- | ----------- |
 | tokenId | uint256 | The tokenId |
 
-### _beforeTokenTransfer
+### \_beforeTokenTransfer
 
 ```solidity
 function _beforeTokenTransfer(address operator, address from, address to, uint256[] ids, uint256[] amounts, bytes data) internal
@@ -3239,14 +3239,14 @@ It calls the parent implementation of before transfer and call testTokenTransfer
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| operator | address | The address that wants to transfer the token |
-| from | address | The address from which the token is being transferred |
-| to | address | The address to which the token is being transferred |
-| ids | uint256[] | The tokenIds of the token being transferred |
-| amounts | uint256[] | The amounts of the tokens being transferred |
-| data | bytes | Additional data |
+| Name     | Type      | Description                                           |
+| -------- | --------- | ----------------------------------------------------- |
+| operator | address   | The address that wants to transfer the token          |
+| from     | address   | The address from which the token is being transferred |
+| to       | address   | The address to which the token is being transferred   |
+| ids      | uint256[] | The tokenIds of the token being transferred           |
+| amounts  | uint256[] | The amounts of the tokens being transferred           |
+| data     | bytes     | Additional data                                       |
 
 ### isTokenSaleClosed
 
@@ -3258,15 +3258,15 @@ _Check if the token sale for a given token ID has closed_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name    | Type    | Description              |
+| ------- | ------- | ------------------------ |
 | tokenId | uint256 | the token ID of interest |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | whether the token sale has closed |
+| Name | Type | Description                       |
+| ---- | ---- | --------------------------------- |
+| [0]  | bool | whether the token sale has closed |
 
 ## AltrLicenseManager
 
@@ -3332,10 +3332,10 @@ _Event emitted when a user's discount is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| user | address | Address of the user whose discount is being set |
-| discount | uint256 | The discount being set for the user |
+| Name     | Type    | Description                                     |
+| -------- | ------- | ----------------------------------------------- |
+| user     | address | Address of the user whose discount is being set |
+| discount | uint256 | The discount being set for the user             |
 
 ### StakingServiceSet
 
@@ -3347,9 +3347,9 @@ _Event emitted when the staking service address is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| stakingService | address | Address of the staking service |
+| Name              | Type    | Description                        |
+| ----------------- | ------- | ---------------------------------- |
+| stakingService    | address | Address of the staking service     |
 | stakingServicePid | uint256 | The pool id of the staking service |
 
 ### StakingServicePidSet
@@ -3362,9 +3362,9 @@ _Event emitted when the staking service pool id is set_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| pid | uint256 | The pool id of the staking service |
+| Name | Type    | Description                        |
+| ---- | ------- | ---------------------------------- |
+| pid  | uint256 | The pool id of the staking service |
 
 ### StakedTokensForOracleEligibilitySet
 
@@ -3376,8 +3376,8 @@ _Event emitted when the amount of staked tokens required for oracle eligibility 
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                                                 |
+| ------ | ------- | ----------------------------------------------------------- |
 | amount | uint256 | The amount of staked tokens required for oracle eligibility |
 
 ### constructor
@@ -3390,11 +3390,11 @@ _Constructor to initialize the staking service and staked tokens for oracle elig
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| stakingService_ | address | The address of the staking service. |
-| stakingServicePid_ | uint256 | The pool id of the staking service. |
-| _stakedTokensForOracleEligibility | uint256 | The number of tokens required for oracle eligibility. |
+| Name                               | Type    | Description                                           |
+| ---------------------------------- | ------- | ----------------------------------------------------- |
+| stakingService\_                   | address | The address of the staking service.                   |
+| stakingServicePid\_                | uint256 | The pool id of the staking service.                   |
+| \_stakedTokensForOracleEligibility | uint256 | The number of tokens required for oracle eligibility. |
 
 ### setDiscount
 
@@ -3406,10 +3406,10 @@ _Allows the owner of the contract to set a discount for a given user_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| user | address | Address of the user for which the discount will be set |
-| discount | uint256 | Amount of the discount for the user (in percents) |
+| Name     | Type    | Description                                            |
+| -------- | ------- | ------------------------------------------------------ |
+| user     | address | Address of the user for which the discount will be set |
+| discount | uint256 | Amount of the discount for the user (in percents)      |
 
 ### setStakingService
 
@@ -3421,10 +3421,10 @@ _Allows the owner of the contract to set the staking service_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| stakingService_ | address | address of the staking service |
-| pid_ | uint256 | pool id of the staking service |
+| Name             | Type    | Description                    |
+| ---------------- | ------- | ------------------------------ |
+| stakingService\_ | address | address of the staking service |
+| pid\_            | uint256 | pool id of the staking service |
 
 ### setStakedTokensForOracleEligibility
 
@@ -3436,8 +3436,8 @@ _Allows the owner of the contract to set the required staked tokens for an oracl
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description                     |
+| ------ | ------- | ------------------------------- |
 | amount | uint256 | minimum amount of staked tokens |
 
 ### getDiscount
@@ -3450,15 +3450,15 @@ _returns the discount for a given user_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name | Type    | Description                                                  |
+| ---- | ------- | ------------------------------------------------------------ |
 | user | address | Address of the user for which the discount will be retrieved |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | uint256 | discount Amount of the discount for the user (in percents) |
+| Name | Type    | Description                                                |
+| ---- | ------- | ---------------------------------------------------------- |
+| [0]  | uint256 | discount Amount of the discount for the user (in percents) |
 
 ### isAQualifiedOracle
 
@@ -3470,15 +3470,15 @@ _returns true if the oracle has the minimum required staked tokens_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name   | Type    | Description           |
+| ------ | ------- | --------------------- |
 | oracle | address | address of the oracle |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool returns true if the oracle is qualified |
+| Name | Type | Description                                  |
+| ---- | ---- | -------------------------------------------- |
+| [0]  | bool | bool returns true if the oracle is qualified |
 
 ### supportsInterface
 
@@ -3490,17 +3490,17 @@ _Check if a given address supports the ILicenseManager interface_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                               |
+| ----------- | ------ | ----------------------------------------- |
 | interfaceId | bytes4 | 4 bytes long ID of the interface to check |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool returns true if the address implements the interface |
+| Name | Type | Description                                               |
+| ---- | ---- | --------------------------------------------------------- |
+| [0]  | bool | bool returns true if the address implements the interface |
 
-### _setStakingService
+### \_setStakingService
 
 ```solidity
 function _setStakingService(address stakingService_, uint256 pid_) internal
@@ -3510,10 +3510,10 @@ _This function is responsible for setting the staking service for AltrLicenseMan
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| stakingService_ | address | the address of the contract implementing the IStakingService interface |
-| pid_ | uint256 | the pool id of the staking service |
+| Name             | Type    | Description                                                            |
+| ---------------- | ------- | ---------------------------------------------------------------------- |
+| stakingService\_ | address | the address of the contract implementing the IStakingService interface |
+| pid\_            | uint256 | the pool id of the staking service                                     |
 
 ## LucidaoGovernanceNftReserve
 
@@ -3530,13 +3530,13 @@ _Emits when a ERC721 or ERC1155 tokens have been received and processed by the s
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name              | Type    | Description                                                             |
+| ----------------- | ------- | ----------------------------------------------------------------------- |
 | collectionAddress | address | The address of the ERC721 or ERC1155 contract that this token belong to |
-| from | address | Address from which the token came from |
-| operator | address | Address of the operator that received the token |
-| tokenId | uint256 | ID of the token that was received |
-| amount | uint256 | number of tokens that was received |
+| from              | address | Address from which the token came from                                  |
+| operator          | address | Address of the operator that received the token                         |
+| tokenId           | uint256 | ID of the token that was received                                       |
+| amount            | uint256 | number of tokens that was received                                      |
 
 ### NftBatchReceived
 
@@ -3548,13 +3548,13 @@ _Emits when a batch of ERC1155 tokens have been received and processed by the sm
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| collectionAddress | address | The address of the ERC1155 contract that this token belong to |
-| from | address | Address from which the tokens came from |
-| operator | address | Address of the operator that received the tokens |
-| tokenId | uint256[] | An array of token ids that were received |
-| amount | uint256[] | An array of the amount of tokens that were received |
+| Name              | Type      | Description                                                   |
+| ----------------- | --------- | ------------------------------------------------------------- |
+| collectionAddress | address   | The address of the ERC1155 contract that this token belong to |
+| from              | address   | Address from which the tokens came from                       |
+| operator          | address   | Address of the operator that received the tokens              |
+| tokenId           | uint256[] | An array of token ids that were received                      |
+| amount            | uint256[] | An array of the amount of tokens that were received           |
 
 ### receive
 
@@ -3572,11 +3572,11 @@ _Approves another address to transfer the given token ID_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type    | Description                                   |
+| ----------- | ------- | --------------------------------------------- |
 | nftContract | address | The address of the ERC721 contract to approve |
-| to | address | Address to be approved for the given token ID |
-| tokenId | uint256 | ID of the token to be approved |
+| to          | address | Address to be approved for the given token ID |
+| tokenId     | uint256 | ID of the token to be approved                |
 
 ### approveERC1155
 
@@ -3588,10 +3588,10 @@ _Approves another address to transfer all ERC1155 tokens belonging to this smart
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type    | Description                                    |
+| ----------- | ------- | ---------------------------------------------- |
 | nftContract | address | The address of the ERC1155 contract to approve |
-| to | address | Address to be approved |
+| to          | address | Address to be approved                         |
 
 ### onERC721Received
 
@@ -3605,18 +3605,18 @@ Then it calls the super function and emit an event of NftReceived_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| operator | address | The address that call the onERC721Received function in the smart contract |
-| from | address | The address from which the token is received |
-| tokenId | uint256 | The id of the received token |
-| data | bytes | Additional data with no specified format, sent by the ERC721 smart contract |
+| Name     | Type    | Description                                                                 |
+| -------- | ------- | --------------------------------------------------------------------------- |
+| operator | address | The address that call the onERC721Received function in the smart contract   |
+| from     | address | The address from which the token is received                                |
+| tokenId  | uint256 | The id of the received token                                                |
+| data     | bytes   | Additional data with no specified format, sent by the ERC721 smart contract |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes4 | The bytes4 identifier of the function that the super function call |
+| Name | Type   | Description                                                        |
+| ---- | ------ | ------------------------------------------------------------------ |
+| [0]  | bytes4 | The bytes4 identifier of the function that the super function call |
 
 ### onERC1155Received
 
@@ -3630,19 +3630,19 @@ Then it calls the super function and emit an event of NftReceived_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| operator | address | The address that call the onERC1155Received function in the smart contract |
-| from | address | The address from which the token is received |
-| tokenId | uint256 | The id of the received token |
-| amount | uint256 | The amount of token received |
-| data | bytes | Additional data with no specified format, sent by the ERC1155 smart contract |
+| Name     | Type    | Description                                                                  |
+| -------- | ------- | ---------------------------------------------------------------------------- |
+| operator | address | The address that call the onERC1155Received function in the smart contract   |
+| from     | address | The address from which the token is received                                 |
+| tokenId  | uint256 | The id of the received token                                                 |
+| amount   | uint256 | The amount of token received                                                 |
+| data     | bytes   | Additional data with no specified format, sent by the ERC1155 smart contract |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes4 | The bytes4 identifier of the function that the super function call |
+| Name | Type   | Description                                                        |
+| ---- | ------ | ------------------------------------------------------------------ |
+| [0]  | bytes4 | The bytes4 identifier of the function that the super function call |
 
 ### onERC1155BatchReceived
 
@@ -3654,19 +3654,19 @@ _Handle batch of ERC1155 tokens being received_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| operator | address | address that called safeBatchTransferFrom |
-| from | address | address that originally owned the NFTs |
-| ids | uint256[] | array of token IDs |
-| values | uint256[] | array of amounts |
-| data | bytes | data passed to safeBatchTransferFrom |
+| Name     | Type      | Description                               |
+| -------- | --------- | ----------------------------------------- |
+| operator | address   | address that called safeBatchTransferFrom |
+| from     | address   | address that originally owned the NFTs    |
+| ids      | uint256[] | array of token IDs                        |
+| values   | uint256[] | array of amounts                          |
+| data     | bytes     | data passed to safeBatchTransferFrom      |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bytes4 | bytes4 value of the function call's success or failure |
+| Name | Type   | Description                                            |
+| ---- | ------ | ------------------------------------------------------ |
+| [0]  | bytes4 | bytes4 value of the function call's success or failure |
 
 ### supportsInterface
 
@@ -3678,13 +3678,12 @@ _Function to check if the contract implements the required interface_
 
 #### Parameters
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
+| Name        | Type   | Description                     |
+| ----------- | ------ | ------------------------------- |
 | interfaceId | bytes4 | bytes4 The interface identifier |
 
 #### Return Values
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| [0] | bool | bool Returns true if the contract implements the interface, false otherwise |
-
+| Name | Type | Description                                                                 |
+| ---- | ---- | --------------------------------------------------------------------------- |
+| [0]  | bool | bool Returns true if the contract implements the interface, false otherwise |

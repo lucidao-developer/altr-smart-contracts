@@ -3,8 +3,9 @@ import { expect } from "chai";
 import { ethers, upgrades } from "hardhat";
 import { ADMIN_ROLE, NFT_MINTER_ROLE, NFT_MINTER_ROLE_MANAGER, VAULT_MANAGER_ROLE } from "../config/roles";
 import { AltrNftCollectionFactoryV2 } from "../typechain-types";
-import { getTokenId, mintNft, SOLIDITY_ERROR_MSG } from "./common";
-import { getUnixEpoch, setNetworkTimestampTo, toBytes1 } from "./utilities";
+import { SOLIDITY_ERROR_MSG } from "./common";
+import { toBytes1 } from "./utilities";
+import { getOrDeployNftCollectionFullFactory, getOrDeployNftCollectionLightFactory } from "../scripts/deployFunctions";
 
 const NFT_COLLECTION_FACTORY_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrNftCollectionFactory");
 const NFT_COLLECTION_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrNftCollection");
@@ -115,15 +116,16 @@ export function nftCollectionFactoryBehavior(): void {
         const symbol = "wtch_1";
         const newName = "watches_2";
         const newSymbol = "wtch_2";
-        const deadline = getUnixEpoch(10);
         await createCollection(this, name, symbol, this.signer, this.oracle1);
 
+        const nftCollectionFullFactory = await getOrDeployNftCollectionFullFactory(this.nftCollectionFactory.address);
+        const nftCollectionLightFactory = await getOrDeployNftCollectionLightFactory(this.nftCollectionFactory.address);
+
         const AltrNftCollectionFactoryV2 = await ethers.getContractFactory("AltrNftCollectionFactoryV2");
-        const altrNftCollectionFactoryV2 = (await upgrades.upgradeProxy(this.nftCollectionFactory.address, AltrNftCollectionFactoryV2, {
-            call: { fn: "migration", args: [] },
-        })) as AltrNftCollectionFactoryV2;
+        const altrNftCollectionFactoryV2 = (await upgrades.upgradeProxy(this.nftCollectionFactory.address, AltrNftCollectionFactoryV2, { call: { fn: "migrate", args: [nftCollectionFullFactory.address, nftCollectionLightFactory.address] } })) as AltrNftCollectionFactoryV2;
 
         expect(altrNftCollectionFactoryV2.address).to.be.eq(this.nftCollectionFactory.address);
+        await expect(altrNftCollectionFactoryV2.migrate(nftCollectionFullFactory.address, nftCollectionLightFactory.address)).to.be.revertedWith(NFT_COLLECTION_FACTORY_ERROR_MSG.ALREADY_MIGRATED);
         await (
             await altrNftCollectionFactoryV2
                 .connect(this.signer)
@@ -135,39 +137,64 @@ export function nftCollectionFactoryBehavior(): void {
                     this.minGracePeriod,
                     this.insolvencyGracePeriod,
                     this.freeVaultServicePeriod,
-                    deadline
                 )
         ).wait();
         let collectionsCount = await altrNftCollectionFactoryV2.createdContractCount();
         expect(collectionsCount).to.equal(2);
 
+        await (
+            await altrNftCollectionFactoryV2
+                .connect(this.signer)
+                .createCollectionLight(
+                    newName,
+                    newSymbol,
+                    this.oracle1.address
+                )
+        ).wait();
+        collectionsCount = await altrNftCollectionFactoryV2.createdContractCount();
+        expect(collectionsCount).to.equal(3);
+
         const firstCreatedCollection = await altrNftCollectionFactoryV2.createdContracts(0);
         const newCreatedCollection = await altrNftCollectionFactoryV2.createdContracts(1);
+        const lightCollection = await altrNftCollectionFactoryV2.createdContracts(2);
         expect(await altrNftCollectionFactoryV2.isAKnownCollection(firstCreatedCollection.collection)).to.be.eq(true);
         expect(await altrNftCollectionFactoryV2.isAKnownCollection(newCreatedCollection.collection)).to.be.eq(true);
+        expect(await altrNftCollectionFactoryV2.isAKnownCollection(lightCollection.collection)).to.be.eq(true);
+
+        expect(firstCreatedCollection.name).to.equal(name);
+        expect(firstCreatedCollection.symbol).to.equal(symbol);
+        expect(firstCreatedCollection.oracle).to.equal(this.oracle1.address);
+
+        expect(newCreatedCollection.name).to.eq(newName);
+        expect(newCreatedCollection.symbol).to.equal(newSymbol);
+        expect(newCreatedCollection.oracle).to.equal(this.oracle1.address);
+
+        expect(lightCollection.name).to.equal(newName);
+        expect(lightCollection.symbol).to.equal(newSymbol);
+        expect(lightCollection.oracle).to.equal(this.oracle1.address);
 
         expect(firstCreatedCollection.tokenVersion).to.be.eq(toBytes1("1"));
 
-        expect(newCreatedCollection.tokenVersion).to.be.eq(toBytes1("2"));
-
-        //Cannot cast parent to child contract
-        await expect(
-            (await ethers.getContractAt("AltrNftCollectionV2", firstCreatedCollection.collection)).sellDeadline()
-        ).to.be.revertedWithoutReason();
-
-        //Can cast child to parent contract
-        const newCollectionWrongCast = await ethers.getContractAt("AltrNftCollection", newCreatedCollection.collection);
-        expect(await newCollectionWrongCast.name()).to.be.eq(newName);
-
-        const newCollectionV2 = await ethers.getContractAt("AltrNftCollectionV2", newCreatedCollection.collection);
-        expect(await newCollectionV2.sellDeadline()).to.be.eq(deadline);
-        await setNetworkTimestampTo(deadline);
-
-        const transactionReceipt = await mintNft(newCollectionV2, "", this.oracle1);
-        const tokenId = getTokenId(transactionReceipt);
-
-        await expect(
-            newCollectionV2.connect(this.oracle1).transferFrom(this.oracle1.address, this.owner1.address, tokenId)
-        ).to.be.revertedWith("Sell ended");
+        expect(newCreatedCollection.tokenVersion).to.be.eq(toBytes1("1"));
     });
+
+    it("Should let upgrade collection only upgrading factory in V2 implementation", async function () {
+        const nftCollectionFullFactory = await getOrDeployNftCollectionFullFactory(this.nftCollectionFactory.address);
+        const nftCollectionLightFactory = await getOrDeployNftCollectionLightFactory(this.nftCollectionFactory.address);
+
+        const AltrNftCollectionFactoryV2 = await ethers.getContractFactory("AltrNftCollectionFactoryV2");
+        const altrNftCollectionFactoryV2 = (await upgrades.upgradeProxy(this.nftCollectionFactory.address, AltrNftCollectionFactoryV2, { call: { fn: "migrate", args: [nftCollectionFullFactory.address, nftCollectionLightFactory.address] } })) as AltrNftCollectionFactoryV2;
+
+        const AltrNftCollectionFullFactoryV2 = await ethers.getContractFactory("AltrNftCollectionFullFactoryV2");
+        const altrNftCollectionFullFactoryV2 = await AltrNftCollectionFullFactoryV2.deploy();
+        await altrNftCollectionFullFactoryV2.transferOwnership(this.nftCollectionFactory.address);
+
+        await altrNftCollectionFactoryV2.setNftCollectionFullFactory(altrNftCollectionFullFactoryV2.address, ethers.utils.hexZeroPad(ethers.utils.hexlify(2), 1));
+
+        const collectionV2Address = await createCollection(this, "name", "sym2", this.signer, this.oracle1);
+
+        const collectionV2 = await ethers.getContractAt("AltrNftCollectionV2", collectionV2Address);
+        expect(await collectionV2.isV2()).to.be.true;
+        expect((await altrNftCollectionFactoryV2.createdContracts(0)).tokenVersion).to.eq(ethers.utils.hexZeroPad(ethers.utils.hexlify(2), 1));
+    })
 }

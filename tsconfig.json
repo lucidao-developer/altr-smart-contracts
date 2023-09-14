@@ -14,5 +14,7 @@
     "./typechain",
     "./typechain-types"
   ],
-  "files": ["./hardhat.config.ts"]
+  "files": [
+    "./hardhat.config.ts"
+  ]
 }

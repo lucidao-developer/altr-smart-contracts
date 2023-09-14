@@ -365,6 +365,11 @@ export class SOLIDITY_ERROR_MSG {
     public SALE_MIN_FRACTION_MUST_BE_ABOVE_0 = `${this.contractName}: sale min fractions must be above 0`;
     public FRACTIONS_AMOUNT_CANNOT_BE_0 = `${this.contractName}: fractions amount cannot be 0`;
     public CLOSING_TIME_MUST_BE_SET_AFTER_MINIMUM = `${this.contractName}: closing time must be greater than opening time plus min opening time period`;
+    public AMOUNT_EXCEEDS_BOUNDARIES = `${this.contractName}: amount exceeds boundaries`;
+    public ALREADY_MIGRATED = `${this.contractName}: already migrated`;
+    public CANNOT_SET_FUTURE_EVALUATION = `${this.contractName}: cannot set future evaluation`;
+    public NEW_VALUATION_MUST_COME_AFTER_THE_LAST = `${this.contractName}: new timestamp must come after the last one`;
+    public MUST_BE_REGISTERED_COLLECTION = `${this.contractName}: must be registered collection`;
     public MISSING_ROLE = (address: string, role: string) => `AccessControl: account ${address.toLowerCase()} is missing role ${role}`;
     public DOES_NOT_SUPPORT_INTERFACE = (correctInterface: string) =>
         `${this.contractName}: does not support ${correctInterface} interface`;

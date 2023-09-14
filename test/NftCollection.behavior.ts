@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ContractReceipt } from "ethers";
-import { freeVaultServicePeriod, IPFS_BASE_URL, ZERO_ADDRESS } from "../config/config";
+import { freeVaultServicePeriod, IPFS_BASE_URL } from "../config/config";
 import { ADMIN_ROLE, NFT_MINTER_ROLE, NFT_MINTER_ROLE_MANAGER, VAULT_MANAGER_ROLE } from "../config/roles";
 import { getTokenId, mintNft, SOLIDITY_ERROR_MSG, UNINITIALIZE_UINT256 } from "./common";
 import { getUnixEpoch, setNetworkTimestampTo } from "./utilities";
@@ -112,7 +112,7 @@ export function nftCollectionBehavior(): void {
         await this.nftCollection.connect(this.oracle1).setApprovalForAll(this.signer.address, true);
     });
 
-    it("Check Burn on nft collection", async function () {
+    it("Burn on nft collection", async function () {
         const tokenUri = "fakeTokenUriv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu";
         let transactionReceipt = await mintNft(this.nftCollection, tokenUri, this.oracle1);
         let tokenId = getTokenId(transactionReceipt);
@@ -122,6 +122,8 @@ export function nftCollectionBehavior(): void {
         await (await this.nftCollection.connect(this.oracle1).transferFrom(this.oracle1.address, this.owner1.address, tokenId)).wait();
         //burn token after transfer from minter to new owner
         let realOwner = await this.nftCollection.ownerOf(tokenId);
+        expect(await this.nftCollection.balanceOf(this.oracle1.address)).to.equal(0);
+        expect(await this.nftCollection.balanceOf(this.owner1.address)).to.equal(1);
         expect(realOwner).to.be.equal(this.owner1.address);
         await expect(this.nftCollection.connect(this.oracle1).burn(tokenId)).to.be.revertedWith(NFT_COLLECTION_ERROR_MSG.NOT_TOKEN_OWNER);
 
@@ -210,6 +212,8 @@ export function nftCollectionBehavior(): void {
         let tokenId = getTokenId(transactionReceipt);
 
         await (await this.nftCollection.connect(this.oracle1).transferFrom(this.oracle1.address, this.owner1.address, tokenId)).wait();
+        expect(await this.nftCollection.balanceOf(this.oracle1.address)).to.equal(0)
+        expect(await this.nftCollection.balanceOf(this.owner1.address)).to.equal(1)
 
         await expect(
             this.nftCollection.connect(this.oracle1).transferFrom(this.owner1.address, this.oracle1.address, tokenId)
@@ -218,6 +222,8 @@ export function nftCollectionBehavior(): void {
         await (await this.nftCollection.connect(this.owner1).approve(this.oracle1.address, tokenId)).wait();
 
         await (await this.nftCollection.connect(this.oracle1).transferFrom(this.owner1.address, this.owner2.address, tokenId)).wait();
+        expect(await this.nftCollection.balanceOf(this.owner1.address)).to.equal(0)
+        expect(await this.nftCollection.balanceOf(this.owner2.address)).to.equal(1)
 
         const tokenOwner = await this.nftCollection.ownerOf(tokenId);
         expect(tokenOwner).to.be.equal(this.owner2.address);
@@ -248,6 +254,7 @@ export function nftCollectionBehavior(): void {
         await expect(this.nftCollection.connect(this.signer).seize(origTokenId)).to.be.revertedWith(NFT_COLLECTION_ERROR_MSG.CANNOT_SEIZE);
 
         let grace_months = await this.nftCollection.insolvencyGracePeriod();
+
         await setNetworkTimestampTo(grace_months.add(newDeadline).sub(1).toNumber());
 
         await expect(this.nftCollection.seize(origTokenId)).to.be.revertedWith(NFT_COLLECTION_ERROR_MSG.CANNOT_SEIZE);
@@ -272,6 +279,8 @@ export function nftCollectionBehavior(): void {
         ).wait();
 
         await this.nftCollection.connect(this.owner2).transferFrom(this.governanceNftTreasury.address, this.owner2.address, tokenId);
+        expect(await this.nftCollection.balanceOf(this.governanceNftTreasury.address)).to.equal(0)
+        expect(await this.nftCollection.balanceOf(this.owner2.address)).to.equal(1)
 
         realOwner = await this.nftCollection.ownerOf(tokenId);
         expect(realOwner).to.be.equal(this.owner2.address);

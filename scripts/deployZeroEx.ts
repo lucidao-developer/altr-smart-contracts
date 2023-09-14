@@ -134,9 +134,6 @@ export async function deployZeroExAndFullMigrate() {
     await migrator.migrateZeroEx(deployer.address, zeroEx.address, _features, migrateOpts);
     const migrateTransaction = await erc721Orders.populateTransaction.migrate();
     const zeroExMigrator = new ethers.Contract(zeroEx.address, IOwnableFeature.abi, deployer);
-    const tx = await zeroExMigrator.migrate(erc721Orders.address, migrateTransaction.data, deployer.address);
-    console.log(tx);
+    await zeroExMigrator.migrate(erc721Orders.address, migrateTransaction.data, deployer.address);
     return zeroEx;
 }
-
-deployZeroExAndFullMigrate();

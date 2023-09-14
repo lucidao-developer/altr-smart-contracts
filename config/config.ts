@@ -42,6 +42,8 @@ let altrFractionsSaleAddress: string | undefined = "";
 let altrFractionsBuyoutAddress: string | undefined = "";
 
 let tradeCheckerAddress: string | undefined = "";
+let nftCollectionFullFactoryAddress: string | undefined = "";
+let nftCollectionLightFactoryAddress: string | undefined = "";
 
 const stakedTokens = 1000;
 const servicePid = 0;
@@ -68,6 +70,9 @@ const tiers = {
     fractionsAmounts: [500, 1000, 4000, 6000, 10000],
 };
 
+const setErc1155MetadataUri = (saleContract: string) =>
+    `https://${onPolygonMainnetChain() ? "" : "test"}api.altr.trade/api/erc1155metadata/${saleContract.toLowerCase()}/`;
+
 let erc1155MetadataUri = "https://testapi.altr.trade/api/erc1155metadata/";
 
 let zeroExAddress = "0x4Fb72262344034e034fCE3D9c701fD9213A55260";
@@ -77,6 +82,7 @@ if (onPolygonMainnetChain()) {
     governanceTreasuryAddress = process.env.GovernanceTreasuryAddress;
     fusdtAddress = process.env.FusdtAddress;
     allowListAddress = process.env.AllowListAddress;
+    altrFractionsAddress = process.env.AltrFractionsAddress;
 
     erc1155MetadataUri = "https://api.altr.trade/api/erc1155metadata/";
     zeroExAddress = "0xDef1C0ded9bec7F1a1670819833240f027b25EfF";
@@ -110,6 +116,9 @@ export {
     buyoutOpenTimePeriod,
     tiers,
     erc1155MetadataUri,
+    setErc1155MetadataUri,
     zeroExAddress,
     tradeCheckerAddress,
+    nftCollectionFullFactoryAddress,
+    nftCollectionLightFactoryAddress,
 };

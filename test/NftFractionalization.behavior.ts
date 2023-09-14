@@ -1,10 +1,6 @@
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
-import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { BigNumber } from "ethers";
-import { ethers, network } from "hardhat";
-import { buyoutFee, tiers } from "../config/config";
-import { SALE_ISSUER_ROLE } from "../config/roles";
+import { mintBigNumberfUsdtTo, mintfUsdtTo, restoreSnapshot, setSnapshot } from "./utilities";
 import {
     buildFractionSaleScenario,
     buildScenario1,
@@ -15,7 +11,11 @@ import {
     buildSuccessfulFractionsSaleScenario,
     SOLIDITY_ERROR_MSG,
 } from "./common";
-import { mintBigNumberfUsdtTo, mintfUsdtTo, restoreSnapshot, setSnapshot } from "./utilities";
+import { ethers, network } from "hardhat";
+import { SALE_ISSUER_ROLE } from "../config/roles";
+import { time } from "@nomicfoundation/hardhat-network-helpers";
+import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import { buyoutFee, tiers } from "../config/config";
 
 const NFT_FRACTIONS_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrFractions");
 const NFT_FRACTIONS_SALE_ERROR_MSG = new SOLIDITY_ERROR_MSG("AltrFractionsSale");
@@ -367,11 +367,22 @@ export function nftFractionalizationBehavior() {
         await expect(this.altrFractionsBuyout.executeBuyout(scenarioData.buyout.id))
             .to.changeTokenBalances(
                 this.fUsdt,
-                [this.signer.address, (await this.altrFractionsBuyout.buyouts(scenarioData.buyout.id))[2], this.governanceTreasury.address],
+                [
+                    this.signer.address,
+                    (await this.altrFractionsBuyout.buyouts(scenarioData.buyout.id)).buyoutTokenManager,
+                    this.governanceTreasury.address,
+                ],
                 [-buyoutPrice.add(fee), buyoutPrice, fee]
             )
             .and.to.emit(this.altrFractionsBuyout, "BuyoutExecuted")
-            .withArgs(scenarioData.buyout.id, this.signer.address, 400, scenarioData.buyout.buyout.buyoutPrice.mul(100));
+            .withArgs(
+                scenarioData.buyout.id,
+                this.signer.address,
+                400,
+                scenarioData.buyout.buyout.buyoutPrice.mul(100),
+                this.altrFractions.address,
+                scenarioData.fractionSale.id
+            );
 
         const nftCollection = await ethers.getContractAt("AltrNftCollection", scenarioData.fractionSale.sale.nftCollection);
         await expect(
@@ -466,7 +477,7 @@ export function nftFractionalizationBehavior() {
         const fractionsBalance = await this.altrFractions.balanceOf(this.signer.address, scenarioData.fractionSale.id);
         await expect(this.altrFractionsBuyout.buyoutUnsupervised(scenarioData.fractionSale.id))
             .to.emit(this.altrFractionsBuyout, "BuyoutExecuted")
-            .withArgs(1, this.signer.address, fractionsBalance, 0);
+            .withArgs(1, this.signer.address, fractionsBalance, 0, this.altrFractions.address, scenarioData.fractionSale.id);
     });
 
     it("Allows buys only from whitelisted addresses", async function () {
@@ -517,7 +528,14 @@ export function nftFractionalizationBehavior() {
                 [-buyoutPrice.add(fee), buyoutPrice, fee]
             )
             .and.to.emit(this.altrFractionsBuyout, "BuyoutExecuted")
-            .withArgs(scenarioData.buyout.id, this.signer.address, 400, scenarioData.buyout.buyout.buyoutPrice.mul(100));
+            .withArgs(
+                scenarioData.buyout.id,
+                this.signer.address,
+                400,
+                scenarioData.buyout.buyout.buyoutPrice.mul(100),
+                this.altrFractions.address,
+                scenarioData.fractionSale.id
+            );
 
         await expect(this.altrFractionsSale.connect(this.oracle1).withdrawFractionsKept(scenarioData.fractionSale.id))
             .to.emit(this.altrFractionsSale, "FractionsKeptWithdrawn")

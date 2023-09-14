@@ -136,7 +136,6 @@ export default function () {
                 .to.emit(this.nftCollateralRetriever, "RedeemRequest")
                 .withArgs(this.nftCollection.address, this.oracle1.address, this.oracle1.address, 1);
         });
-        it("If signer is an Oracle and redemption fee is greather than 0 than should emit an event (???...probably wrong)", async function () { });
     });
     describe("getCollectionFactory", function () {
         it("Should return the address of nft collection factory", async function () {

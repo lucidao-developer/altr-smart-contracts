@@ -24,6 +24,9 @@ import {
     tiers,
     tradeCheckerAddress,
     zeroExAddress,
+    setErc1155MetadataUri,
+    nftCollectionFullFactoryAddress,
+    nftCollectionLightFactoryAddress,
 } from "../config/config";
 import { ADMIN_ROLE, TRADE_CHECKER_ROLE } from "../config/roles";
 import {
@@ -39,12 +42,14 @@ import {
     AltrTestLicenseManager,
     AnyswapV3ERC20,
     FeeManagerTester,
-    IFeeManager,
     IStakingService,
     IZeroEx,
     LucidaoGovernanceNftReserve,
     LucidaoGovernanceReserve,
     TestFarm,
+    INftCollectionFactory,
+    AltrNftCollectionFullFactory,
+    AltrNftCollectionLightFactory
 } from "../typechain-types";
 import { isProduction, skipContractVerify } from "./utilities";
 
@@ -79,6 +84,7 @@ export async function deployNftCollection(
     await verifyContract(contractName, {
         address: altrNftCollection.address,
         constructorArguments: contractArgs,
+        contract: `contracts/${contractName}.sol:${contractName}`
     });
 
     return altrNftCollection;
@@ -124,7 +130,6 @@ export async function getOrDeployNftCollateralRetriever(
 
     console.log(`\nDeploying contract ${contractName}`);
 
-    // DEPLOY NFT COLLECTION
     const AltrNftCollateralRetriever = await ethers.getContractFactory(contractName);
     const contractArgs = [nftCollectionFactory.address, feeManager.address];
     const altrNftCollateralRetriever = (await upgrades.deployProxy(AltrNftCollateralRetriever, contractArgs, {
@@ -190,7 +195,7 @@ export async function getOrDeployLicenseManager(
 
     await verifyContract(contractName, {
         address: altrLicenseManager.address,
-        contract: "contracts/AltrLicenseManager.sol:AltrLicenseManager",
+        contract: `contracts/${contractName}.sol:${contractName}`,
         constructorArguments: contractArgs,
     });
 
@@ -219,7 +224,7 @@ export async function getOrDeployLucidaoGovernanceNftReserve(luciDaoTimelockAddr
 
     await verifyContract(contractName, {
         address: governanceNftReserve.address,
-        contract: "contracts/LucidaoGovernanceNftReserve.sol:LucidaoGovernanceNftReserve",
+        contract: `contracts/${contractName}.sol:${contractName}`,
         constructorArguments: contractArgs,
     });
 
@@ -245,7 +250,7 @@ export async function getOrDeployFractions(): Promise<AltrFractions> {
 
     await verifyContract(contractName, {
         address: altrFractions.address,
-        contract: contractName,
+        contract: `contracts/${contractName}.sol:${contractName}`,
         constructorArguments: contractArgs,
     });
 
@@ -273,11 +278,12 @@ export async function getOrDeployFractionsSale(
     console.log(`${contractName} address: ${altrFractionsSale.address}`);
 
     await (await altrFractions.setContractSale(altrFractionsSale.address)).wait();
+    await (await altrFractions.setUri(setErc1155MetadataUri(altrFractionsSale.address))).wait();
     await (await altrFractions.grantRole(ADMIN_ROLE, altrFractionsSale.address)).wait();
 
     await verifyContract(contractName, {
         address: altrFractionsSale.address,
-        contract: contractName,
+        contract: `contracts/${contractName}.sol:${contractName}`,
         constructorArguments: contractArgs,
     });
 
@@ -318,15 +324,69 @@ export async function getOrDeployFractionsBuyout(
 
     await verifyContract(contractName, {
         address: altrFractionsBuyout.address,
-        contract: contractName,
+        contract: `contracts/${contractName}.sol:${contractName}`,
         constructorArguments: contractArgs,
     });
 
     return altrFractionsBuyout;
 }
 
+export async function getOrDeployNftCollectionFullFactory(nftCollectionFactoryAddress: string): Promise<AltrNftCollectionFullFactory> {
+    const contractName = "AltrNftCollectionFullFactory";
+
+    if (nftCollectionFullFactoryAddress) {
+        console.log(`\nFound contract ${contractName} implementation at address ${nftCollectionFullFactoryAddress}`);
+        return await ethers.getContractAt(contractName, nftCollectionFullFactoryAddress);
+    }
+
+    console.log(`\nDeploying contract ${contractName}`);
+
+    const contractArgs = [] as const;
+    const AltrNftCollectionFullFactory = await ethers.getContractFactory(contractName);
+    const altrNftCollectionFullFactory = await AltrNftCollectionFullFactory.deploy(...contractArgs);
+    await altrNftCollectionFullFactory.deployed();
+    console.log(`${contractName} address: ${altrNftCollectionFullFactory.address}`);
+
+    await altrNftCollectionFullFactory.transferOwnership(nftCollectionFactoryAddress);
+
+    await verifyContract(contractName, {
+        address: altrNftCollectionFullFactory.address,
+        contract: `contracts/${contractName}.sol:${contractName}`,
+        constructorArguments: contractArgs,
+    });
+
+    return altrNftCollectionFullFactory;
+}
+
+export async function getOrDeployNftCollectionLightFactory(nftCollectionFactoryAddress: string): Promise<AltrNftCollectionLightFactory> {
+    const contractName = "AltrNftCollectionLightFactory";
+
+    if (nftCollectionLightFactoryAddress) {
+        console.log(`\nFound contract ${contractName} implementation at address ${nftCollectionLightFactoryAddress}`);
+        return await ethers.getContractAt(contractName, nftCollectionLightFactoryAddress);
+    }
+
+    console.log(`\nDeploying contract ${contractName}`);
+
+    const contractArgs = [] as const;
+    const AltrNftCollectionLightFactory = await ethers.getContractFactory(contractName);
+    const altrNftCollectionLightFactory = await AltrNftCollectionLightFactory.deploy(...contractArgs);
+    await altrNftCollectionLightFactory.deployed();
+    console.log(`${contractName} address: ${altrNftCollectionLightFactory.address}`);
+
+    await altrNftCollectionLightFactory.transferOwnership(nftCollectionFactoryAddress);
+
+    await verifyContract(contractName, {
+        address: altrNftCollectionLightFactory.address,
+        contract: `contracts/${contractName}.sol:${contractName}`,
+        constructorArguments: contractArgs,
+    });
+
+    return altrNftCollectionLightFactory;
+}
+
 // *** Proxied Collateral Retriever ***
-async function verifyProxiedContractImplementation(contractName: string, contract: Contract, contractParameter: string) {
+export async function verifyProxiedContractImplementation(contractName: string, contract: Contract, contractParameter: string) {
     try {
         const contractImplAddress = await getImplementationAddress(network.provider, contract.address);
         console.log(`Found ${contractName} implementation in proxied contract json. Impl address: ${contractImplAddress}`);
@@ -372,6 +432,8 @@ export async function getOrDeployAllowList() {
 
     await verifyContract(contractName, {
         address: altrAllowList.address,
+        contract: `contracts/${contractName}.sol:${contractName}`,
+        constructorArguments: []
     });
 
     return altrAllowList;
@@ -387,8 +449,10 @@ export async function getOrDeployTradeChecker(zeroEx: IZeroEx, allowList: AltrAl
 
     console.log(`\nDeploying contract ${contractName}`);
 
+    const constructorArguments = [zeroEx.address, allowList.address, feeManager.address] as const;
+
     const AltrTradeChecker = await ethers.getContractFactory(contractName);
-    const altrTradeChecker = await AltrTradeChecker.deploy(zeroEx.address, allowList.address, feeManager.address);
+    const altrTradeChecker = await AltrTradeChecker.deploy(...constructorArguments);
     await altrTradeChecker.deployed();
     console.log(`${contractName} address ${altrTradeChecker.address}`);
 
@@ -396,6 +460,8 @@ export async function getOrDeployTradeChecker(zeroEx: IZeroEx, allowList: AltrAl
 
     await verifyContract(contractName, {
         address: altrTradeChecker.address,
+        contract: `contracts/${contractName}.sol:${contractName}`,
+        constructorArguments: constructorArguments
     });
 
     return altrTradeChecker;

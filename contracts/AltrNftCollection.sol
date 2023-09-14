@@ -195,7 +195,7 @@ contract AltrNftCollection is ERC721URIStorage, ERC721Enumerable, ERC721Burnable
 	 * @param interfaceId The interfaceId being checked for support
 	 * @return True if the contract supports the interface, false otherwise
 	 */
-	function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721Enumerable, AccessControl) returns (bool) {
+	function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721URIStorage, ERC721Enumerable, AccessControl) returns (bool) {
 		return interfaceId == type(INftCollectionVaultService).interfaceId || super.supportsInterface(interfaceId);
 	}
 

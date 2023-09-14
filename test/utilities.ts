@@ -99,7 +99,7 @@ function getFunctionsNameFromContractSourceName(sourceName: string): string[] {
         try {
             contractFile = fs.readFileSync(contractPath, "utf8");
         } catch (e) {
-            throw e;
+            throw Error("Invalid source name");
         }
     }
     const contract = contractFile.split(" ");

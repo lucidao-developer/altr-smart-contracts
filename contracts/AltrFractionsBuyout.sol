@@ -93,7 +93,14 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 	 * @param boughtOutFractions Amount of fractions bought out
 	 * @param buyoutAmount Amount paid for the buyout
 	 */
-	event BuyoutExecuted(uint256 indexed buyoutId, address indexed executor, uint256 boughtOutFractions, uint256 buyoutAmount);
+	event BuyoutExecuted(
+		uint256 indexed buyoutId,
+		address indexed executor,
+		uint256 boughtOutFractions,
+		uint256 buyoutAmount,
+		address Fractions,
+		uint256 tokenId
+	);
 	/**
 	 * @dev Emitted when the minimum fractions required for a buyout is set
 	 * @param buyoutMinFractions The value of the minimum fractions required for a buyout
@@ -232,7 +239,7 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 
 		feeManager.setSaleInfo(address(fractionsSale.nftCollection), fractionsSale.nftId, address(fractionsSale.buyToken), firstSalePrice);
 
-		emit BuyoutExecuted(currentBuyoutId, msg.sender, fractionsBalance, 0);
+		emit BuyoutExecuted(currentBuyoutId, msg.sender, fractionsBalance, 0, address(altrFractions), saleId);
 	}
 
 	/**
@@ -272,7 +279,7 @@ contract AltrFractionsBuyout is AccessControl, ReentrancyGuard {
 
 		feeManager.setSaleInfo(address(fractionsSale.nftCollection), fractionsSale.nftId, address(fractionsSale.buyToken), firstSalePrice);
 
-		emit BuyoutExecuted(buyoutId, msg.sender, fractionsBalance, buyoutAmount);
+		emit BuyoutExecuted(buyoutId, msg.sender, fractionsBalance, buyoutAmount, address(altrFractions), buyout.fractionSaleId);
 	}
 
 	/**

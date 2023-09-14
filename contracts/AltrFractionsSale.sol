@@ -67,7 +67,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 	 * @param saleId The ID of the sale
 	 * @param fractionsSale The struct containing details of the Fractions sale
 	 */
-	event NewFractionsSale(uint256 indexed saleId, FractionsSale fractionsSale);
+	event NewFractionsSale(uint256 indexed saleId, FractionsSale fractionsSale, address altrFractions);
 	/**
 	 * @dev Emitted when someone purchases fractions
 	 * @param saleId The ID of the sale
@@ -222,7 +222,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 		nftCollection.setApprovalForAll(altrFractionsBuyout, true);
 		altrFractions.mint(address(this), currentSaleId, fractionsAmount, "");
 
-		emit NewFractionsSale(currentSaleId, fractionsSale);
+		emit NewFractionsSale(currentSaleId, fractionsSale, address(altrFractions));
 	}
 
 	/**
@@ -442,8 +442,8 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 	 * @param _feeManager The address of the fee manager contract.
 	 */
 	function _setFeeManager(address _feeManager) internal {
-		require(_feeManager != address(0), "AltrFractionsBuyout: cannot be null address");
-		require(_feeManager.supportsInterface(type(IFeeManager).interfaceId), "AltrFractionsBuyout: does not support IFeeManager interface");
+		require(_feeManager != address(0), "AltrFractionsSale: cannot be null address");
+		require(_feeManager.supportsInterface(type(IFeeManager).interfaceId), "AltrFractionsSale: does not support IFeeManager interface");
 
 		feeManager = IFeeManager(_feeManager);
 	}
@@ -458,7 +458,7 @@ contract AltrFractionsSale is AccessControl, ReentrancyGuard, ERC721Holder, ERC1
 		require(priceLimits[0] == 0, "AltrFractionsSale: price limits array must start with 0");
 		for (uint256 i; i < priceLimits.length; i++) {
 			bool success = tiers.set(priceLimits[i], fractionsAmounts[i]);
-			require(success, "AltrFractionsSale: tiers setting fails");
+			require(success, "AltrFractionsSale: tiers setting failed");
 		}
 	}
 }

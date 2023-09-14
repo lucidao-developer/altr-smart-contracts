@@ -1,18 +1,23 @@
 diff --git a/node_modules/@0x/contracts-zero-ex/contracts/src/external/FeeCollector.sol b/node_modules/@0x/contracts-zero-ex/contracts/src/external/FeeCollector.sol
-index 6d377d2..4f461dc 100644
+index 0445265..bb7e61a 100644
 --- a/node_modules/@0x/contracts-zero-ex/contracts/src/external/FeeCollector.sol
 +++ b/node_modules/@0x/contracts-zero-ex/contracts/src/external/FeeCollector.sol
-@@ -26,28 +26,28 @@ import "../vendor/v3/IStaking.sol";
+@@ -21,28 +21,28 @@ import "../vendor/v3/IStaking.sol";
  
  /// @dev The collector contract for protocol fees
  contract FeeCollector is AuthorizableV06 {
 -    /// @dev Allow ether transfers to the collector.
 -    receive() external payable {}
--
++	/// @dev Allow ether transfers to the collector.
++	receive() external payable {}
+ 
 -    constructor() public {
 -        _addAuthorizedAddress(msg.sender);
 -    }
--
++	constructor() public {
++		_addAuthorizedAddress(msg.sender);
++	}
+ 
 -    /// @dev   Approve the staking contract and join a pool. Only an authority
 -    ///        can call this.
 -    /// @param weth The WETH contract.
@@ -22,21 +27,6 @@ index 6d377d2..4f461dc 100644
 -        weth.approve(address(staking), type(uint256).max);
 -        staking.joinStakingPoolAsMaker(poolId);
 -    }
--
--    /// @dev Convert all held ether to WETH. Only an authority can call this.
--    /// @param weth The WETH contract.
--    function convertToWeth(IEtherTokenV06 weth) external onlyAuthorized {
--        if (address(this).balance > 0) {
--            weth.deposit{value: address(this).balance}();
--        }
--    }
-+	/// @dev Allow ether transfers to the collector.
-+	receive() external payable {}
-+
-+	constructor() public {
-+		_addAuthorizedAddress(msg.sender);
-+	}
-+
 +	/// @dev   Approve the staking contract and join a pool. Only an authority
 +	///        can call this.
 +	/// @param weth The WETH contract.
@@ -46,7 +36,14 @@ index 6d377d2..4f461dc 100644
 +		weth.approve(address(staking), (2 ** 256 - 1));
 +		staking.joinStakingPoolAsMaker(poolId);
 +	}
-+
+ 
+-    /// @dev Convert all held ether to WETH. Only an authority can call this.
+-    /// @param weth The WETH contract.
+-    function convertToWeth(IEtherTokenV06 weth) external onlyAuthorized {
+-        if (address(this).balance > 0) {
+-            weth.deposit{value: address(this).balance}();
+-        }
+-    }
 +	/// @dev Convert all held ether to WETH. Only an authority can call this.
 +	/// @param weth The WETH contract.
 +	function convertToWeth(IEtherTokenV06 weth) external onlyAuthorized {
@@ -56,10 +53,10 @@ index 6d377d2..4f461dc 100644
 +	}
  }
 diff --git a/node_modules/@0x/contracts-zero-ex/contracts/src/features/interfaces/INativeOrdersFeature.sol b/node_modules/@0x/contracts-zero-ex/contracts/src/features/interfaces/INativeOrdersFeature.sol
-index 0ac96f8..b760b59 100644
+index 85b8c65..a405d80 100644
 --- a/node_modules/@0x/contracts-zero-ex/contracts/src/features/interfaces/INativeOrdersFeature.sol
 +++ b/node_modules/@0x/contracts-zero-ex/contracts/src/features/interfaces/INativeOrdersFeature.sol
-@@ -27,350 +27,304 @@ import "./INativeOrdersEvents.sol";
+@@ -22,350 +22,304 @@ import "./INativeOrdersEvents.sol";
  
  /// @dev Feature for interacting with limit orders.
  interface INativeOrdersFeature is INativeOrdersEvents {
@@ -711,10 +708,10 @@ index 0ac96f8..b760b59 100644
 +	function isValidOrderSigner(address maker, address signer) external view returns (bool isAllowed);
  }
 diff --git a/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersInfo.sol b/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersInfo.sol
-index 7a33b3d..7724e7d 100644
+index 9207135..436818f 100644
 --- a/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersInfo.sol
 +++ b/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersInfo.sol
-@@ -31,308 +31,261 @@ import "../libs/LibNativeOrder.sol";
+@@ -26,308 +26,261 @@ import "../libs/LibNativeOrder.sol";
  
  /// @dev Feature for getting info about limit and RFQ orders.
  abstract contract NativeOrdersInfo is FixinEIP712, FixinTokenSpender {
@@ -1262,10 +1259,10 @@ index 7a33b3d..7724e7d 100644
 +	}
  }
 diff --git a/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersSettlement.sol b/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersSettlement.sol
-index 3028a0d..967a568 100644
+index 164281e..20341a1 100644
 --- a/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersSettlement.sol
 +++ b/node_modules/@0x/contracts-zero-ex/contracts/src/features/native_orders/NativeOrdersSettlement.sol
-@@ -36,491 +36,430 @@ import "./NativeOrdersCancellation.sol";
+@@ -31,491 +31,430 @@ import "./NativeOrdersCancellation.sol";
  import "./NativeOrdersProtocolFees.sol";
  
  /// @dev Mixin for settling limit and RFQ orders.

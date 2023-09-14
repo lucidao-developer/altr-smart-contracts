@@ -113,7 +113,7 @@ export function myDotenvConfig() {
     });
 
     let mandatoryEnvParams = ["MNEMONIC", "POLYGONSCAN_API_KEY"];
-    if (isProduction()) {
+    if (!isDevelopment()) {
         mandatoryEnvParams.push("GovernanceTreasuryAddress");
         mandatoryEnvParams.push("FusdtAddress");
         mandatoryEnvParams.push("TimelockAddress");

@@ -36,24 +36,25 @@
   },
   "homepage": "https://github.com/lucidao-developer/altr-marketplace#readme",
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
-    "@openzeppelin/contracts": "^4.8.1",
-    "@openzeppelin/contracts-upgradeable": "^4.8.1",
-    "@openzeppelin/hardhat-upgrades": "^1.22.1",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@openzeppelin/contracts": "^4.8.3",
+    "@openzeppelin/contracts-upgradeable": "^4.8.3",
+    "@openzeppelin/hardhat-upgrades": "^1.26.0",
     "dotenv": "^16.0.3",
-    "prettier-plugin-solidity": "^1.1.1",
-    "solhint": "^3.3.8",
+    "prettier-plugin-solidity": "^1.1.3",
+    "solhint": "^3.4.1",
     "solhint-plugin-prettier": "^0.0.5"
   },
   "dependencies": {
     "@0x/contracts-erc20": "^3.3.54",
-    "@0x/contracts-utils": "^4.8.35",
-    "@0x/contracts-zero-ex": "^0.38.3",
-    "@traderxyz/nft-swap-sdk": "^0.30.0",
-    "hardhat-contract-sizer": "^2.7.0",
+    "@0x/contracts-utils": "^4.8.51",
+    "@0x/contracts-zero-ex": "^0.38.6",
+    "@traderxyz/nft-swap-sdk": "^0.31.1",
+    "hardhat-contract-sizer": "^2.8.0",
     "hardhat-gas-reporter": "^1.0.9",
-    "patch-package": "^6.5.1",
-    "solidity-docgen": "^0.6.0-beta.34",
-    "yesno": "^0.4.0"
+    "patch-package": "^7.0.0",
+    "solidity-docgen": "^0.6.0-beta.35",
+    "yesno": "^0.4.0",
+    "typechain": "8.1.1"
   }
 }
