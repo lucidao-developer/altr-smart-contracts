@@ -91,3 +91,4 @@ contract AltrAllowList is AccessControl, IAllowList {
 		}
 	}
 }
+
