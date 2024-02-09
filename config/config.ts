@@ -45,6 +45,9 @@ let tradeCheckerAddress: string | undefined = "";
 let nftCollectionFullFactoryAddress: string | undefined = "";
 let nftCollectionLightFactoryAddress: string | undefined = "";
 
+let altrPriceIndexAddress: string | undefined = "";
+let safePriceIndexWatchesAddress: string | undefined = "";
+
 const stakedTokens = 1000;
 const servicePid = 0;
 const tokensForEligibility = 0;
@@ -83,6 +86,7 @@ if (onPolygonMainnetChain()) {
     fusdtAddress = process.env.FusdtAddress;
     allowListAddress = process.env.AllowListAddress;
     altrFractionsAddress = process.env.AltrFractionsAddress;
+    safePriceIndexWatchesAddress = process.env.SafePriceIndexWatchesAddress;
 
     erc1155MetadataUri = "https://api.altr.trade/api/erc1155metadata/";
     zeroExAddress = "0xDef1C0ded9bec7F1a1670819833240f027b25EfF";
@@ -121,4 +125,6 @@ export {
     tradeCheckerAddress,
     nftCollectionFullFactoryAddress,
     nftCollectionLightFactoryAddress,
+    altrPriceIndexAddress,
+    safePriceIndexWatchesAddress,
 };

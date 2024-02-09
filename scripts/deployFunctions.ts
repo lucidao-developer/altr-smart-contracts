@@ -27,6 +27,7 @@ import {
     setErc1155MetadataUri,
     nftCollectionFullFactoryAddress,
     nftCollectionLightFactoryAddress,
+    altrPriceIndexAddress,
 } from "../config/config";
 import { ADMIN_ROLE, TRADE_CHECKER_ROLE } from "../config/roles";
 import {
@@ -49,7 +50,8 @@ import {
     TestFarm,
     INftCollectionFactory,
     AltrNftCollectionFullFactory,
-    AltrNftCollectionLightFactory
+    AltrNftCollectionLightFactory,
+    AltrPriceIndex
 } from "../typechain-types";
 import { isProduction, skipContractVerify } from "./utilities";
 
@@ -465,6 +467,33 @@ export async function getOrDeployTradeChecker(zeroEx: IZeroEx, allowList: AltrAl
     });
 
     return altrTradeChecker;
+}
+
+export async function getOrDeployAltrPriceIndex(nftCollectionFactory: INftCollectionFactory): Promise<AltrPriceIndex> {
+    const contractName = "AltrPriceIndex";
+
+    if (altrPriceIndexAddress) {
+        console.log(`\nFound contract ${contractName} implementation at address ${altrPriceIndexAddress}`);
+        return await ethers.getContractAt(contractName, altrPriceIndexAddress);
+    }
+
+    console.log(`\nDeploying contract ${contractName}`);
+
+    const constructorArguments = [nftCollectionFactory.address] as const;
+
+    const AltrPriceIndex = await ethers.getContractFactory(contractName);
+    const altrPriceIndex = await AltrPriceIndex.deploy(...constructorArguments);
+    await altrPriceIndex.deployed();
+
+    console.log(`${contractName} address ${altrPriceIndex.address}`);
+
+    await verifyContract(contractName, {
+        address: altrPriceIndex.address,
+        contract: `contracts/${contractName}.sol:${contractName}`,
+        constructorArguments,
+    });
+
+    return altrPriceIndex;
 }
 
 /*********************************** TEST CONTRACT DEPLOY *********************/
